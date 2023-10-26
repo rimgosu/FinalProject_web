@@ -1,2 +1,1 @@
-print("hello!")
-print("Jan mang Ji hyup")
+print("충돌해결")

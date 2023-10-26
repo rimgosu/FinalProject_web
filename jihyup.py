@@ -1,3 +1,1 @@
-print("hello!")
-
-print("i am jihyup")
+print("충돌해결")

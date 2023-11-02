@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%-- 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+ --%>
+    
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +15,12 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
-
+	
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+  	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+	
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
 
@@ -47,7 +58,7 @@
         <!-- Navbar Start -->
         <div class="container-fluid nav-bar bg-transparent">
             <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">
-                <a href="index.html" class="navbar-brand d-flex align-items-center text-center">
+                <a href="index" class="navbar-brand d-flex align-items-center text-center">
                     <div class="icon p-2 me-2">
                         <img class="img-fluid" src="img/icon-deal.png" alt="Icon" style="width: 30px; height: 30px;">
                     </div>
@@ -58,14 +69,14 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a href="index.html" class="nav-item nav-link active">Home</a>
-                        <a href="recommend.html" class="nav-item nav-link">RECOMMEND</a>
+                        <a href="index" class="nav-item nav-link active">Home</a>
+                        <a href="recommend" class="nav-item nav-link">RECOMMEND</a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Property</a>
                             <div class="dropdown-menu rounded-0 m-0">
                                 <a href="property-list.html" class="dropdown-item">Property List</a>
                                 <a href="property-type.html" class="dropdown-item">Property Type</a>
-                                <a href="like.html" class="dropdown-item">LIKE</a>
+                                <a href="like" class="dropdown-item">LIKE</a>
                             </div>
                         </div>
                         <!-- <div class="nav-item dropdown">
@@ -75,9 +86,9 @@
                                 <a href="404.html" class="dropdown-item">404 Error</a>
                             </div>
                         </div> -->
-                        <a href="chat.html" class="nav-item nav-link">CHAT</a>
+                        <a href="chat" class="nav-item nav-link">CHAT</a>
                     </div>
-                    <a href="login.html" class="btn btn-primary px-3 d-none d-lg-flex">LOGIN</a>
+                    <a href="login" class="btn btn-primary px-3 d-none d-lg-flex">LOGIN</a>
                 </div>
             </nav>
         </div>

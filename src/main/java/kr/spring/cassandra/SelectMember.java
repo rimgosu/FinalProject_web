@@ -16,7 +16,7 @@ import com.datastax.oss.driver.api.core.cql.ResultSet;
 import com.datastax.oss.driver.api.core.cql.Row;
 
 public class SelectMember {
-	public static void main(String[] args) {
+	public void main(String[] args) {
 		//Use DriverConfigLoader to load your configuration file
 		Path configPath = Paths.get("c:/keys/keyspace/application.conf");
         DriverConfigLoader loader = DriverConfigLoader.fromPath(configPath);

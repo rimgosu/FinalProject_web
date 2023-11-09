@@ -10,9 +10,8 @@ public interface MemberInfoService {
 
 	public int SelectMemberInfo(String username, String password);
 
-	/*
-	 * public void InsertMemberInfoAdditional(MemberInfo info);
-	 */
+	/* public void InsertMemberInfoAdditional(MemberInfo info); */
+	 
 	
 	
 	

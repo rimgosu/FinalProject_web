@@ -74,4 +74,31 @@ public class MainController {
 		System.out.println("정보입력으로 들어왔음.");
 		return "info";
 	}
+	
+	@PostMapping("/info")
+	public String showInfoPage(MemberInfo info) {
+		memberInfoService.InsertMemberInfoAdditional(info);
+		
+		return "redirect:/main";
+	}
+	
+	
+	
+	@GetMapping("/test")
+	public String showTestPage() {
+		System.out.println("테스트페이지로 들어옴.");
+		return "test";
+	}
+	
+	/*
+	 * @GetMapping("/test2") //지협님이 하신 테스트 public String
+	 * showTest2Page(@RequestParam("username") String username) {
+	 * System.out.println("테스트페이지2로 들어옴.");
+	 * memberInfoService.InsertMemberInfo(username);
+	 * 
+	 * return "test"; }
+	 */
+	
+	
+	
 }

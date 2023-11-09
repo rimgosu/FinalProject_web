@@ -37,4 +37,3 @@ public class MemberInfo {
 
     // You can also add constructors as needed
 }
-

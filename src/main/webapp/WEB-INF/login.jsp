@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@ taglib prefix ="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix ="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<c:set var="cpath" value="${pageContext.request.contextPath}" />    
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -89,13 +96,31 @@
                 <div class="row g-2">
                     <div class="col-md-4 mx-auto text-center mb-3">
                         <h2 class="text-black">Login</h2>
-                        <div class="form-group">
+                        
+                        <form action="${cpath}/login" method="post" >
+                        	<table>
+                        		<tr>
+                        			<td class="form-group"> 
+                        			 	<input type="email" class="form-control border-0 py-3" placeholder="Username" id="username" name="username">
+                        			 </td>
+                        		</tr>
+                        		<tr>
+                        			<td class="form-group"> 
+                        				 <input type="password" class="form-control border-0 py-3" placeholder="Password" id="password" name="password">
+                        			 </td>
+                        		</tr>
+                        	</table>
+						    <input type="submit" class="btn btn-dark border-0 w-100 py-3" value="Login">
+						</form>
+                                                
+                       <!--  <div class="form-group">
                             <input type="text" class="form-control border-0 py-3" placeholder="Username" id="username">
                         </div>
                         <div class="form-group">
                             <input type="password" class="form-control border-0 py-3" placeholder="Password" id="password">
                         </div>
-                        <button class="btn btn-dark border-0 w-100 py-3" onclick="login()">Login</button>
+                        <button type ="submit" class="btn btn-dark border-0 w-100 py-3" >Login</button> -->
+                        
                         <br>
                         <br>
                         <p>회원이 아니신가요? <a href="join" style="

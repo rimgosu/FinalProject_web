@@ -65,31 +65,27 @@ public class MemberInfoServiceImpl implements MemberInfoService{
                  
                 }
 	}
+}
 
-	@Override
-	public void InsertMemberInfoAdditional(MemberInfo info) {
-		// TODO Auto-generated method stub
-		Path configPath = Paths.get("c:/keys/keyspace/application.conf");
-        DriverConfigLoader loader = DriverConfigLoader.fromPath(configPath);
-        
-        try (CqlSession session = CqlSession.builder()
-                .withConfigLoader(loader)
-                .build()) {
-        	
-				String cql = "insert into member.info () values (?,?,?,?,?,?,?,?,?,?,?,?)";
-				PreparedStatement preparedStatement = session.prepare(cql);
-				BoundStatement boundStatement = preparedStatement.bind(
-						info.getField1(),
-				        info.getField2(),
-				            // 나머지 필드에 대한 바인딩
-				        );
-				
-				
-				session.execute(preparedStatement.bind(info));
-				System.out.println(info);
-			
-	} }
-	}
+//	  @Override
+//	  public void InsertMemberInfoAdditional(MemberInfo info) { // TODO
+//		  Auto-generated method stub Path configPath =
+//		  Paths.get("c:/keys/keyspace/application.conf"); DriverConfigLoader loader =
+//		  DriverConfigLoader.fromPath(configPath);
+//		  
+//		  try (CqlSession session = CqlSession.builder() .withConfigLoader(loader)
+//		  .build()) {
+//		  
+//		  String cql = "insert into member.info () values (?,?,?,?,?,?,?,?,?,?,?,?)";
+//		  PreparedStatement preparedStatement = session.prepare(cql); BoundStatement
+//		  boundStatement = preparedStatement.bind( info.getField1(), info.getField2(),
+//		  // 나머지 필드에 대한 바인딩 );
+//		  
+//		  
+//		  session.execute(preparedStatement.bind(info)); System.out.println(info);
+//		  
+//		  } } }
+ 
 
 	
 	

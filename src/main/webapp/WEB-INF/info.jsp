@@ -49,6 +49,30 @@
         .form-select {
             border: none;
         }
+            .info-front {
+        margin-bottom: 40px;
+    }
+
+    input {
+        border: none;
+        border-bottom: 1px solid pink;
+        outline: none;
+    }
+
+    .form-select {
+        border: none;
+    }
+
+    @media (max-width: 768px) {
+        /* 작은 화면에 대한 스타일 조정 */
+        .info-front {
+            margin-bottom: 20px;
+        }
+
+        input, select {
+            width: 100%;
+        }
+    }
     </style>
 </head>
 <body>
@@ -69,7 +93,7 @@
                     <div class="icon p-2 me-2">
                         <img class="img-fluid" src="img/icon-deal.png" alt="Icon" style="width: 30px; height: 30px;">
                     </div>
-                    <h1 class="m-0 text-primary">SIM KOONG</h1>
+                    <h1 class="m-0 marko">SIM KOONG</h1>
                 </a>
                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>

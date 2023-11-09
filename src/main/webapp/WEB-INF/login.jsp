@@ -57,7 +57,7 @@
                     <div class="icon p-2 me-2">
                         <img class="img-fluid" src="img/icon-deal.png" alt="Icon" style="width: 30px; height: 30px;">
                     </div>
-                    <h1 class="m-0 text-primary">SIM KOONG</h1>
+                    <h1 class="m-0 marko">SIM KOONG</h1>
                 </a>
                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
@@ -125,6 +125,8 @@
                         <br>
                         <p>회원이 아니신가요? <a href="join" style="
                             margin-left: 5px;">회원가입</a></p>
+            			<a href="/oauth2/authorization/google" class="btn btn-success active" role="button">Google Login</a>
+						<a href="/oauth2/authorization/kakao" class="btn btn-secondary active" role="button">Kakao Login</a>
                     </div>
                 </div>
             </div>

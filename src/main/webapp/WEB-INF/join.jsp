@@ -1,12 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-<%@ taglib prefix ="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix ="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-<c:set var="cpath" value="${pageContext.request.contextPath}" />        
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -119,15 +112,19 @@
             </div>
             <br>
             <br>
-            <form action="${cpath}/join" method="post" onsubmit="return submitForm()">
+            <form>
                 <table>
                     <tr>
                         <td class="joinfont"><i class="fa-regular fa-user"></i>  닉네임</td>
                         <td><input type="text" name="nickname" required></td>
                     </tr>
                     <tr>
+                        <td class="joinfont"><i class="fa-solid fa-id-badge fa-lg"></i>   아이디</td>
+                        <td><input type="text" name="username" required></td>
+                    </tr>
+                    <tr>
                         <td class="joinfont"><i class="fa-regular fa-envelope"></i>   이메일</td>
-                        <td><input type="email" name="username" required></td>
+                        <td><input type="email" name="email" required></td>
                     </tr>
                     <tr>
                         <td class="joinfont"><i class="fa-solid fa-key"></i>   비밀번호</td>
@@ -137,12 +134,13 @@
                         <td class="joinfont"><i class="fa-solid fa-key"></i>   비밀번호 확인</td>
                         <td><input type="password" name="confirm_password" required></td>
                     </tr>
+                    
                 </table>
                 <br>
                 <br>
                 <div class="row">
                     <div class="col-12 text-center">
-                        <input type="submit" style="width: 300px;" class="btn btn-primary" value="가입하기">
+                        <button style="width: 300px;" class="btn btn-primary" type="button" onclick="location.href='info'">가입하기</button>
                     </div>
                 </div>
             </form>

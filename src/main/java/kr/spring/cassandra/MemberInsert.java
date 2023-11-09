@@ -14,7 +14,7 @@ import com.datastax.oss.driver.api.core.config.DriverConfigLoader;
 import com.datastax.oss.driver.api.core.cql.PreparedStatement;
 
 public class MemberInsert {
-	public static void main(String[] args) {
+	public void main(String[] args) {
 		Path configPath = Paths.get("c:/keys/keyspace/application.conf");
         DriverConfigLoader loader = DriverConfigLoader.fromPath(configPath);
 		//Use DriverConfigLoader to load your configuration file

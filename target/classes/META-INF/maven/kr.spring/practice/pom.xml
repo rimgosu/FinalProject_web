@@ -43,12 +43,12 @@
 			<scope>test</scope>
 		</dependency>
 		
-		<dependency>
+<!-- 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
-			<version>1.2</version> <!-- 이 부분에 적절한 버전을 지정합니다. -->
+			<version>1.2</version> 
 		</dependency>
-		
+		 -->
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-jasper</artifactId>
@@ -73,6 +73,23 @@
 		  <artifactId>java-driver-mapper-runtime</artifactId>
 		</dependency>
 		
+		<!-- 사진 추가 위한 의존성 -->
+		<!-- https://mvnrepository.com/artifact/servlets.com/cos -->
+		<dependency>
+		    <groupId>servlets.com</groupId>
+		    <artifactId>cos</artifactId>
+		    <version>05Nov2002</version>
+		</dependency>
+		<dependency>
+          <groupId>jakarta.servlet.jsp.jstl</groupId>
+          <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>org.glassfish.web</groupId>
+          <artifactId>jakarta.servlet.jsp.jstl</artifactId>
+      </dependency>
+
+				
 		
 	</dependencies>
 

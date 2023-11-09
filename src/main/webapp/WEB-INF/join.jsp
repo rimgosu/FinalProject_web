@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+<%@ taglib prefix ="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix ="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<c:set var="cpath" value="${pageContext.request.contextPath}" />        
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,7 +75,7 @@
                     <div class="icon p-2 me-2">
                         <img class="img-fluid" src="img/icon-deal.png" alt="Icon" style="width: 30px; height: 30px;">
                     </div>
-                    <h1 class="m-0 text-primary">SIM KOONG</h1>
+                    <h1 class="m-0 marko">SIM KOONG</h1>
                 </a>
                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
@@ -112,20 +119,15 @@
             </div>
             <br>
             <br>
-            <form>
+            <form action="${cpath}/join" method="post" onsubmit="return submitForm()">
                 <table>
                     <tr>
-                        <td class="joinfont"><i class="fa-regular fa-user"></i>  닉네임
-                        </td>
+                        <td class="joinfont"><i class="fa-regular fa-user"></i>  닉네임</td>
                         <td><input type="text" name="nickname" required></td>
                     </tr>
                     <tr>
-                        <td class="joinfont"><i class="fa-solid fa-id-badge fa-lg"></i>   아이디</td>
-                        <td><input type="text" name="username" required></td>
-                    </tr>
-                    <tr>
                         <td class="joinfont"><i class="fa-regular fa-envelope"></i>   이메일</td>
-                        <td><input type="email" name="email" required></td>
+                        <td><input type="email" name="username" required></td>
                     </tr>
                     <tr>
                         <td class="joinfont"><i class="fa-solid fa-key"></i>   비밀번호</td>
@@ -140,7 +142,7 @@
                 <br>
                 <div class="row">
                     <div class="col-12 text-center">
-                        <button style="width: 300px;" class="btn btn-primary" type="button" onclick="location.href='info'">가입하기</button>
+                        <input type="submit" style="width: 300px;" class="btn btn-primary" value="가입하기">
                     </div>
                 </div>
             </form>
@@ -167,24 +169,31 @@
     <!-- icons-->
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    
     <script>
-        function VaildEmailck(){
-            let email = document.getElementById("email");
-            $(ajax){
-                DB 조회해서 EMAIL있는지 확인하고 EMAIL있는지 확인 있으면
-                밑에
-                success:function emailNotFound(),
-            error:
-            }
-           
-        }
-        function emailNotFound(){
-            var email_span = $(#email-val__span);
-            email_span.attr("style:color=blue")
-            email_span.text("사용가능한 이메일입니다.") 
-        }
+	    function submitForm() {
+	        // 입력된 값 가져오기
+	        var nickname = $("input[name='nickname']").val();
+	        var username = $("input[name='username']").val();
+	        var password = $("input[name='password']").val();
+	        var confirm_password = $("input[name='confirm_password']").val();
+	
+	        // 필수 입력 필드 확인
+	        if (nickname === "" || username === "" || password === "" || confirm_password === "") {
+	            alert("모든 필수 입력 필드를 작성해주세요.");
+	            return false; // 폼 전송 취소
+	        } else {
+	            // 비밀번호 일치 여부 확인
+	            if (password !== confirm_password) {
+	                alert("비밀번호가 일치하지 않습니다.");
+	                return false; // 폼 전송 취소
+	            } else {
+	                // 모든 조건이 충족되면 true를 반환하여 폼이 제출될 수 있도록 함
+	                return true;
+	            }
+	        }
+	    }
+</script>
 
-
-    </script>
 </body>
 </html>

@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@ taglib prefix ="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix ="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<c:set var="cpath" value="${pageContext.request.contextPath}" />
+    
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,6 +50,30 @@
         .form-select {
             border: none;
         }
+            .info-front {
+        margin-bottom: 40px;
+    }
+
+    input {
+        border: none;
+        border-bottom: 1px solid pink;
+        outline: none;
+    }
+
+    .form-select {
+        border: none;
+    }
+
+    @media (max-width: 768px) {
+        /* 작은 화면에 대한 스타일 조정 */
+        .info-front {
+            margin-bottom: 20px;
+        }
+
+        input, select {
+            width: 100%;
+        }
+    }
     </style>
 </head>
 <body>
@@ -63,7 +94,7 @@
                     <div class="icon p-2 me-2">
                         <img class="img-fluid" src="img/icon-deal.png" alt="Icon" style="width: 30px; height: 30px;">
                     </div>
-                    <h1 class="m-0 text-primary">SIM KOONG</h1>
+                    <h1 class="m-0 marko">SIM KOONG</h1>
                 </a>
                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
@@ -97,107 +128,143 @@
 
 
         <!-- Header Start -->
-        <br>
-        <br>
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center">
-                    <h2>본인 정보 입력</h2>
-                </div>
-            </div>
-            <br>
-            <br>
-            <br>
-            <div class="row">
-                <!-- 왼쪽 세로 정렬 -->
-                <div class="col-md-3"></div>
-                <div class="col-md-3 info-front">
-                    <div class="mb-3 row">
-                        <label for="age" class="col-4 col-form-label">나이</label>
-                        <div class="col-8">
-                            <input type="number" id="age" name="age" required>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="location" class="col-4 col-form-label">거주지역</label>
-                        <div class="col-8">
-                            <input type="text" id="location" name="location" required>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="interests" class="col-4 col-form-label">관심사</label>
-                        <div class="col-8">
-                            <input type="text" id="interests" name="interests" required>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="exercise" class="col-4 col-form-label">운동</label>
-                        <div class="col-8">
-                            <select class="form-select" id="exercise" name="exercise" required>
-                                <option value="yes">예</option>
-                                <option value="no">아니오</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <!-- 오른쪽 세로 정렬 -->
-                <div class="col-md-3">
-                    <div class="mb-3 row">
-                        <label for="smoking" class="col-4 col-form-label">흡연</label>
-                        <div class="col-8">
-                            <select class="form-select" id="smoking" name="smoking" required>
-                                <option value="yes">예</option>
-                                <option value="no">아니오</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="drinking" class="col-4 col-form-label">음주</label>
-                        <div class="col-8">
-                            <select class="form-select" id="drinking" name="drinking" required>
-                                <option value="yes">예</option>
-                                <option value="no">아니오</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="job" class="col-4 col-form-label">직장</label>
-                        <div class="col-8">
-                            <input type="text" id="job" name="job" required>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="school" class="col-4 col-form-label">학교</label>
-                        <div class="col-8">
-                            <input type="text" id="school" name="school" required>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <br>
-            <br>
-            <div class="">
-                <!-- 양쪽에 자기소개 배치 -->
-                <div class="row">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-6">
-                        <label for="introduction" class="form-label">자기소개</label>
-                        <textarea class="form-control" id="introduction" name="introduction" rows="5" required></textarea>
-                    </div>
-                </div>
-                <br>
-                <br>
-                <div class="">
-                    <!-- 가입 버튼 오른쪽에 배치 -->
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-primary">가입하기</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br>
-        <br>
-        <br>
+        <form action ="${cpath}/info" method="post">
+		      <div class="container">
+		          <div class="row">
+		              <div class="col-12 text-center">
+		                    <h2>본인 정보 입력</h2>
+		              </div>
+		            </div>
+		            <br>
+		            <br>
+		            <br>
+              
+		            <div class="row">
+		                <!-- 왼쪽 세로 정렬 -->
+		                <div class="col-md-1"></div>
+		                <div class="col-md-5 info-front">
+		                
+		                	 <div class="mb-3 row">
+		                        <label for="age" class="col-4 col-form-label">나이</label>
+		                        <div class="col-8">
+		                            <input type="number" id="age" name="age" required>
+		                        </div>
+		                    </div>
+		                    
+		                	<div class="mb-3 row">
+		                        <label for="phone" class="col-7 col-form-label">핸드폰 번호</label>
+		                        <div class="col-10">
+		                            <input type="number" id="phone" name="phone" required>
+		                        </div>
+		                    </div>
+		                	
+		                    <div class="mb-3 row">
+		                        <label for="address" class="col-4 col-form-label">거주지역</label>
+		                        <div class="col-8">
+		                            <input type="text" id="address" name="address" required>
+		                        </div>
+		                        
+		                    </div>
+		                    <div class="mb-3 row">
+		                        <label for="interest" class="col-4 col-form-label">관심사</label>
+		                        <div class="col-8">
+		                            <input type="text" id="interest" name="interest" required>
+		                        </div>
+		                    </div>
+		                    
+		                      <div class="mb-3 row">
+		                        <label for="mbti" class="col-4 col-form-label">MBTI</label>
+		                        <div class="col-8">
+		                            <input type="text" id="mbti" name="mbti" required>
+		                        </div>
+		                    </div>
+		                    
+		                    <div class="mb-3 row">
+		                        <label for="sport" class="col-4 col-form-label">운동</label>
+		                        <div class="col-8">
+		                            <select class="form-select" id="sport" name="sport" required>
+		                                <option value="yes">예</option>
+		                                <option value="no">아니오</option>
+		                            </select>
+		                        </div>
+		                    </div>		          
+		                </div>
+		                
+		                
+		                <!-- 오른쪽 세로 정렬 -->
+		                <div class="col-md-5">
+		                    <div class="mb-5 row">
+		                        <label for="smoking" class="col-4 col-form-label">흡연</label>
+		                        <div class="col-8">
+		                            <select class="form-select" id="smoking" name="smoking" required>
+		                                <option value="yes">예</option>
+		                                <option value="no">아니오</option>
+		                            </select>
+		                        </div>
+		                    </div>
+		                    
+		                    <div class="mb-3 row">
+		                        <label for="drinking" class="col-4 col-form-label">음주</label>
+		                        <div class="col-8">
+		                            <select class="form-select" id="drinking" name="drinking" required>
+		                                <option value="yes">예</option>
+		                                <option value="no">아니오</option>
+		                            </select>
+		                        </div>
+		                    </div>
+		                    
+		                    <div class="mb-3 row">
+		                        <label for="job" class="col-4 col-form-label">직장</label>
+		                        <div class="col-8">
+		                            <input type="text" id="job" name="job" required>
+		                        </div>
+		                    </div>
+		                    
+		                    <div class="mb-3 row">
+		                        <label for="school" class="col-4 col-form-label">학교</label>
+		                        <div class="col-8">
+		                            <input type="text" id="school" name="school" required>
+		                        </div>
+		                    </div>
+		                    
+		                    <div class="mb-3 row">
+		                        <label for="role" class="col-4 col-form-label">등급</label>
+		                        <div class="col-8">
+		                        	<select class="form-select" id="role" name="role" required>
+		                        		<option value="user">사용자</option>
+		                        		<option value="admin">관리자</option>
+		                        	</select>
+		                       
+		                        </div>
+		                    </div>
+		                    
+		                </div>
+		            </div>
+		      
+		            <br>
+		            <br>
+		            
+		            <div class="">
+		                <!-- 양쪽에 자기소개 배치 -->
+		                <div class="row">
+		                    <div class="col-md-1"></div>
+		                    <div class="col-md-10">
+		                        <label for="aboutme" class="form-label">자기소개</label>
+		                        <textarea class="form-control" id="aboutme" name="aboutme" rows="5" required></textarea>
+		                    </div>
+		                </div>
+		                <br>
+		                <br>
+		                <div class="">
+		                    <!-- 가입 버튼 오른쪽에 배치 -->
+		                    <div class="text-center">
+		                        <input type="submit" class="btn btn-primary" value="가입하기">
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		   </form>
+		   <!-- 정보 입력 끝!!!!!!!!!!!!!!!!!!!!!!!!  -->
         <!-- Header End -->
 
 

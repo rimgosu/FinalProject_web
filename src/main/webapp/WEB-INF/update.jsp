@@ -136,35 +136,35 @@
 		                	 <div class="mb-3 row">
 		                        <label for="age" class="col-4 col-form-label">나이</label>
 		                        <div class="col-8">
-		                            <input type="number" id="age" name="age" value="${mvo.age}" required>
+		                            <input type="number" id="age" name="age" value="${mvo1.age}" required>
 		                        </div>
 		                    </div>
 		                    
 		                	<div class="mb-3 row">
 		                        <label for="phone" class="col-7 col-form-label">핸드폰 번호</label>
 		                        <div class="col-10">
-		                            <input type="number" id="phone" name="phone" value="${mvo.phone}" required>
+		                            <input type="number" id="phone" name="phone" value="${mvo1.phone}" required>
 		                        </div>
 		                    </div>
 		                	
 		                    <div class="mb-3 row">
 		                        <label for="address" class="col-4 col-form-label">거주지역</label>
 		                        <div class="col-8">
-		                            <input type="text" id="address" name="address" value="${mvo.address}" required>
+		                            <input type="text" id="address" name="address" value="${mvo1.address}" required>
 		                        </div>
 		                        
 		                    </div>
 		                    <div class="mb-3 row">
 		                        <label for="interest" class="col-4 col-form-label">관심사</label>
 		                        <div class="col-8">
-		                            <input type="text" id="interest" name="interest" value="${mvo.interest}" required>
+		                            <input type="text" id="interest" name="interest" value="${mvo1.interest}" required>
 		                        </div>
 		                    </div>
 		                    
 		                      <div class="mb-3 row">
 		                        <label for="mbti" class="col-4 col-form-label">MBTI</label>
 		                        <div class="col-8">
-		                            <input type="text" id="mbti" name="mbti" value="${mvo.mbti}" required>
+		                            <input type="text" id="mbti" name="mbti" value="${mvo1.mbti}" required>
 		                        </div>
 		                    </div>
 		                    
@@ -205,14 +205,14 @@
 		                    <div class="mb-3 row">
 		                        <label for="job" class="col-4 col-form-label">직장</label>
 		                        <div class="col-8">
-		                            <input type="text" id="job" name="job" value="${mvo.job}" required>
+		                            <input type="text" id="job" name="job" value="${mvo1.job}" required>
 		                        </div>
 		                    </div>
 		                    
 		                    <div class="mb-3 row">
 		                        <label for="school" class="col-4 col-form-label">학교</label>
 		                        <div class="col-8">
-		                            <input type="text" id="school" name="school" value="${mvo.school}" required>
+		                            <input type="text" id="school" name="school" value="${mvo1.school}" required>
 		                        </div>
 		                    </div>
 		                    
@@ -239,7 +239,7 @@
 		                    <div class="col-md-1"></div>
 		                    <div class="col-md-10">
 		                        <label for="aboutme" class="form-label">자기소개</label>
-		                        <textarea class="form-control" id="aboutme" name="aboutme" rows="5" required style="resize: none;">"${mvo.aboutme}"</textarea>
+		                        <textarea class="form-control" id="aboutme" name="aboutme" rows="5" required style="resize: none;">"${mvo1.aboutme}"</textarea>
 		                    </div>
 		                </div>
 		                <br>

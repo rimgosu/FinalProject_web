@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartRequest;
 
 import com.datastax.oss.driver.api.core.session.Request;
 
@@ -54,20 +55,28 @@ public class MainController {
 	}
 	
 	@PostMapping("/login")
-	public String showLoginPage(MemberInfo m, HttpSession session) {
-	   MemberInfo mvo = memberInfoService.SelectMemberInfo(m);
-	   if (mvo != null) {
-	      session.setAttribute("mvo", mvo);
-	      System.out.println(mvo.getUsername());
-	      /*
-	       * String username1 = (String)session.getAttribute("username");
-	       * System.out.println(username1);
-	       */
-	      return "redirect:/index";         
-	   }else {
-	      return "redirect:/login";
+	   public String showLoginPage(MemberInfo m, HttpSession session) {
+	      MemberInfo mvo = memberInfoService.login(m);
+	      if (mvo != null) {
+	         session.setAttribute("mvo", mvo);
+	         System.out.println(mvo.getUsername());
+	         
+	         /* 로그인할 떄 세션에 값이 들어오는지 테스트 한 코드
+	          * String username1 = (String)session.getAttribute("username");
+	          * System.out.println(username1);
+	          */
+	         
+	         // 전체 memberinfo불러올때 테스트 한 코드 
+	          String username_session =((MemberInfo)session.getAttribute("mvo")).getUsername();          
+	          MemberInfo mvo1 = memberInfoService.SelectMemberInfo(username_session);
+	          System.out.println(mvo1);
+	          session.setAttribute("mvo1", mvo1);
+	         
+	         return "redirect:/index";         
+	      }else {
+	         return "redirect:/login";
+	      }
 	   }
-	}
 
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
@@ -94,19 +103,29 @@ public class MainController {
 	}
 	
 	@PostMapping("/info")
-	public String showInfoPage(MemberInfo info, HttpSession session, HttpServletRequest request) {
-//	      HttpSession session = request.getSession(true);
+	   public String showInfoPage(MemberInfo info, HttpSession session, HttpServletRequest request) {
+	      //파일 업로드를 할 수 있게 도와주는 MultipartRequest 객체 생성. 
+	      MultipartRequest multi = null;
+	      //저장경로 
+	      /* String savePath =request.getRealPath("resources/upload"); */
+	      int fileMaxSize = 10*1024*1024; //파일 최대 크기 
+	      String username_session = ((MemberInfo)session.getAttribute("mvo")).getUsername();
 	      
-	if(session == null) {
-		
-	    System.out.println("세션 값 없음" );
-	    }else {
-	        String username_session = ((MemberInfo)session.getAttribute("mvo")).getUsername();
-	        System.out.println(username_session);
-	        memberInfoService.InsertMemberInfoAdditional(info, username_session);
-	      }
+	      MemberInfo mvo = memberInfoService.SelectMemberInfo(username_session);
+	      System.out.println(mvo);
+	      
+	      
+//	        Map<Integer, String> oldImg =
+//	        memberInfoService.selectMemPhoto(username_session);
+//	        
+//	        MemberInfo mvo = memberInfoService.InsertMemberInfoAdditional(info,username_session);
+	      
+
 	      return "redirect:/index";
+	   
+	   
 	   }
+
 
 	
 	@GetMapping("/profile")

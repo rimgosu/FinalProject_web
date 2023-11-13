@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta charset="EUC-KR">
 <title>Insert title here</title>
 </head>
 <body>
@@ -67,7 +67,7 @@
 						<form class="form-iniline" action="${cpath}/profile">
 							<button type="submit" class="btn btn-prmary px-3 d-none d-lg-flex">PROFILE</button>
 						</form>
-						<form class="form-inline" action="${cpath}/logout" method="post">
+						<form class="form-inline" action="${cpath}/logout" method="get">
 							<button type="submit" class="btn btn-default">LOGOUT</button>
 						</form>
 					</c:if>	

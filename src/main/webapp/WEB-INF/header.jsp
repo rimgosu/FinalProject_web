@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
@@ -35,7 +35,7 @@
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Property</a>
                             <div class="dropdown-menu rounded-0 m-0">
-                                <a href="info" class="dropdown-item">³» Á¤º¸ ÀÔ·Â</a>
+                                <a href="info" class="dropdown-item">ì •ë³´ì¶”ê°€í•˜ê¸°</a>
                                 <a href="property-type.html" class="dropdown-item">Property Type</a>
                                 <a href="like" class="dropdown-item">LIKE</a>
                             </div>

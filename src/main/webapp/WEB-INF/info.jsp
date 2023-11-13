@@ -49,73 +49,85 @@
         .form-select {
             border: none;
         }
+            .info-front {
+        margin-bottom: 40px;
+    }
+
+    input {
+        border: none;
+        border-bottom: 1px solid pink;
+        outline: none;
+    }
+
+    .form-select {
+        border: none;
+    }
+
+    @media (max-width: 768px) {
+        /* 작은 화면에 대한 스타일 조정 */
+        .info-front {
+            margin-bottom: 20px;
+        }
+
+        input, select {
+            width: 100%;
+        }
+    }
+    
+    #imageForm1 {
+            display: inline-block;
+            border: 2px solid #ddd;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        #uploadInput {
+            display: none;
+        }
+
+        #uploadButton {
+            background-color: pink;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+        }
     </style>
 </head>
 <body>
     <div class="container-xxl bg-white p-0">
-        <!-- Spinner Start -->
-        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-        </div>
-        <!-- Spinner End -->
-
-
-        <!-- Navbar Start -->
-        <div class="container-fluid nav-bar bg-transparent">
-            <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">
-                <a href="index" class="navbar-brand d-flex align-items-center text-center">
-                    <div class="icon p-2 me-2">
-                        <img class="img-fluid" src="img/icon-deal.png" alt="Icon" style="width: 30px; height: 30px;">
-                    </div>
-                    <h1 class="m-0 text-primary">SIM KOONG</h1>
-                </a>
-                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <div class="navbar-nav ms-auto">
-                        <a href="${cpath}/index" class="nav-item nav-link">Home</a>
-                        <a href="${cpath}/recommend" class="nav-item nav-link">RECOMMEND</a>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Property</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="${cpath}/info" class="dropdown-item">내 정보 입력</a>
-                                <a href="property-type.html" class="dropdown-item">Property Type</a>
-                                <a href="like" class="dropdown-item">LIKE</a>
-                            </div>
-                        </div>
-                        <!-- <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                                <a href="404.html" class="dropdown-item">404 Error</a>
-                            </div>
-                        </div> -->
-                        <a href="${cpath}/chat" class="nav-item nav-link">CHAT</a>
-                    </div>
-                    <a href="${cpath}/login" class="btn btn-primary px-3 d-none d-lg-flex">LOGIN</a>
-                </div>
-            </nav>
-        </div>
+        <jsp:include page="header.jsp"></jsp:include>
         <!-- Navbar End -->
 
 
         <!-- Header Start -->
         <br>
         <br>
-         <form action ="${cpath}/info" method="post">
+         <form action ="${cpath}/info" method="post", enctype ="multipart/form-data">
 		      <div class="container">
 		          <div class="row">
 		              <div class="col-12 text-center">
 		                    <h2>본인 정보 입력</h2>
+		                    <br>
+		                    <br>
+		                    <br>
+		                    <br>
+<!-- 						<form id="imageForm1">  -->
+							    <label for="uploadInput" id="uploadButton">이미지 선택</label>
+							    <input type="file" id="photo" accept="image/*">
+							    <button type="button" onclick="uploadImage()" id="uploadButton">업로드</button>
+						<!-- </form>  -->
 		              </div>
 		            </div>
 		            <br>
 		            <br>
 		            <br>
-              
 		            <div class="row">
 		                <!-- 왼쪽 세로 정렬 -->
 		                <div class="col-md-1"></div>
@@ -235,7 +247,7 @@
 		                <div class="">
 		                    <!-- 가입 버튼 오른쪽에 배치 -->
 		                    <div class="text-center">
-		                        <input type="submit" class="btn btn-primary" value="가입하기">
+		                        <input type="submit" class="btn btn-primary" value="가입하기"  onclick="checkFormAndSubmit()">
 		                    </div>
 		                </div>
 		            </div>
@@ -262,5 +274,73 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    
+    <script>
+    
+	    function checkFormAndSubmit() {
+	        checkForm();
+	
+	        var isSubmitEnabled = !document.getElementById("submitBtn").disabled;
+	
+	        if (isSubmitEnabled) {
+	            // 이동할 페이지의 URL을 여기에 입력해줘
+	            window.location.href = "index";
+	        }
+	    }
+    
+    
+	    function checkForm() {
+	        var age = document.getElementById("age").value;
+	        var phone = document.getElementById("phone").value;
+	        var address = document.getElementById("address").value;
+	        var interest = document.getElementById("interest").value;
+	        var mbti = document.getElementById("mbti").value;
+	        var sport = document.getElementById("sport").options[document.getElementById("sport").selectedIndex].value;
+	        var smoking = document.getElementById("smoking").options[document.getElementById("smoking").selectedIndex].value;
+	        var drinking = document.getElementById("drinking").options[document.getElementById("drinking").selectedIndex].value;
+	        var job = document.getElementById("job").value;
+	        var school = document.getElementById("school").value;
+	        var role = document.getElementById("role").options[document.getElementById("role").selectedIndex].value;
+	        var aboutme = document.getElementById("aboutme").value;
+	
+	        if (age && phone && address && interest && mbti && sport !== "none" && smoking && drinking && job && school && role !== "none" && aboutme) {
+	            document.getElementById("submitBtn").disabled = false;
+	        } else {
+	            document.getElementById("submitBtn").disabled = true;
+	        }
+	    }
+	    
+	    function uploadImage() {
+	    	  var input = document.getElementById('photo');
+	    	  var file = fileInput.files[0];
+
+	    	  if (file) {
+	    	    var formData = new FormData(document.getElementById('infoForm'));
+	    	    formData.append('file', file);
+
+	    	 // 여기에서 서버로 Ajax 요청을 보내거나, form.submit()을 사용하여 제출할 수 있습니다.
+	            // 예를 들어, jQuery를 사용하여 Ajax 요청을 보내는 경우:
+
+	            $.ajax({
+	                type: 'POST',
+	                url: '${cpath}/info',
+	                data: formData,
+	                processData: false,
+	                contentType: false,
+	                success: function(response) {
+	                    // 성공 시 동작
+	                },
+	                error: function(error) {
+	                    // 에러 시 동작
+	                }
+	            });
+	    	  }
+	    	}
+	    
+	</script>
+    
+    
+    
+    
 </body>
 </html>

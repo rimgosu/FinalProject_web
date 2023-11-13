@@ -11,6 +11,8 @@ import com.datastax.oss.driver.api.core.cql.PreparedStatement;
 import com.datastax.oss.driver.api.core.cql.ResultSet;
 import com.datastax.oss.driver.api.core.cql.Row;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import kr.spring.entity.MemberInfo;
 
 @Service
@@ -25,7 +27,12 @@ public class MemberInfoServiceImpl implements MemberInfoService{
                 .withConfigLoader(loader)
                 .build()) {
         	
-				String cql = "insert into member.info ( nickname, username, password) values (?,?,?)";
+				String cql = """
+						insert into member.info ( 
+							nickname, username, password, register_date
+						) values (
+							?, ?, ?, toTimestamp(now())
+						)""";
 				PreparedStatement preparedStatement = session.prepare(cql);
 				session.execute(preparedStatement.bind( nickname, username, password));
 			
@@ -65,27 +72,47 @@ public class MemberInfoServiceImpl implements MemberInfoService{
                  
                 }
 	}
-}
 
-//	  @Override
-//	  public void InsertMemberInfoAdditional(MemberInfo info) { // TODO
-//		  Auto-generated method stub Path configPath =
-//		  Paths.get("c:/keys/keyspace/application.conf"); DriverConfigLoader loader =
-//		  DriverConfigLoader.fromPath(configPath);
-//		  
-//		  try (CqlSession session = CqlSession.builder() .withConfigLoader(loader)
-//		  .build()) {
-//		  
-//		  String cql = "insert into member.info () values (?,?,?,?,?,?,?,?,?,?,?,?)";
-//		  PreparedStatement preparedStatement = session.prepare(cql); BoundStatement
-//		  boundStatement = preparedStatement.bind( info.getField1(), info.getField2(),
-//		  // 나머지 필드에 대한 바인딩 );
-//		  
-//		  
-//		  session.execute(preparedStatement.bind(info)); System.out.println(info);
-//		  
-//		  } } }
- 
+	@Override
+	public void InsertMemberInfoAdditional(MemberInfo info, String username_session) {
+		// TODO Auto-generated method stub
+		Path configPath = Paths.get("c:/keys/keyspace/application.conf");
+        DriverConfigLoader loader = DriverConfigLoader.fromPath(configPath);
+        
+        try (CqlSession session = CqlSession.builder()
+                .withConfigLoader(loader)
+                .build()) {
+        	
+				String cql = """
+						update member.info 
+						set age =?,phone=?,address=?,interest=?,mbti=?,
+						    sport=?,smoking=?,drinking=?,job=?,school=?,
+						    role=?,aboutme=? 
+						where username = ?;
+						""";
+				PreparedStatement preparedStatement = session.prepare(cql);
+
+				session.execute(preparedStatement.bind( 
+						info.getAge(),
+				        info.getPhone(),
+				        info.getAddress(),
+				        info.getInterest(),
+				        info.getMbti(),
+				        info.getSport(),
+				        info.getSmoking(),
+				        info.getDrinking(),
+				        info.getJob(),
+				        info.getSchool(),
+				        info.getRole(),
+				        info.getAboutme(),
+				        username_session
+						));
+						
+
+				System.out.println(info);
+			
+	} }
+	}
 
 	
 	

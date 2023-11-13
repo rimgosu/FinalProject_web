@@ -7,7 +7,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-//import jakarta.servlet.http.HttpSession;
+import com.datastax.oss.driver.api.core.session.Request;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import kr.spring.entity.MemberInfo;
 import kr.spring.service.MemberInfoService;
 
@@ -16,6 +19,7 @@ public class MainController {
 	
 	@Autowired
 	private MemberInfoService memberInfoService;
+	
 	
 	@GetMapping("/index")
 	public String showMainPage() {
@@ -46,16 +50,22 @@ public class MainController {
 		System.out.println("로그인으로 들어왔음.");
 		return "login";
 	}
-//	@PostMapping("/login")
-//	public String showLoginPage(@RequestParam("username") String username, @RequestParam("password") String password, HttpSession session) {
-//		int mvo = memberInfoService.SelectMemberInfo(username, password);
-//		if (mvo ==1) {
-//			session.setAttribute("mvo", mvo);
-//			return "redirect:/index";
-//		}else {
-//			return "redirect:/login";
-//		}
-//	}
+	@PostMapping("/login")
+	public String showLoginPage(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest request) {
+		int mvo = memberInfoService.SelectMemberInfo(username, password);
+		if (mvo ==1) {
+			System.out.println(username);
+			HttpSession session = request.getSession(true);
+			session.setAttribute("username", username);
+			/*
+			 * String username1 = (String)session.getAttribute("username");
+			 * System.out.println(username1);
+			 */
+			return "redirect:/index";			
+		}else {
+			return "redirect:/login";
+		}
+	}
 	
 	@GetMapping("/join")
 	public String showJoinPage() {
@@ -75,12 +85,13 @@ public class MainController {
 		return "info";
 	}
 	
-	/*
-	 * @PostMapping("/info") public String showInfoPage(MemberInfo info) {
-	 * memberInfoService.InsertMemberInfoAdditional(info);
-	 * 
-	 * return "redirect:/main"; }
-	 */
+	@PostMapping("/info")
+	public String showInfoPage(MemberInfo info, HttpServletRequest request) {
+		HttpSession session = request.getSession(true);
+		String username_session = (String)session.getAttribute("username");
+		memberInfoService.InsertMemberInfoAdditional(info, username_session);
+		return "redirect:/index";
+	}
 	
 	
 	

@@ -52,24 +52,23 @@ public class MainController {
 		System.out.println("로그인으로 들어왔음.");
 		return "login";
 	}
+	
 	@PostMapping("/login")
-	   public String showLoginPage(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest request, Model model) {
-	      int mvo = memberInfoService.SelectMemberInfo(username, password);
-	      
-	      if (mvo ==1) {
-	         System.out.println(username);
-	         
-	         HttpSession session = request.getSession(true);
-	         session.setAttribute("username", username);
-	         /*
-	          * String username1 = (String)session.getAttribute("username");
-	          * System.out.println(username1);
-	          */
-	         return "redirect:/index";         
-	      }else {
-	         return "redirect:/login";
-	      }
+	public String showLoginPage(MemberInfo m, HttpSession session) {
+	   MemberInfo mvo = memberInfoService.SelectMemberInfo(m);
+	   if (mvo != null) {
+	      session.setAttribute("mvo", mvo);
+	      System.out.println(mvo.getUsername());
+	      /*
+	       * String username1 = (String)session.getAttribute("username");
+	       * System.out.println(username1);
+	       */
+	      return "redirect:/index";         
+	   }else {
+	      return "redirect:/login";
 	   }
+	}
+
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
@@ -95,17 +94,31 @@ public class MainController {
 	}
 	
 	@PostMapping("/info")
-	public String showInfoPage(MemberInfo info, HttpServletRequest request) {
-		HttpSession session = request.getSession(true);
-		String username_session = (String)session.getAttribute("username");
-		memberInfoService.InsertMemberInfoAdditional(info, username_session);
-		return "redirect:/index";
-	}
+	public String showInfoPage(MemberInfo info, HttpSession session, HttpServletRequest request) {
+//	      HttpSession session = request.getSession(true);
+	      
+	if(session == null) {
+		
+	    System.out.println("세션 값 없음" );
+	    }else {
+	        String username_session = ((MemberInfo)session.getAttribute("mvo")).getUsername();
+	        System.out.println(username_session);
+	        memberInfoService.InsertMemberInfoAdditional(info, username_session);
+	      }
+	      return "redirect:/index";
+	   }
+
 	
 	@GetMapping("/profile")
 	public String showProfilePage() {
 		System.out.println("마이페이지로 들어왔음.");
 		return "profile";
+	}
+	
+	@PostMapping("/update")
+	public String showUpdatePage() {
+		System.out.println("수정페이지로 들어왔음.");
+		return "update";
 	}
 	
 	

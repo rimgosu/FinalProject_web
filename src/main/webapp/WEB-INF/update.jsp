@@ -113,7 +113,7 @@
 		      <div class="container">
 		          <div class="row">
 		              <div class="col-12 text-center">
-		                    <h2>Profile</h2>
+		                    <h2>본인 정보 입력</h2>
 		                    <br>
 		                    <br>
 		                    <br>
@@ -136,42 +136,45 @@
 		                	 <div class="mb-3 row">
 		                        <label for="age" class="col-4 col-form-label">나이</label>
 		                        <div class="col-8">
-		                            <input type="number" id="age" name="age" value="${mvo.age}" readonly="readonly">
+		                            <input type="number" id="age" name="age" value="${mvo.age}" required>
 		                        </div>
 		                    </div>
 		                    
 		                	<div class="mb-3 row">
 		                        <label for="phone" class="col-7 col-form-label">핸드폰 번호</label>
 		                        <div class="col-10">
-		                            <input type="number" id="phone" name="phone" value="${mvo.phone}" readonly="readonly">
+		                            <input type="number" id="phone" name="phone" value="${mvo.phone}" required>
 		                        </div>
 		                    </div>
 		                	
 		                    <div class="mb-3 row">
 		                        <label for="address" class="col-4 col-form-label">거주지역</label>
 		                        <div class="col-8">
-		                            <input type="text" id="address" name="address" value="${mvo.address}" readonly="readonly">
+		                            <input type="text" id="address" name="address" value="${mvo.address}" required>
 		                        </div>
 		                        
 		                    </div>
 		                    <div class="mb-3 row">
 		                        <label for="interest" class="col-4 col-form-label">관심사</label>
 		                        <div class="col-8">
-		                            <input type="text" id="interest" name="interest" value="${mvo.interest}" readonly="readonly">
+		                            <input type="text" id="interest" name="interest" value="${mvo.interest}" required>
 		                        </div>
 		                    </div>
 		                    
 		                      <div class="mb-3 row">
 		                        <label for="mbti" class="col-4 col-form-label">MBTI</label>
 		                        <div class="col-8">
-		                            <input type="text" id="mbti" name="mbti" value="${mvo.mbti}" readonly="readonly">
+		                            <input type="text" id="mbti" name="mbti" value="${mvo.mbti}" required>
 		                        </div>
 		                    </div>
 		                    
 		                    <div class="mb-3 row">
 		                        <label for="sport" class="col-4 col-form-label">운동</label>
 		                        <div class="col-8">
-		                            <input type="text" id="sport" name="sport" value="${mvo.sport}" readonly="readonly">
+		                            <select class="form-select" id="sport" name="sport" required>
+		                                <option value="yes">예</option>
+		                                <option value="no">아니오</option>
+		                            </select>
 		                        </div>
 		                    </div>		          
 		                </div>
@@ -182,35 +185,45 @@
 		                    <div class="mb-5 row">
 		                        <label for="smoking" class="col-4 col-form-label">흡연</label>
 		                        <div class="col-8">
-		                            <input type="text" id="smoking" name="smoking" value="${mvo.smoking}" readonly="readonly">
+		                            <select class="form-select" id="smoking" name="smoking" required>
+		                                <option value="yes">예</option>
+		                                <option value="no">아니오</option>
+		                            </select>
 		                        </div>
 		                    </div>
 		                    
 		                    <div class="mb-3 row">
 		                        <label for="drinking" class="col-4 col-form-label">음주</label>
 		                        <div class="col-8">
-		                            <input type="text" id="drinking" name="drinking" value="${mvo.drinking}" readonly="readonly">
+		                            <select class="form-select" id="drinking" name="drinking" required>
+		                                <option value="yes">예</option>
+		                                <option value="no">아니오</option>
+		                            </select>
 		                        </div>
 		                    </div>
 		                    
 		                    <div class="mb-3 row">
 		                        <label for="job" class="col-4 col-form-label">직장</label>
 		                        <div class="col-8">
-		                            <input type="text" id="job" name="job" value="${mvo.job}" readonly="readonly">
+		                            <input type="text" id="job" name="job" value="${mvo.job}" required>
 		                        </div>
 		                    </div>
 		                    
 		                    <div class="mb-3 row">
 		                        <label for="school" class="col-4 col-form-label">학교</label>
 		                        <div class="col-8">
-		                            <input type="text" id="school" name="school" value="${mvo.school}" readonly="readonly">
+		                            <input type="text" id="school" name="school" value="${mvo.school}" required>
 		                        </div>
 		                    </div>
 		                    
 		                    <div class="mb-3 row">
 		                        <label for="role" class="col-4 col-form-label">등급</label>
 		                        <div class="col-8">
-		                        	<input type="text" id="role" name="role" value="${mvo.role}" readonly="readonly">
+		                        	<select class="form-select" id="role" name="role" required>
+		                        		<option value="user">사용자</option>
+		                        		<option value="admin">관리자</option>
+		                        	</select>
+		                       
 		                        </div>
 		                    </div>
 		                    
@@ -226,7 +239,7 @@
 		                    <div class="col-md-1"></div>
 		                    <div class="col-md-10">
 		                        <label for="aboutme" class="form-label">자기소개</label>
-		                        <textarea class="form-control" id="aboutme" name="aboutme" rows="5" readonly="readonly" style="resize: none;">"${mvo.aboutme}"</textarea>
+		                        <textarea class="form-control" id="aboutme" name="aboutme" rows="5" required style="resize: none;">"${mvo.aboutme}"</textarea>
 		                    </div>
 		                </div>
 		                <br>
@@ -234,7 +247,7 @@
 		                <div class="">
 		                    <!-- 가입 버튼 오른쪽에 배치 -->
 		                    <div class="text-center">
-		                        <input type="submit" class="btn btn-primary" value="수정하기">
+		                        <input type="submit" class="btn btn-primary" value="수정하기"  onclick="checkUpdateSubmit()">
 		                    </div>
 		                </div>
 		            </div>
@@ -263,6 +276,39 @@
     <script src="js/main.js"></script>
     
     <script>
+    
+	    function checkUpdateSubmit() {
+	        checkForm();
+	
+	        var isSubmitEnabled = !document.getElementById("submitBtn").disabled;
+	
+	        if (isSubmitEnabled) {
+	            // 이동할 페이지의 URL을 여기에 입력해줘
+	            window.location.href = "index";
+	        }
+	    }
+    
+    
+	    function checkForm() {
+	        var age = document.getElementById("age").value;
+	        var phone = document.getElementById("phone").value;
+	        var address = document.getElementById("address").value;
+	        var interest = document.getElementById("interest").value;
+	        var mbti = document.getElementById("mbti").value;
+	        var sport = document.getElementById("sport").options[document.getElementById("sport").selectedIndex].value;
+	        var smoking = document.getElementById("smoking").options[document.getElementById("smoking").selectedIndex].value;
+	        var drinking = document.getElementById("drinking").options[document.getElementById("drinking").selectedIndex].value;
+	        var job = document.getElementById("job").value;
+	        var school = document.getElementById("school").value;
+	        var role = document.getElementById("role").options[document.getElementById("role").selectedIndex].value;
+	        var aboutme = document.getElementById("aboutme").value;
+	
+	        if (age && phone && address && interest && mbti && sport !== "none" && smoking && drinking && job && school && role !== "none" && aboutme) {
+	            document.getElementById("submitBtn").disabled = false;
+	        } else {
+	            document.getElementById("submitBtn").disabled = true;
+	        }
+	    }
 	    
 	    function uploadImage() {
 	    	  const input = document.getElementById('uploadInput');

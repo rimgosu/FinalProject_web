@@ -239,7 +239,7 @@
 		                    <div class="col-md-1"></div>
 		                    <div class="col-md-10">
 		                        <label for="aboutme" class="form-label">자기소개</label>
-		                        <textarea class="form-control" id="aboutme" name="aboutme" rows="5" required></textarea>
+		                        <textarea class="form-control" id="aboutme" name="aboutme" rows="5" required style="resize: none;"></textarea>
 		                    </div>
 		                </div>
 		                <br>

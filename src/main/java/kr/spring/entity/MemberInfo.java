@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Data
 @ToString
@@ -28,10 +29,11 @@ public class MemberInfo {
     private String job;
     private String school;
     private String aboutme;
-    private Instant registerDate;
+    private LocalDateTime registerDate;
     private List<String> role;
     private List<String> address;
     private Map<Integer, String> photo;
+
 
     // Add getters and setters for all fields here
 

@@ -1,12 +1,4 @@
 /********** Template CSS **********/
-
-  @import url('https://fonts.googleapis.com/css2?family=Marko+One&display=swap');
-  
-.marko {
-	font-family: 'Marko One', serif;
-	color: pink;
-}
-
 :root {
     --primary: #00B98E;
     --secondary: #FF6922;

@@ -171,7 +171,7 @@
     <!-- icons-->
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-    <script>
+    
     <script>
 	    function submitForm() {
 	        // 입력된 값 가져오기
@@ -197,7 +197,5 @@
 	    }
 </script>
 
-
-    </script>
 </body>
 </html>

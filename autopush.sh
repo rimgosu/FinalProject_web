@@ -1,4 +1,4 @@
-[200~git pull origin bogyeong 
+git pull origin bogyeong 
 git add .
 git commit -m "$(date)"
 git push origin bogyeong

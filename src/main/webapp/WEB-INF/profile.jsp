@@ -109,7 +109,7 @@
         <!-- Header Start -->
         <br>
         <br>
-         <form action ="${cpath}/info" method="post">
+         <form action ="${cpath}/profile" method="post">
 		      <div class="container">
 		          <div class="row">
 		              <div class="col-12 text-center">

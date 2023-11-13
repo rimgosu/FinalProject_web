@@ -3,6 +3,7 @@ package kr.spring.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,10 +53,12 @@ public class MainController {
 		return "login";
 	}
 	@PostMapping("/login")
-	   public String showLoginPage(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest request) {
+	   public String showLoginPage(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest request, Model model) {
 	      int mvo = memberInfoService.SelectMemberInfo(username, password);
+	      
 	      if (mvo ==1) {
 	         System.out.println(username);
+	         
 	         HttpSession session = request.getSession(true);
 	         session.setAttribute("username", username);
 	         /*
@@ -70,7 +73,7 @@ public class MainController {
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
-		return "redirect:/board/index";
+		return "redirect:/index";
 	}
 	
 	@GetMapping("/join")
@@ -99,6 +102,11 @@ public class MainController {
 		return "redirect:/index";
 	}
 	
+	@GetMapping("/profile")
+	public String showProfilePage() {
+		System.out.println("마이페이지로 들어왔음.");
+		return "profile";
+	}
 	
 	
 	@GetMapping("/test")

@@ -1,5 +1,8 @@
 package kr.spring.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,7 +41,7 @@ public class MainController {
 	@GetMapping("/chat")
 	public String showChatPage() {
 		System.out.println("채팅으로 들어왔음.");
-		return "chat";
+		return "/chat/chat";
 	}
 	
 	@GetMapping("/login")
@@ -46,16 +49,23 @@ public class MainController {
 		System.out.println("로그인으로 들어왔음.");
 		return "login";
 	}
-//	@PostMapping("/login")
-//	public String showLoginPage(@RequestParam("username") String username, @RequestParam("password") String password, HttpSession session) {
-//		int mvo = memberInfoService.SelectMemberInfo(username, password);
-//		if (mvo ==1) {
-//			session.setAttribute("mvo", mvo);
-//			return "redirect:/index";
-//		}else {
-//			return "redirect:/login";
-//		}
-//	}
+	
+	@PostMapping("/login")
+	   public String showLoginPage(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest request) {
+	      int mvo = memberInfoService.SelectMemberInfo(username, password);
+	      if (mvo ==1) {
+	         System.out.println(username);
+	         HttpSession session = request.getSession(true);
+	         session.setAttribute("username", username);
+	         /*
+	          * String username1 = (String)session.getAttribute("username");
+	          * System.out.println(username1);
+	          */
+	         return "redirect:/index";         
+	      }else {
+	         return "redirect:/login";
+	      }
+	   }
 	
 	@GetMapping("/join")
 	public String showJoinPage() {

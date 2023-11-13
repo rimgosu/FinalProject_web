@@ -29,7 +29,9 @@ public class MemberInfoServiceImpl implements MemberInfoService{
 				PreparedStatement preparedStatement = session.prepare(cql);
 				session.execute(preparedStatement.bind( nickname, username, password));
 			
-	} }
+        } 
+        
+	}
 
 	@Override
 	public int SelectMemberInfo(String username, String password) {

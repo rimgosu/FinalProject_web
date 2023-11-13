@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
+   
+<%@ taglib prefix ="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix ="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<c:set var="cpath" value="${pageContext.request.contextPath}" />
+    
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +25,7 @@
 
 
         <!-- Navbar Start -->
-        <div class="container-fluid nav-bar bg-transparent">
+        <div class="container-fluid nav-bar bg-transparent"></div>
             <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">
                 <a href="index" class="navbar-brand d-flex align-items-center text-center">
                     <div class="icon p-2 me-2">
@@ -47,9 +55,22 @@
                                 <a href="404.html" class="dropdown-item">404 Error</a>
                             </div>
                         </div> -->
+                        
+                        
                         <a href="chat" class="nav-item nav-link">CHAT</a>
                     </div>
-                    <a href="login" class="btn btn-primary px-3 d-none d-lg-flex">LOGIN</a>
+                    
+                    <!-- 로그인 확인 -->
+                    <c:if test="${not empty sessionScope.username}">
+					    로그인 성공함 : ${username}
+					</c:if>
+					
+					<c:if test="${empty sessionScope.username}">
+					    <a href="login" class="btn btn-primary px-3 d-none d-lg-flex">LOGIN</a>
+					</c:if>
+					<!-- 로그인 확인 끝 -->
+                    
+                    
                 </div>
             </nav>
 

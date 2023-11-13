@@ -1,9 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<c:set var="cpath" value="${pageContext.request.contextPath}" />
+    
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
@@ -35,7 +41,7 @@
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Property</a>
                             <div class="dropdown-menu rounded-0 m-0">
-                                <a href="info" class="dropdown-item">≥ª ¡§∫∏ ¿‘∑¬</a>
+                                <a href="info" class="dropdown-item">ÎÇ¥ Ï†ïÎ≥¥ ÏûÖÎ†•</a>
                                 <a href="property-type.html" class="dropdown-item">Property Type</a>
                                 <a href="like" class="dropdown-item">LIKE</a>
                             </div>
@@ -49,9 +55,25 @@
                         </div> -->
                         <a href="chat" class="nav-item nav-link">CHAT</a>
                     </div>
-                    <a href="login" class="btn btn-primary px-3 d-none d-lg-flex">LOGIN</a>
+                    <c:if test="${empty mvo}">
+						<form class="form-inline" action="${cpath}/login" method="post">
+                    		<a href="login" class="btn btn-primary px-3 d-none d-lg-flex">LOGIN</a>
+                    	</form>
+                    </c:if>
+                    <c:if test="${not empty mvo}">
+							<div class="form-group">
+								<label>${mvo.nickname}Îãò Î∞©Î¨∏ÏùÑ ÌôòÏòÅÌï©ÎãàÎã§.</label>
+							</div>
+						<form class="form-iniline" action="${cpath}/profile">
+							<button type="submit" class="btn btn-prmary px-3 d-none d-lg-flex">PROFILE</button>
+						</form>
+						<form class="form-inline" action="${cpath}/logout" method="post">
+							<button type="submit" class="btn btn-default">LOGOUT</button>
+						</form>
+					</c:if>	
                 </div>
             </nav>
+         </div>
 
 </body>
 </html>

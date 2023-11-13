@@ -1,11 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<c:set var="cpath" value="${pageContext.request.contextPath}" />
-    
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +17,7 @@
 
 
         <!-- Navbar Start -->
-        <div class="container-fluid nav-bar bg-transparent">
+        <div class="container-fluid nav-bar bg-transparent"></div>
             <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">
                 <a href="index" class="navbar-brand d-flex align-items-center text-center">
                     <div class="icon p-2 me-2">
@@ -53,24 +47,11 @@
                                 <a href="404.html" class="dropdown-item">404 Error</a>
                             </div>
                         </div> -->
+                        
+                        
                         <a href="chat" class="nav-item nav-link">CHAT</a>
                     </div>
-                    <c:if test="${empty mvo}">
-						<form class="form-inline" action="${cpath}/login" method="post">
-                    		<a href="login" class="btn btn-primary px-3 d-none d-lg-flex">LOGIN</a>
-                    	</form>
-                    </c:if>
-                    <c:if test="${not empty mvo}">
-							<div class="form-group">
-								<label>${mvo1.nickname}님 방문을 환영합니다.</label>
-							</div>
-						<form class="form-iniline" action="${cpath}/profile">
-							<button type="submit" class="btn btn-prmary px-3 d-none d-lg-flex">PROFILE</button>
-						</form>
-						<form class="form-inline" action="${cpath}/logout" method="get">
-							<button type="submit" class="btn btn-default">LOGOUT</button>
-						</form>
-					</c:if>	
+                    <a href="login" class="btn btn-primary px-3 d-none d-lg-flex">LOGIN</a>
                 </div>
             </nav>
          </div>

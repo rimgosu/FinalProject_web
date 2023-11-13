@@ -1,5 +1,7 @@
 package kr.spring.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -45,7 +47,7 @@ public class MainController {
 	@GetMapping("/chat")
 	public String showChatPage() {
 		System.out.println("채팅으로 들어왔음.");
-		return "chat";
+		return "/chat/chat";
 	}
 	
 	@GetMapping("/login")

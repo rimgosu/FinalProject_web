@@ -18,24 +18,20 @@ import kr.spring.entity.MemberInfo;
 @Service
 public class MemberInfoServiceImpl implements MemberInfoService {
 
-   @Override
-   public void InsertMemberInfo(String nickname, String username, String password) {
-      Path configPath = Paths.get("c:/keys/keyspace/application.conf");
-      DriverConfigLoader loader = DriverConfigLoader.fromPath(configPath);
-
-      try (CqlSession session = CqlSession.builder().withConfigLoader(loader).build()) {
-
-         String cql = """
-               insert into member.info (
-                  nickname, username, password, register_date
-               ) values (
-                  ?, ?, ?, toTimestamp(now())
-               )""";
-         PreparedStatement preparedStatement = session.prepare(cql);
-         session.execute(preparedStatement.bind(nickname, username, password));
-
-      }
-   }
+	@Override
+	public void InsertMemberInfo(String nickname, String username, String password) {
+		Path configPath = Paths.get("c:/keys/keyspace/application.conf");
+        DriverConfigLoader loader = DriverConfigLoader.fromPath(configPath);
+        
+        try (CqlSession session = CqlSession.builder()
+                .withConfigLoader(loader)
+                .build()) {
+        	
+				String cql = "insert into member.info ( nickname, username, password) values (?,?,?)";
+				PreparedStatement preparedStatement = session.prepare(cql);
+				session.execute(preparedStatement.bind( nickname, username, password));
+			
+	} }
 
    @Override
    public MemberInfo login(MemberInfo m) {

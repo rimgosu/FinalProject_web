@@ -136,42 +136,42 @@
 		                	 <div class="mb-3 row">
 		                        <label for="age" class="col-4 col-form-label">나이</label>
 		                        <div class="col-8">
-		                            <input type="number" id="age" name="age" value="${mvo.age}" readonly="readonly">
+		                            <input type="number" id="age" name="age" value="${mvo1.age}" readonly="readonly">
 		                        </div>
 		                    </div>
 		                    
 		                	<div class="mb-3 row">
 		                        <label for="phone" class="col-7 col-form-label">핸드폰 번호</label>
 		                        <div class="col-10">
-		                            <input type="number" id="phone" name="phone" value="${mvo.phone}" readonly="readonly">
+		                            <input type="number" id="phone" name="phone" value="${mvo1.phone}" readonly="readonly">
 		                        </div>
 		                    </div>
 		                	
 		                    <div class="mb-3 row">
 		                        <label for="address" class="col-4 col-form-label">거주지역</label>
 		                        <div class="col-8">
-		                            <input type="text" id="address" name="address" value="${mvo.address}" readonly="readonly">
+		                            <input type="text" id="address" name="address" value="${mvo1.address}" readonly="readonly">
 		                        </div>
 		                        
 		                    </div>
 		                    <div class="mb-3 row">
 		                        <label for="interest" class="col-4 col-form-label">관심사</label>
 		                        <div class="col-8">
-		                            <input type="text" id="interest" name="interest" value="${mvo.interest}" readonly="readonly">
+		                            <input type="text" id="interest" name="interest" value="${mvo1.interest}" readonly="readonly">
 		                        </div>
 		                    </div>
 		                    
 		                      <div class="mb-3 row">
 		                        <label for="mbti" class="col-4 col-form-label">MBTI</label>
 		                        <div class="col-8">
-		                            <input type="text" id="mbti" name="mbti" value="${mvo.mbti}" readonly="readonly">
+		                            <input type="text" id="mbti" name="mbti" value="${mvo1.mbti}" readonly="readonly">
 		                        </div>
 		                    </div>
 		                    
 		                    <div class="mb-3 row">
 		                        <label for="sport" class="col-4 col-form-label">운동</label>
 		                        <div class="col-8">
-		                            <input type="text" id="sport" name="sport" value="${mvo.sport}" readonly="readonly">
+		                            <input type="text" id="sport" name="sport" value="${mvo1.sport}" readonly="readonly">
 		                        </div>
 		                    </div>		          
 		                </div>
@@ -182,35 +182,35 @@
 		                    <div class="mb-5 row">
 		                        <label for="smoking" class="col-4 col-form-label">흡연</label>
 		                        <div class="col-8">
-		                            <input type="text" id="smoking" name="smoking" value="${mvo.smoking}" readonly="readonly">
+		                            <input type="text" id="smoking" name="smoking" value="${mvo1.smoking}" readonly="readonly">
 		                        </div>
 		                    </div>
 		                    
 		                    <div class="mb-3 row">
 		                        <label for="drinking" class="col-4 col-form-label">음주</label>
 		                        <div class="col-8">
-		                            <input type="text" id="drinking" name="drinking" value="${mvo.drinking}" readonly="readonly">
+		                            <input type="text" id="drinking" name="drinking" value="${mvo1.drinking}" readonly="readonly">
 		                        </div>
 		                    </div>
 		                    
 		                    <div class="mb-3 row">
 		                        <label for="job" class="col-4 col-form-label">직장</label>
 		                        <div class="col-8">
-		                            <input type="text" id="job" name="job" value="${mvo.job}" readonly="readonly">
+		                            <input type="text" id="job" name="job" value="${mvo1.job}" readonly="readonly">
 		                        </div>
 		                    </div>
 		                    
 		                    <div class="mb-3 row">
 		                        <label for="school" class="col-4 col-form-label">학교</label>
 		                        <div class="col-8">
-		                            <input type="text" id="school" name="school" value="${mvo.school}" readonly="readonly">
+		                            <input type="text" id="school" name="school" value="${mvo1.school}" readonly="readonly">
 		                        </div>
 		                    </div>
 		                    
 		                    <div class="mb-3 row">
 		                        <label for="role" class="col-4 col-form-label">등급</label>
 		                        <div class="col-8">
-		                        	<input type="text" id="role" name="role" value="${mvo.role}" readonly="readonly">
+		                        	<input type="text" id="role" name="role" value="${mvo1.role}" readonly="readonly">
 		                        </div>
 		                    </div>
 		                    
@@ -226,7 +226,7 @@
 		                    <div class="col-md-1"></div>
 		                    <div class="col-md-10">
 		                        <label for="aboutme" class="form-label">자기소개</label>
-		                        <textarea class="form-control" id="aboutme" name="aboutme" rows="5" readonly="readonly" style="resize: none;">"${mvo.aboutme}"</textarea>
+		                        <textarea class="form-control" id="aboutme" name="aboutme" rows="5" readonly="readonly" style="resize: none;">"${mvo1.aboutme}"</textarea>
 		                    </div>
 		                </div>
 		                <br>

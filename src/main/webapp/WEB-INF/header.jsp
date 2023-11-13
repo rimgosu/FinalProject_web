@@ -62,7 +62,7 @@
                     </c:if>
                     <c:if test="${not empty mvo}">
 							<div class="form-group">
-								<label>${mvo.nickname}님 방문을 환영합니다.</label>
+								<label>${mvo1.nickname}님 방문을 환영합니다.</label>
 							</div>
 						<form class="form-iniline" action="${cpath}/profile">
 							<button type="submit" class="btn btn-prmary px-3 d-none d-lg-flex">PROFILE</button>

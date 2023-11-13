@@ -53,6 +53,7 @@ function sendName() {
 }
 
 function showGreeting(message) {
+	createChatting(message)
     $("#greetings").append("<tr><td>" + message + "</td></tr>");
 }
 
@@ -62,6 +63,29 @@ $(function () {
     $( "#disconnect" ).click(() => disconnect());
     $( "#send" ).click(() => sendName());
 });
+
+function createChatting(message) {
+	$.ajax({
+        url: '/boot/CreateChatting',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+            room_uuid: "716c67cf-0ec7-40b1-8ced-4ac1f04bfb32", // 프론트엔드에서 UUID 생성 또는 서버에서 생성하도록 둘 수 있음
+            chat_uuid: null,
+            chat_chatter: null,
+            chat_content: message,
+            chat_emoticon: null,
+            chatted_at: null,
+            
+        }),
+        success: function(response) {
+            console.log('채팅 보내기 성공');
+        },
+        error: function(error) {
+            console.log('채팅 보내기 오류', error);
+        }
+    });
+}
 
 
 // 채팅방 생성 매소드

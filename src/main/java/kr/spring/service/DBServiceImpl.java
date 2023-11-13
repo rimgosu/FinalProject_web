@@ -28,10 +28,10 @@ public class DBServiceImpl implements DBService{
 	
 
 	@Override
-	public void save(DriverConfigLoader loader, ChatRoom chatRoom) {
-		// TODO Auto-generated method stub
-		TableColumnsValues.Result<ChatRoom> result = TableColumnsValues.extractData(ChatRoom.class, chatRoom);
-		try (CqlSession session = CqlSession.builder()
+	public <T> void save(DriverConfigLoader loader, Class<T> entityClass, T entity) {
+		
+	    TableColumnsValues.Result<T> result = TableColumnsValues.extractData(entityClass, entity);
+	    try (CqlSession session = CqlSession.builder()
 	            .withConfigLoader(loader)
 	            .build()) {
 
@@ -43,9 +43,10 @@ public class DBServiceImpl implements DBService{
 	        session.execute(preparedStatement.bind((Object[]) result.values));
 	    } catch (Exception e) {
 	        // 오류 처리 로직
-	    	System.out.println("save Error: " + e);
+	        System.out.println("save Error: " + e);
 	    }
 	}
+
 
 	
 }

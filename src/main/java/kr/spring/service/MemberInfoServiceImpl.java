@@ -20,6 +20,7 @@ public class MemberInfoServiceImpl implements MemberInfoService {
 
 	@Override
 	public void InsertMemberInfo(String nickname, String username, String password) {
+		
 		Path configPath = Paths.get("c:/keys/keyspace/application.conf");
         DriverConfigLoader loader = DriverConfigLoader.fromPath(configPath);
         
@@ -31,7 +32,8 @@ public class MemberInfoServiceImpl implements MemberInfoService {
 				PreparedStatement preparedStatement = session.prepare(cql);
 				session.execute(preparedStatement.bind( nickname, username, password));
 			
-	} }
+        } 
+    }
 
    @Override
    public MemberInfo login(MemberInfo m) {

@@ -170,6 +170,7 @@ public class MemberInfoServiceImpl implements MemberInfoService {
                
                
             }
+            m.setUsername(usernameDb);
             m.setPassword(passwordDb);
             m.setNickname(nicknameDb);
             m.setPhone(phoneDb);

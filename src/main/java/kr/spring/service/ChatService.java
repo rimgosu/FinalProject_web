@@ -1,7 +1,6 @@
 package kr.spring.service;
 
-import javax.servlet.http.HttpSession;
-
+import jakarta.servlet.http.HttpSession;
 import kr.spring.entity.ChatRoom;
 import kr.spring.entity.Chatting;
 

@@ -56,6 +56,7 @@
                         </div> -->
                         
                         <a href="chat" class="nav-item nav-link">CHAT</a>
+                        <a href="showChatRoom" class="nav-item nav-link">CHATROOM</a>
                         
                         <!-- 로그인 확인 -->
 	                    <c:if test="${not empty sessionScope.mvo}">

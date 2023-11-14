@@ -18,6 +18,8 @@ public interface MemberInfoService {
 	public MemberInfo InsertMemberInfoAdditional(MemberInfo m, String username_session);
 
 	public Map<Integer, String> selectMemPhoto(String username_session);
+	
+	public void fileUpload(Map<Integer, String> additionalFile, String username_session);
 
 	
 	

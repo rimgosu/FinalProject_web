@@ -97,8 +97,7 @@ public class MemberInfoServiceImpl implements MemberInfoService {
 
 			session.execute(preparedStatement.bind(m.getAge(), m.getPhone(), m.getAddress(),
 					m.getInterest(), m.getMbti(), m.getSport(), m.getSmoking(), m.getDrinking(),
-					m.getJob(), m.getSchool(), m.getRole(), m.getAboutme(), username_session));
-
+					m.getJob(), m.getSchool(), m.getRole(), m.getAboutme(),username_session));
 			System.out.println(m);
 
 		}
@@ -110,100 +109,87 @@ public class MemberInfoServiceImpl implements MemberInfoService {
 		public  Map<Integer, String> selectMemPhoto(String username_session) {
 			Path configPath = Paths.get("c:/keys/keyspace/application.conf");
 			DriverConfigLoader loader = DriverConfigLoader.fromPath(configPath);
-	
+			
+			//DB에서 받아오는 photo를 담아올 photomap 변수 선언 및 초기화
+			Map<Integer, String> photoMap = new HashMap<>(); 
+			
 			try (CqlSession session = CqlSession.builder().withConfigLoader(loader).build()) {
-	
 				String cql = "select photo from member.info where username =? ";
 				PreparedStatement preparedStatement = session.prepare(cql);
 				ResultSet resultSet = session.execute(preparedStatement.bind(username_session));
-				 Map<Integer, String> photoMap = new HashMap<>();
-		            for (Row row : resultSet) {
-		                // Access the columns in the result set using row.getXXX() methods
-		                int photoNum = row.getInt("photo");
-		                String photoPath = row.getString("photo");
-		                photoMap.put(photoNum, photoPath);
-		             
-		            }
-		            return photoMap;
+				for(Row row : resultSet) {
+					photoMap = row.getMap("photo", Integer.class, String.class);
+					if(photoMap!=null) {
+						photoMap.putAll(photoMap);
+					}
+				}
 		        } catch (Exception e) {
-		            e.printStackTrace(); // Handle the exception appropriately in your application
-		            return Collections.emptyMap(); // Return an empty map in case of an exception
+		            e.printStackTrace(); 
+		            return Collections.emptyMap(); // 비어있는 photoMap 반환
 		        }
+			return photoMap;
 	}
-		
-		//전체 데이터 불러올 수 있음.(세션 값 있어야함)
 		@Override
-		public MemberInfo SelectMemberInfo(String username_session) {
+		public void fileUpload(Map<Integer, String> additionalFile, String username_session) {
 			Path configPath = Paths.get("c:/keys/keyspace/application.conf");
 			DriverConfigLoader loader = DriverConfigLoader.fromPath(configPath);
-			MemberInfo m = new MemberInfo();
 			
 			try (CqlSession session = CqlSession.builder().withConfigLoader(loader).build()) {
 
-				String cql = "select * from member.info where username =? ";
+				String cql = """
+						update member.info
+						set photo=?
+						where username = ?;
+						""";
 				PreparedStatement preparedStatement = session.prepare(cql);
-				ResultSet resultSet = session.execute(preparedStatement.bind(username_session));
-
-				String usernameDb = null;
-				String passwordDb = null;
-				String nicknameDb = null;
-				String phoneDb = null;
-				int ageDb = 0;
-				String interestDb = null;
-				String mbtiDb = null;
-				String sportDb = null;
-				String drinkingDb = null;
-				String smokingDb = null;
-				String jobDb = null;
-				String schoolDb = null;
-				String aboutmeDb = null;
-				String registerDateDb = null;
-				String roleDb = null;
-				String addressDb = null;
-				String photoDb = null;
-
-				// Process the results
-				for (Row row : resultSet) {
-					// Access the columns in the result set using row.getXXX() methods
-					usernameDb = row.getString("username");
-					passwordDb = row.getString("password");
-					nicknameDb = row.getString("nickname");
-					phoneDb = row.getString("phone");
-					ageDb = row.getInt("age");
-					interestDb = row.getString("interest");
-					mbtiDb = row.getString("mbti");
-					sportDb = row.getString("sport");
-					drinkingDb = row.getString("drinking");
-					smokingDb = row.getString("smoking");
-					jobDb = row.getString("job");
-					schoolDb = row.getString("school");
-					aboutmeDb = row.getString("aboutme");
-
-					
-					
-				}
-				m.setPassword(passwordDb);
-				m.setNickname(nicknameDb);
-				m.setPhone(phoneDb);
-				m.setAge(ageDb);
-				m.setInterest(interestDb);
-				m.setMbti(mbtiDb);
-				m.setSport(sportDb);
-				m.setDrinking(drinkingDb);
-				m.setSmoking(smokingDb);
-				m.setJob(jobDb);
-				m.setSchool(schoolDb);
-				
-
-				
-			
-				
-				return m;
-
+				session.execute(preparedStatement.bind(additionalFile,username_session));
 			}
 		}
+		
+		
+		//전체 데이터 불러올 수 있음.(세션 값 있어야함)
+		@Override
+	    public MemberInfo SelectMemberInfo(String username_session) {
+			Path configPath = Paths.get("c:/keys/keyspace/application.conf");
+			DriverConfigLoader loader = DriverConfigLoader.fromPath(configPath);
+			
+			try (CqlSession session = CqlSession.builder().withConfigLoader(loader).build()) {
+				System.out.println("SelectMemberInfo 서비스에 들어왔음.");
+				String cql = "SELECT * FROM member.info WHERE username = ?";
+				PreparedStatement preparedStatement = session.prepare(cql);
+				ResultSet resultSet = session.execute(preparedStatement.bind(username_session));
+				
+				if (resultSet.one() != null) {
+					System.out.println("SelectMemberInfo 서비스에 row에 들어왔음.");
+					Row row = resultSet.one();
+					MemberInfo m = new MemberInfo();
+	                m.setUsername(row.getString("username"));
+	                m.setPassword(row.getString("password"));
+	                m.setNickname(row.getString("nickname"));
+		            m.setPhone(row.getString("phone"));
+		            m.setAge(row.getInt("age"));
+		            m.setInterest(row.getString("interest"));
+		            m.setMbti(row.getString("mbti"));
+		            m.setSport(row.getString("sport"));
+		            m.setDrinking(row.getString("drinking"));
+		            m.setSmoking(row.getString("smoking"));
+		            m.setJob(row.getString("job"));
+		            m.setSchool(row.getString("school"));
+		            m.setAboutme(row.getString("aboutme"));
+		            return m;
+		            } else {
+		            	// 적절한 예외 처리 또는 null 반환
+		            	return null;
+		            	}
+				} catch (Exception e) {
+	             // 예외 처리 로직
+					return null;
+					}
+			}
 
-}
+		
+		
+		}
 			
 
 /*

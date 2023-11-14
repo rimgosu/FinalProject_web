@@ -1,10 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-<%@ taglib prefix ="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix ="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="cpath" value="${pageContext.request.contextPath}" />
     
 <!DOCTYPE html>
@@ -24,7 +23,7 @@
 
 
         <!-- Navbar Start -->
-        <div class="container-fluid nav-bar bg-transparent"></div>
+        <div class="container-fluid nav-bar bg-transparent">
             <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">
                 <a href="index" class="navbar-brand d-flex align-items-center text-center">
                     <div class="icon p-2 me-2">
@@ -42,7 +41,7 @@
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Property</a>
                             <div class="dropdown-menu rounded-0 m-0">
-                                <a href="info" class="dropdown-item">�� ��蹂� ����</a>
+                                <a href="info" class="dropdown-item">내 정보 입력</a>
                                 <a href="property-type.html" class="dropdown-item">Property Type</a>
                                 <a href="like" class="dropdown-item">LIKE</a>
                             </div>
@@ -55,26 +54,28 @@
                             </div>
                         </div> -->
                         
-                        <a href="chat" class="nav-item nav-link">CHAT</a>
-                        <a href="showChatRoom" class="nav-item nav-link">CHATROOM</a>
-                        
-                        <!-- 로그인 확인 -->
-	                    <c:if test="${not empty sessionScope.mvo}">
-						    로그인 성공함 : ${mvo}
-						</c:if>
-						
-						<c:if test="${empty sessionScope.mvo}">
-						    <a href="login" class="btn btn-primary px-3 d-none d-lg-flex">LOGIN</a>
-						</c:if> 
-						<!-- 로그인 확인 끝 -->
-	                        
-                        
-                        
-                        
                     </div>
-                   
+                    <c:if test="${empty mvo}">
+                  <form class="form-inline" action="${cpath}/login" method="post">
+                          <a href="login" class="btn btn-primary px-3 d-none d-lg-flex">LOGIN</a>
+                       </form>
+                    </c:if>
+                    <c:if test="${not empty mvo}">
+                     <div class="form-group">
+                        <label></label>
+                     </div>
+                     <a href="chat" class="nav-item nav-link">CHAT</a>
+                     <a href="showChatRoom" class="nav-item nav-link">CHATROOM</a>
+                  <form class="form-iniline" action="${cpath}/profile" method="get">
+                     <button type="submit" class="btn btn-prmary px-3 d-none d-lg-flex" style="color: var(--dark); font-weight: 500;">PROFILE</button>
+                  </form>
+                  <form class="form-inline" action="${cpath}/logout" method="get">
+                     <button type="submit" class="btn btn-default" style="color: var(--dark); font-weight: 500;">LOGOUT</button>
+                  </form>
+               </c:if>   
                 </div>
             </nav>
+         </div>
 
 </body>
 </html>

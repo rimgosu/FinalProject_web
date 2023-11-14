@@ -11,7 +11,6 @@ public interface MemberInfoService {
 
    public void InsertMemberInfo(String nickname, String username, String password);
 
-   public MemberInfo login(MemberInfo m);
    
    public MemberInfo SelectMemberInfo(String username_session); //세션값 있어야 불러올 수 있음.
 

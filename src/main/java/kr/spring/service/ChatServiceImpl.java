@@ -72,9 +72,8 @@ public class ChatServiceImpl implements ChatService{
 	@Override
 	public List<ChatRoom> findAllChatRooms() {
 		// TODO Auto-generated method stub
-		ChatRoom chatroom = new ChatRoom();
 		DriverConfigLoader loader = dbService.getConnection();
-		return dbService.findAll(loader, ChatRoom.class, chatroom);
+		return dbService.findAll(loader, ChatRoom.class);
 	}
 	
 	

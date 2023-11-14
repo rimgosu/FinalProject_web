@@ -29,7 +29,7 @@ public class Info {
     private String job;
     private String school;
     private String aboutme;
-    private LocalDateTime register_date;
+    private Instant register_date;
     private List<String> role;
     private List<String> address;
     private Map<Integer, String> photo;

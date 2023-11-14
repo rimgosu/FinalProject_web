@@ -31,50 +31,15 @@ public class MemberInfoServiceImpl implements MemberInfoService {
 		info.setUsername(username);
 		info.setPassword(password);
 		
+		
+		
 		DriverConfigLoader loader = dbservice.getConnection();
+		
 		dbservice.save(loader, Info.class, info);
 		
 		
     }
 
-   @Override
-   public MemberInfo login(MemberInfo m) {
-	   
-      Path configPath = Paths.get("c:/keys/keyspace/application.conf");
-      DriverConfigLoader loader = DriverConfigLoader.fromPath(configPath);
-      String username = m.getUsername();
-      String password = m.getPassword();
-
-      try (CqlSession session = CqlSession.builder().withConfigLoader(loader).build()) {
-    	  
-
-         String cql = "select username, password from member.info where username =? ";
-         PreparedStatement preparedStatement = session.prepare(cql);
-         ResultSet resultSet = session.execute(preparedStatement.bind(username));
-
-         String username_db = null;
-         String password_db = null;
-
-         // Process the results
-         for (Row row : resultSet) {
-         
-            // Access the columns in the result set using row.getXXX() methods
-            username_db = row.getString("username");
-            password_db = row.getString("password");
-         }
-
-         if (username_db.equals(username) && password_db.equals(password)) {
-            System.out.println("로그인 완료");
-            return m;
-         } else {
-            System.out.println("실패");
-            System.out.println(username_db);
-            System.out.println(password_db);
-            return m;
-         }
-
-      }
-   }
 
    @Override
    public MemberInfo InsertMemberInfoAdditional(MemberInfo m, String username_session) {
@@ -135,11 +100,14 @@ public class MemberInfoServiceImpl implements MemberInfoService {
 		DriverConfigLoader loader = DriverConfigLoader.fromPath(configPath);
 		
 		try (CqlSession session = CqlSession.builder().withConfigLoader(loader).build()) {
-		    String cql = "SELECT * FROM member.info WHERE username = ?";
+		    System.out.println("SelectMemberInfo 서비스에 들어왔음.");
+			
+			String cql = "SELECT * FROM member.info WHERE username = ?";
 		    PreparedStatement preparedStatement = session.prepare(cql);
 		    ResultSet resultSet = session.execute(preparedStatement.bind(username_session));
 		
 		    if (resultSet.one() != null) {
+		    	System.out.println("SelectMemberInfo 서비스에 row에 들어왔음.");
 		        Row row = resultSet.one();
 		        MemberInfo m = new MemberInfo();
 		        m.setUsername(row.getString("username"));

@@ -3,15 +3,16 @@ package kr.spring.service;
 import java.time.Instant;
 import java.util.UUID;
 
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.datastax.oss.driver.api.core.config.DriverConfigLoader;
 
+import jakarta.servlet.http.HttpSession;
 import kr.spring.entity.ChatRoom;
 import kr.spring.entity.Chatting;
+import kr.spring.entity.MemberInfo;
 
 @Service
 public class ChatServiceImpl implements ChatService{
@@ -30,11 +31,11 @@ public class ChatServiceImpl implements ChatService{
 		 * 4. room_joined : 상대방 아이디를 좋아요 정보를 통해 가져오면 됨 (TODO 아직 구현되지 않았음)
 		 */
 		System.out.println(chatRoom.toString());
+		MemberInfo membersession = (MemberInfo) session.getAttribute("mvo");
+		
 		chatRoom.setRoom_uuid(UUID.randomUUID());
 		chatRoom.setRoom_regdate(Instant.now());
-
-		String sessionUsername = (String) session.getAttribute("username");
-		chatRoom.setRoom_maker(sessionUsername);
+		chatRoom.setRoom_maker(membersession.getUsername());
 		
 		System.out.println(chatRoom.toString());
 		
@@ -56,10 +57,11 @@ public class ChatServiceImpl implements ChatService{
 		
 		System.out.println("ChatServiceImpl, createChatting 서비스에 들어옴.");
 		System.out.println(chatting.toString());
+		MemberInfo membersession = (MemberInfo) session.getAttribute("mvo");
 		
 		chatting.setChatted_at(Instant.now());
 		chatting.setChat_uuid(UUID.randomUUID());
-		chatting.setChat_chatter((String) session.getAttribute("username"));
+		chatting.setChat_chatter(membersession.getUsername());
 		
 		DriverConfigLoader loader = dbService.getConnection();
 		dbService.save(loader, Chatting.class, chatting);

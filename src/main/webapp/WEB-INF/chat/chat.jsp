@@ -72,6 +72,8 @@
 		        </div>
 		        <div class="col-md-6">
 		            <form class="form-inline">
+		            	<input type="hidden" value="${mvo.username}">
+		            
 		                <div class="form-group">
 		                    <label for="name">What is your name?</label>
 		                    <input type="text" id="name" class="form-control" placeholder="Your name here...">

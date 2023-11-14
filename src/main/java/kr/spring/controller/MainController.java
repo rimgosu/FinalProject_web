@@ -1,8 +1,5 @@
 package kr.spring.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -72,7 +69,7 @@ public class MainController {
 	          String username_session =((MemberInfo)session.getAttribute("mvo")).getUsername();          
 	          MemberInfo mvo1 = memberInfoService.SelectMemberInfo(username_session);
 	          System.out.println(mvo1);
-	          session.setAttribute("mvo1", mvo1);
+	          session.setAttribute("mvo", mvo1);
 	         
 	         return "redirect:/index";         
 	      }else {

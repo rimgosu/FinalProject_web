@@ -1,9 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<%@ taglib prefix ="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix ="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<c:set var="cpath" value="${pageContext.request.contextPath}" />
+    
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
@@ -35,7 +42,7 @@
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Property</a>
                             <div class="dropdown-menu rounded-0 m-0">
-                                <a href="info" class="dropdown-item">내 정보 입력</a>
+                                <a href="info" class="dropdown-item">�� ��蹂� ����</a>
                                 <a href="property-type.html" class="dropdown-item">Property Type</a>
                                 <a href="like" class="dropdown-item">LIKE</a>
                             </div>
@@ -48,13 +55,25 @@
                             </div>
                         </div> -->
                         
-                        
                         <a href="chat" class="nav-item nav-link">CHAT</a>
+                        
+                        <!-- 로그인 확인 -->
+	                    <c:if test="${not empty sessionScope.mvo}">
+						    로그인 성공함 : ${mvo}
+						</c:if>
+						
+						<c:if test="${empty sessionScope.mvo}">
+						    <a href="login" class="btn btn-primary px-3 d-none d-lg-flex">LOGIN</a>
+						</c:if> 
+						<!-- 로그인 확인 끝 -->
+	                        
+                        
+                        
+                        
                     </div>
-                    <a href="login" class="btn btn-primary px-3 d-none d-lg-flex">LOGIN</a>
+                   
                 </div>
             </nav>
-         </div>
 
 </body>
 </html>

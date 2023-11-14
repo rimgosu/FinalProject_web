@@ -1,8 +1,10 @@
 package kr.spring.service;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 import com.datastax.oss.driver.api.core.config.DriverConfigLoader;
+import com.datastax.oss.driver.api.core.cql.Row;
 
 import kr.spring.entity.ChatRoom;
 
@@ -12,5 +14,7 @@ public interface DBService {
 	public DriverConfigLoader getConnection();
 	<T> void save(DriverConfigLoader loader, Class<T> entityClass, T entity);
 	public List<ChatRoom> findAll(DriverConfigLoader loader, Class<ChatRoom> class1, ChatRoom chatroom);
+	
+	public void setFieldValue(Field field, ChatRoom chatRoom, Row row) throws IllegalAccessException;
 
 }

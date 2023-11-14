@@ -1,6 +1,7 @@
 package kr.spring.service;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -70,21 +71,22 @@ public class DBServiceImpl implements DBService{
 	        PreparedStatement preparedStatement = session.prepare(cql);
 	        ResultSet resultSet = session.execute(preparedStatement.bind());
 	        for (Row row : resultSet) {
-	            // 예시로, ChatRoom 객체를 생성하고 속성을 설정합니다.
-	            // ChatRoom 클래스의 구조에 맞게 필드를 설정해야 합니다.
 	            ChatRoom chatRoom = new ChatRoom();
-	            chatRoom.setRoom_describe(row.getString("room_describe"));
-	            chatRoom.setRoom_joined(row.getString("room_joined"));
-	            chatRoom.setRoom_maker(row.getString("room_maker"));
-	            chatRoom.setRoom_uuid(row.getUuid(("room_uuid")));
-	            chatRoom.setRoom_regdate(row.getInstant("room_regdate"));
-	            chatRoom.setRoom_status(row.getString("room_status"));
-	            chatRoom.setRoom_title(row.getString("room_title"));
 
-	            
-	            // 리스트에 추가
+	            for (Field field : ChatRoom.class.getDeclaredFields()) {
+	                field.setAccessible(true); // 필드 접근 허용
+
+	                try {
+	                    setFieldValue(field, chatRoom, row);
+	                } catch (IllegalAccessException e) {
+	                    System.out.println("Field access error: " + e.getMessage());
+	                    // 적절한 예외 처리
+	                }
+	            }
+
 	            chatRooms.add(chatRoom);
 	        }
+
 
 	    } catch (Exception e) {
 	        // 오류 처리 로직
@@ -92,6 +94,30 @@ public class DBServiceImpl implements DBService{
 	    }
 
 	    return chatRooms;
+	}
+	
+	
+	public void setFieldValue(Field field, ChatRoom chatRoom, Row row) throws IllegalAccessException {
+	    String columnName = field.getName();
+
+	    if (field.getType().equals(String.class)) {
+	        field.set(chatRoom, row.getString(columnName));
+	    } else if (field.getType().equals(UUID.class)) {
+	        field.set(chatRoom, row.getUuid(columnName));
+	    } else if (field.getType().equals(Instant.class)) {
+	        field.set(chatRoom, row.getInstant(columnName));
+	    } else if (field.getType().equals(Integer.class)) {
+	        field.set(chatRoom, row.getInt(columnName));
+	    } else if (field.getType().equals(Long.class)) {
+	        field.set(chatRoom, row.getLong(columnName));
+	    } else if (field.getType().equals(Double.class)) {
+	        field.set(chatRoom, row.getDouble(columnName));
+	    } else if (field.getType().equals(List.class)) {
+	        field.set(chatRoom, row.getList(columnName, String.class));
+	    } else if (field.getType().equals(Map.class)) {
+	        field.set(chatRoom, row.getMap(columnName, Instant.class, String.class));
+	    }
+	    // 추가적인 타입에 대한 처리는 여기에 추가
 	}
 
 

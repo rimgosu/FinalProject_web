@@ -1,6 +1,7 @@
 package kr.spring.service;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -67,5 +68,13 @@ public class ChatServiceImpl implements ChatService{
 		dbService.save(loader, Chatting.class, chatting);
 		
 	}
+
+	@Override
+	public List<ChatRoom> findAllChatRooms() {
+		// TODO Auto-generated method stub
+		DriverConfigLoader loader = dbService.getConnection();
+		return dbService.findAll(loader, ChatRoom.class);
+	}
+	
 	
 }

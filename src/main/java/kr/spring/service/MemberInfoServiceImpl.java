@@ -5,6 +5,7 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.datastax.oss.driver.api.core.CqlSession;
 import com.datastax.oss.driver.api.core.config.DriverConfigLoader;
@@ -13,61 +14,32 @@ import com.datastax.oss.driver.api.core.cql.PreparedStatement;
 import com.datastax.oss.driver.api.core.cql.ResultSet;
 import com.datastax.oss.driver.api.core.cql.Row;
 
+import kr.spring.entity.Info;
 import kr.spring.entity.MemberInfo;
 
 @Service
 public class MemberInfoServiceImpl implements MemberInfoService {
+	
+	@Autowired
+	DBService dbservice;
 
 	@Override
 	public void InsertMemberInfo(String nickname, String username, String password) {
-		Path configPath = Paths.get("c:/keys/keyspace/application.conf");
-        DriverConfigLoader loader = DriverConfigLoader.fromPath(configPath);
-        
-        try (CqlSession session = CqlSession.builder()
-                .withConfigLoader(loader)
-                .build()) {
-        	
-				String cql = "insert into member.info ( nickname, username, password) values (?,?,?)";
-				PreparedStatement preparedStatement = session.prepare(cql);
-				session.execute(preparedStatement.bind( nickname, username, password));
-			
-	} }
 
-   @Override
-   public MemberInfo login(MemberInfo m) {
-      Path configPath = Paths.get("c:/keys/keyspace/application.conf");
-      DriverConfigLoader loader = DriverConfigLoader.fromPath(configPath);
-      String username = m.getUsername();
-      String password = m.getPassword();
+		Info info = new Info();
+		info.setNickname(nickname);
+		info.setUsername(username);
+		info.setPassword(password);
+		
+		
+		
+		DriverConfigLoader loader = dbservice.getConnection();
+		
+		dbservice.save(loader, Info.class, info);
+		
+		
+    }
 
-      try (CqlSession session = CqlSession.builder().withConfigLoader(loader).build()) {
-
-         String cql = "select username, password from member.info where username =? ";
-         PreparedStatement preparedStatement = session.prepare(cql);
-         ResultSet resultSet = session.execute(preparedStatement.bind(username));
-
-         String username_db = null;
-         String password_db = null;
-
-         // Process the results
-         for (Row row : resultSet) {
-            // Access the columns in the result set using row.getXXX() methods
-            username_db = row.getString("username");
-            password_db = row.getString("password");
-         }
-
-         if (username_db.equals(username) && password_db.equals(password)) {
-            System.out.println("로그인 완료");
-            return m;
-         } else {
-            System.out.println("실패");
-            System.out.println(username_db);
-            System.out.println(password_db);
-            return m;
-         }
-
-      }
-   }
 
    @Override
    public MemberInfo InsertMemberInfoAdditional(MemberInfo m, String username_session) {
@@ -122,73 +94,44 @@ public class MemberInfoServiceImpl implements MemberInfoService {
 
       @Override
       public MemberInfo SelectMemberInfo(String username_session) {
-         Path configPath = Paths.get("c:/keys/keyspace/application.conf");
-         DriverConfigLoader loader = DriverConfigLoader.fromPath(configPath);
-         MemberInfo m = new MemberInfo();
-         
-         try (CqlSession session = CqlSession.builder().withConfigLoader(loader).build()) {
-
-            String cql = "select * from member.info where username =? ";
-            PreparedStatement preparedStatement = session.prepare(cql);
-            ResultSet resultSet = session.execute(preparedStatement.bind(username_session));
-
-            String usernameDb = null;
-            String passwordDb = null;
-            String nicknameDb = null;
-            String phoneDb = null;
-            int ageDb = 0;
-            String interestDb = null;
-            String mbtiDb = null;
-            String sportDb = null;
-            String drinkingDb = null;
-            String smokingDb = null;
-            String jobDb = null;
-            String schoolDb = null;
-            String aboutmeDb = null;
-            String registerDateDb = null;
-            String roleDb = null;
-            String addressDb = null;
-            String photoDb = null;
-
-            // Process the results
-            for (Row row : resultSet) {
-               // Access the columns in the result set using row.getXXX() methods
-               usernameDb = row.getString("username");
-               passwordDb = row.getString("password");
-               nicknameDb = row.getString("nickname");
-               phoneDb = row.getString("phone");
-               ageDb = row.getInt("age");
-               interestDb = row.getString("interest");
-               mbtiDb = row.getString("mbti");
-               sportDb = row.getString("sport");
-               drinkingDb = row.getString("drinking");
-               smokingDb = row.getString("smoking");
-               jobDb = row.getString("job");
-               schoolDb = row.getString("school");
-               aboutmeDb = row.getString("aboutme");
-
-               
-               
-            }
-            m.setUsername(usernameDb);
-            m.setPassword(passwordDb);
-            m.setNickname(nicknameDb);
-            m.setPhone(phoneDb);
-            m.setAge(ageDb);
-            m.setInterest(interestDb);
-            m.setMbti(mbtiDb);
-            m.setSport(sportDb);
-            m.setDrinking(drinkingDb);
-            m.setSmoking(smokingDb);
-            m.setJob(jobDb);
-            m.setSchool(schoolDb);
-
-            
-         
-            
-            return m;
-
-         }
+    	  
+    	  
+    	  Path configPath = Paths.get("c:/keys/keyspace/application.conf");
+		DriverConfigLoader loader = DriverConfigLoader.fromPath(configPath);
+		
+		try (CqlSession session = CqlSession.builder().withConfigLoader(loader).build()) {
+		    System.out.println("SelectMemberInfo 서비스에 들어왔음.");
+			
+			String cql = "SELECT * FROM member.info WHERE username = ?";
+		    PreparedStatement preparedStatement = session.prepare(cql);
+		    ResultSet resultSet = session.execute(preparedStatement.bind(username_session));
+		
+		    if (resultSet.one() != null) {
+		    	System.out.println("SelectMemberInfo 서비스에 row에 들어왔음.");
+		        Row row = resultSet.one();
+		        MemberInfo m = new MemberInfo();
+		        m.setUsername(row.getString("username"));
+		        m.setPassword(row.getString("password"));
+		        m.setNickname(row.getString("nickname"));
+		        m.setPhone(row.getString("phone"));
+		        m.setAge(row.getInt("age"));
+		        m.setInterest(row.getString("interest"));
+		        m.setMbti(row.getString("mbti"));
+		        m.setSport(row.getString("sport"));
+		        m.setDrinking(row.getString("drinking"));
+		        m.setSmoking(row.getString("smoking"));
+		        m.setJob(row.getString("job"));
+		        m.setSchool(row.getString("school"));
+		        m.setAboutme(row.getString("aboutme"));
+		        return m;
+		    } else {
+		        // 적절한 예외 처리 또는 null 반환
+		        return null;
+		    }
+		} catch (Exception e) {
+		    // 예외 처리 로직
+		    return null;
+		}
       }
 
 }

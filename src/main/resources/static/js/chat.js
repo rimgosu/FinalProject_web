@@ -1,3 +1,14 @@
+// ******   1. css를 위한 기능들      **********
+// 1-1. 스크
+$(document).ready(function() {
+  var chatUl = document.querySelector("#chatting-ul");
+  chatUl.scrollTop = chatUl.scrollHeight;
+});
+
+
+
+// *********   2. 채팅을 위한 기능들      *******
+
 host_address = 'localhost'
 var username = '@Session["username"]';
 
@@ -111,4 +122,14 @@ function createChatRoom() {
         }
     });
 }
+
+
+
+
+
+
+
+
+
+
 

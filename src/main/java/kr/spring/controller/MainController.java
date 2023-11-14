@@ -1,6 +1,5 @@
 package kr.spring.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,7 +44,7 @@ public class MainController {
 	@GetMapping("/chat")
 	public String showChatPage() {
 		System.out.println("채팅으로 들어왔음.");
-		return "chat";
+		return "/chat/chat";
 	}
 	
 	@GetMapping("/login")
@@ -70,7 +69,7 @@ public class MainController {
 	          String username_session =((MemberInfo)session.getAttribute("mvo")).getUsername();          
 	          MemberInfo mvo1 = memberInfoService.SelectMemberInfo(username_session);
 	          System.out.println(mvo1);
-	          session.setAttribute("mvo1", mvo1);
+	          session.setAttribute("mvo", mvo1);
 	         
 	         return "redirect:/index";         
 	      }else {
@@ -134,7 +133,7 @@ public class MainController {
 		return "profile";
 	}
 	
-	@PostMapping("/update")
+	@GetMapping("/update")
 	public String showUpdatePage() {
 		System.out.println("수정페이지로 들어왔음.");
 		return "update";

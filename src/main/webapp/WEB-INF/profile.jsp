@@ -98,6 +98,60 @@
             border-radius: 5px;
             border: none;
         }
+        
+        body{
+		    margin-top:20px;
+		    color: #1a202c;
+		    text-align: left;
+		    background-color: #e2e8f0;    
+		}
+		.main-body {
+		    padding: 15px;
+		}
+		.card {
+		    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+		}
+		
+		.card {
+		    position: relative;
+		    display: flex;
+		    flex-direction: column;
+		    min-width: 0;
+		    word-wrap: break-word;
+		    background-color: #fff;
+		    background-clip: border-box;
+		    border: 0 solid rgba(0,0,0,.125);
+		    border-radius: .25rem;
+		}
+		
+		.card-body {
+		    flex: 1 1 auto;
+		    min-height: 1px;
+		    padding: 1rem;
+		}
+		
+		.gutters-sm {
+		    margin-right: -8px;
+		    margin-left: -8px;
+		}
+		
+		.gutters-sm>.col, .gutters-sm>[class*=col-] {
+		    padding-right: 8px;
+		    padding-left: 8px;
+		}
+		.mb-3, .my-3 {
+		    margin-bottom: 1rem!important;
+		}
+		
+		.bg-gray-300 {
+		    background-color: #e2e8f0;
+		}
+		.h-100 {
+		    height: 100%!important;
+		}
+		.shadow-none {
+		    box-shadow: none!important;
+		}
     </style>
 </head>
 <body>
@@ -114,136 +168,159 @@
 		          <div class="row">
 		              <div class="col-12 text-center">
 		                    <h2>Profile</h2>
-		                    <br>
-		                    <br>
-		                    <br>
-		                    <br>
-							<form id="imageForm1">
-							    <label for="uploadInput" id="uploadButton">이미지 선택</label>
-							    <input type="file" id="uploadInput" accept="image/*">
-							    <button type="button" onclick="uploadImage()" id="uploadButton">업로드</button>
-							</form>
 		              </div>
 		            </div>
-		            <br>
-		            <br>
-		            <br>
-		            <div class="row">
-		                <!-- 왼쪽 세로 정렬 -->
-		                <div class="col-md-1"></div>
-		                <div class="col-md-5 info-front">
-		                
-		                	 <div class="mb-3 row">
-		                        <label for="age" class="col-4 col-form-label">나이</label>
-		                        <div class="col-8">
-		                            <input type="number" id="age" name="age" value="${mvo1.age}" readonly="readonly">
-		                        </div>
-		                    </div>
-		                    
-		                	<div class="mb-3 row">
-		                        <label for="phone" class="col-7 col-form-label">핸드폰 번호</label>
-		                        <div class="col-10">
-		                            <input type="number" id="phone" name="phone" value="${mvo1.phone}" readonly="readonly">
-		                        </div>
-		                    </div>
-		                	
-		                    <div class="mb-3 row">
-		                        <label for="address" class="col-4 col-form-label">거주지역</label>
-		                        <div class="col-8">
-		                            <input type="text" id="address" name="address" value="${mvo1.address}" readonly="readonly">
-		                        </div>
-		                        
-		                    </div>
-		                    <div class="mb-3 row">
-		                        <label for="interest" class="col-4 col-form-label">관심사</label>
-		                        <div class="col-8">
-		                            <input type="text" id="interest" name="interest" value="${mvo1.interest}" readonly="readonly">
-		                        </div>
-		                    </div>
-		                    
-		                      <div class="mb-3 row">
-		                        <label for="mbti" class="col-4 col-form-label">MBTI</label>
-		                        <div class="col-8">
-		                            <input type="text" id="mbti" name="mbti" value="${mvo1.mbti}" readonly="readonly">
-		                        </div>
-		                    </div>
-		                    
-		                    <div class="mb-3 row">
-		                        <label for="sport" class="col-4 col-form-label">운동</label>
-		                        <div class="col-8">
-		                            <input type="text" id="sport" name="sport" value="${mvo1.sport}" readonly="readonly">
-		                        </div>
-		                    </div>		          
-		                </div>
-		                
-		                
-		                <!-- 오른쪽 세로 정렬 -->
-		                <div class="col-md-5">
-		                    <div class="mb-5 row">
-		                        <label for="smoking" class="col-4 col-form-label">흡연</label>
-		                        <div class="col-8">
-		                            <input type="text" id="smoking" name="smoking" value="${mvo1.smoking}" readonly="readonly">
-		                        </div>
-		                    </div>
-		                    
-		                    <div class="mb-3 row">
-		                        <label for="drinking" class="col-4 col-form-label">음주</label>
-		                        <div class="col-8">
-		                            <input type="text" id="drinking" name="drinking" value="${mvo1.drinking}" readonly="readonly">
-		                        </div>
-		                    </div>
-		                    
-		                    <div class="mb-3 row">
-		                        <label for="job" class="col-4 col-form-label">직장</label>
-		                        <div class="col-8">
-		                            <input type="text" id="job" name="job" value="${mvo1.job}" readonly="readonly">
-		                        </div>
-		                    </div>
-		                    
-		                    <div class="mb-3 row">
-		                        <label for="school" class="col-4 col-form-label">학교</label>
-		                        <div class="col-8">
-		                            <input type="text" id="school" name="school" value="${mvo1.school}" readonly="readonly">
-		                        </div>
-		                    </div>
-		                    
-		                    <div class="mb-3 row">
-		                        <label for="role" class="col-4 col-form-label">등급</label>
-		                        <div class="col-8">
-		                        	<input type="text" id="role" name="role" value="${mvo1.role}" readonly="readonly">
-		                        </div>
-		                    </div>
-		                    
-		                </div>
-		            </div>
-		      
-		            <br>
-		            <br>
-		            
-		            <div class="">
-		                <!-- 양쪽에 자기소개 배치 -->
-		                <div class="row">
-		                    <div class="col-md-1"></div>
-		                    <div class="col-md-10">
-		                        <label for="aboutme" class="form-label">자기소개</label>
-		                        <textarea class="form-control" id="aboutme" name="aboutme" rows="5" readonly="readonly" style="resize: none;">"${mvo1.aboutme}"</textarea>
-		                    </div>
-		                </div>
-		                <br>
-		                <br>
-		                <div class="">
-		                    <!-- 가입 버튼 오른쪽에 배치 -->
-		                    <div class="text-center">
-		                        <input type="submit" class="btn btn-primary" value="수정하기">
-		                    </div>
-		                </div>
-		            </div>
-		        </div>
-		   </form>
-		   <!-- 정보 입력 끝!!!!!!!!!!!!!!!!!!!!!!!!  -->
-        <br>
-        <br>
-        <br>
+		            <div class="container">
+    <div class="main-body">
+    
+          <!-- Breadcrumb -->
+<!--           <nav aria-label="breadcrumb" class="main-breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+              <li class="breadcrumb-item"><a href="javascript:void(0)">User</a></li>
+              <li class="breadcrumb-item active" aria-current="page">User Profile</li>
+            </ol>
+          </nav> -->
+          <!-- /Breadcrumb -->
+    
+          <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex flex-column align-items-center text-center">
+                    <img src="img/team-1.jpg" alt="Admin" class="rounded-circle" width="150">
+                    <div class="mt-3">
+                      <h4>${mvo.nickname}</h4>
+                      <p class="text-secondary mb-1">${mvo.job}</p>
+                      <p class="text-muted font-size-sm">${mvo.address}</p>
+                      <form id="imageForm1" style="border: none;">
+						<label for="uploadInput" id="uploadButton">이미지 선택</label>
+						<input type="file" id="uploadInput" accept="image/*">
+						<button type="button" onclick="uploadImage()" id="uploadButton">업로드</button>
+					 </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card mt-3">
+                <textarea class="form-control" id="aboutme" name="aboutme" rows="9" readonly="readonly"  style="resize: none;">${mvo.aboutme}</textarea>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Nick</h6>
+                    </div>
+                    <div class="col-sm-9">
+                      ${mvo.nickname}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Age</h6>
+                    </div>
+                    <div class="col-sm-9">
+                      ${mvo.age}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Phone</h6>
+                    </div>
+                    <div class="col-sm-9">
+                      ${mvo.phone}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Address</h6>
+                    </div>
+                    <div class="col-sm-9">
+                      ${mvo.address}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Interest</h6>
+                    </div>
+                    <div class="col-sm-9">
+                      ${mvo.interest}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">MBTI</h6>
+                    </div>
+                    <div class="col-sm-9">
+                      ${mvo.mbti}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Sport</h6>
+                    </div>
+                    <div class="col-sm-9">
+                      ${mvo.sport}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Smoke</h6>
+                    </div>
+                    <div class="col-sm-9">
+                      ${mvo.smoking}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Drink</h6>
+                    </div>
+                    <div class="col-sm-9">
+                      ${mvo.address}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Job</h6>
+                    </div>
+                    <div class="col-sm-9">
+                      ${mvo.job}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Education</h6>
+                    </div>
+                    <div class="col-sm-9">
+                      ${mvo.school}
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+				<hr>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <a class="btn btn-info " target="__blank" href="update">Edit</a>
+                    </div>
+                  </div>
+            </div>
+          </div>
+
+        </div>
+    </div>
         <!-- Header End -->
 
 

@@ -340,31 +340,31 @@
     <script src="js/main.js"></script>
     
     <script>
-	    
-	    function uploadImage() {
-	    	  const input = document.getElementById('uploadInput');
-	    	  const file = input.files[0];
+       
+       function uploadImage() {
+            const input = document.getElementById('uploadInput');
+            const file = input.files[0];
 
-	    	  if (file) {
-	    	    const formData = new FormData();
-	    	    formData.append('image', file);
+            if (file) {
+              const formData = new FormData();
+              formData.append('image', file);
 
-	    	    // 서버로 데이터 전송
-	    	    fetch('/upload-endpoint', {
-	    	      method: 'POST',
-	    	      body: formData,
-	    	    })
-	    	    .then(response => response.json())
-	    	    .then(data => {
-	    	      console.log('Upload successful:', data);
-	    	    })
-	    	    .catch(error => {
-	    	      console.error('Error uploading image:', error);
-	    	    });
-	    	  }
-	    	}
-	    
-	</script>
+              // 서버로 데이터 전송
+              fetch('/upload-endpoint', {
+                method: 'POST',
+                body: formData,
+              })
+              .then(response => response.json())
+              .then(data => {
+                console.log('Upload successful:', data);
+              })
+              .catch(error => {
+                console.error('Error uploading image:', error);
+              });
+            }
+          }
+       
+   </script>
     
     
     

@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class MemberInfo {
+public class Info {
     private String username;
     private String password;
     private String nickname;
@@ -29,7 +29,7 @@ public class MemberInfo {
     private String job;
     private String school;
     private String aboutme;
-    private LocalDateTime registerDate;
+    private Instant register_date;
     private List<String> role;
     private List<String> address;
     private Map<Integer, String> photo;

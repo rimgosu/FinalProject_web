@@ -1,0 +1,26 @@
+body {
+    background-color: #f5f5f5;
+}
+
+#main-content {
+    max-width: 940px;
+    padding: 2em 3em;
+    margin: 0 auto 20px;
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+ul {
+  overflow-y: scroll; /* 스크롤 활성화 */
+  scrollbar-width: none; /* 파이어폭스에서 스크롤바 숨김 */
+  -ms-overflow-style: none; /* 인터넷 익스플로러와 엣지에서 스크롤바 숨김 */
+
+  max-height: 1000px; /* 또는 원하는 높이 */
+}
+
+ul::-webkit-scrollbar {
+  display: none; /* 웹킷(사파리, 크롬 등) 기반 브라우저에서 스크롤바 숨김 */
+}

@@ -16,16 +16,15 @@ import com.datastax.oss.driver.api.core.cql.ResultSet;
 import com.datastax.oss.driver.api.core.cql.Row;
 
 import kr.spring.entity.Info;
-import kr.spring.entity.MemberInfo;
 
 @Service
-public class MemberInfoServiceImpl implements MemberInfoService {
+public class InfoServiceImpl implements InfoService {
 	//로그인
 	@Autowired
 	DBService dbservice;
 
 	@Override
-	public MemberInfo login(MemberInfo m) {
+	public Info login(Info m) {
 		Path configPath = Paths.get("c:/keys/keyspace/application.conf");
 		DriverConfigLoader loader = DriverConfigLoader.fromPath(configPath);
 		String username = m.getUsername();
@@ -62,7 +61,7 @@ public class MemberInfoServiceImpl implements MemberInfoService {
 	
 	// 회원가입 후, 추가정보 넣는 메서드
 	@Override
-	public MemberInfo InsertMemberInfoAdditional(MemberInfo m, String username_session) {
+	public Info InsertInfoAdditional(Info m, String username_session) {
 		// TODO Auto-generated method stub
 		Path configPath = Paths.get("c:/keys/keyspace/application.conf");
 		DriverConfigLoader loader = DriverConfigLoader.fromPath(configPath);
@@ -133,20 +132,20 @@ public class MemberInfoServiceImpl implements MemberInfoService {
 		
 	//전체 데이터 불러올 수 있음.(세션 값 있어야함)
 	@Override
-	public MemberInfo SelectMemberInfo(String username_session) {
+	public Info SelectInfo(String username_session) {
 		Path configPath = Paths.get("c:/keys/keyspace/application.conf");
 		DriverConfigLoader loader = DriverConfigLoader.fromPath(configPath);
 		
 		try (CqlSession session = CqlSession.builder().withConfigLoader(loader).build()) {
-			System.out.println("SelectMemberInfo 서비스에 들어왔음.");
+			System.out.println("SelectInfo 서비스에 들어왔음.");
 			String cql = "SELECT * FROM member.info WHERE username = ?";
 			PreparedStatement preparedStatement = session.prepare(cql);
 			ResultSet resultSet = session.execute(preparedStatement.bind(username_session));
 			
 			if (resultSet.one() != null) {
-				System.out.println("SelectMemberInfo 서비스에 row에 들어왔음.");
+				System.out.println("SelectInfo 서비스에 row에 들어왔음.");
 				Row row = resultSet.one();
-				MemberInfo m = new MemberInfo();
+				Info m = new Info();
 				m.setUsername(row.getString("username"));
 				m.setPassword(row.getString("password"));
 				m.setNickname(row.getString("nickname"));
@@ -177,7 +176,7 @@ public class MemberInfoServiceImpl implements MemberInfoService {
 
 
 	@Override
-	public void InsertMemberInfo(String nickname, String username, String password) {
+	public void InsertInfo(String nickname, String username, String password) {
 
 		Info info = new Info();
 		info.setNickname(nickname);

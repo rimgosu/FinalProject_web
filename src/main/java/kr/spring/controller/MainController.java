@@ -24,15 +24,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import kr.spring.entity.ChatRoom;
 import kr.spring.entity.Info;
-import kr.spring.entity.MemberInfo;
 import kr.spring.service.DBService;
-import kr.spring.service.MemberInfoService;
+import kr.spring.service.InfoService;
 
 @Controller
 public class MainController {
 
 	@Autowired
-	private MemberInfoService memberInfoService;
+	private InfoService infoService;
 	@Autowired
 	private DBService dbService;
 	
@@ -98,7 +97,7 @@ public class MainController {
 	@PostMapping("/join")
 	public String showJoinPage(@RequestParam("nickname") String nickname, @RequestParam("username") String username,
 			@RequestParam("password") String password) {
-		memberInfoService.InsertMemberInfo(nickname, username, password);
+		infoService.InsertInfo(nickname, username, password);
 		return "redirect:/login";
 	}
 
@@ -109,20 +108,20 @@ public class MainController {
 	}
 
 	@PostMapping("/info")
-	public String showInfoPage(MemberInfo info, HttpSession session, HttpServletRequest request) {
-		String username_session = ((MemberInfo) session.getAttribute("mvo")).getUsername();
-		memberInfoService.InsertMemberInfoAdditional(info, username_session);
+	public String showInfoPage(Info info, HttpSession session, HttpServletRequest request) {
+		String username_session = ((Info) session.getAttribute("mvo")).getUsername();
+		infoService.InsertInfoAdditional(info, username_session);
 		return "redirect:/index";
 
 	}
 	
 	//파일 업로드
 	@PostMapping("/fileUpload")
-	public String fileUpload(MemberInfo info, @RequestParam("file") MultipartFile file, HttpSession session, HttpServletRequest request) {
+	public String fileUpload(Info info, @RequestParam("file") MultipartFile file, HttpSession session, HttpServletRequest request) {
 		System.out.println("사진 업로드함.");
 		// 파일 업로드를 할 수 있게 도와주는 MultipartRequest.
 //	    String savePath =request.getServletContext().getRealPath("/");  절대경로 찾는 코드
-		String username_session = ((MemberInfo) session.getAttribute("mvo")).getUsername();
+		String username_session = ((Info) session.getAttribute("mvo")).getUsername();
 		System.out.println(username_session);
 		// 추가 정보를 담을 Map선언
 		Map<Integer, String> additionalFile = new HashMap<>();
@@ -145,14 +144,14 @@ public class MainController {
 
 			}			
 			// database에서 기존에 사진 정보 조회
-			Map<Integer, String> photosDb = memberInfoService.selectMemPhoto(username_session);
+			Map<Integer, String> photosDb = infoService.selectMemPhoto(username_session);
 			// 새로운 사진 정보 추가
 			int nextNum = photosDb.size() + 1;
 			additionalFile.put(nextNum, uploadedFilePath);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		memberInfoService.fileUpload(additionalFile, username_session);
+		infoService.fileUpload(additionalFile, username_session);
 		return "redirect:/index";
 	}
 
@@ -179,7 +178,7 @@ public class MainController {
 	 * @GetMapping("/test2") //지협님이 하신 테스트 public String
 	 * showTest2Page(@RequestParam("username") String username) {
 	 * System.out.println("테스트페이지2로 들어옴.");
-	 * memberInfoService.InsertMemberInfo(username);
+	 * InfoService.InsertInfo(username);
 	 * 
 	 * return "test"; }
 	 */

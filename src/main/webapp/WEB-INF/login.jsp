@@ -55,16 +55,18 @@
                         <form action="${cpath}/login" method="post" >
                         	<table>
                         		<tr>
-                        			<td class="form-group"> 
+                        			<td class="form-group" style="width:400px;"> 
                         			 	<input type="email" class="form-control border-0 py-3" placeholder="Username" id="username" name="username">
                         			 </td>
                         		</tr>
+                        		<br>
                         		<tr>
                         			<td class="form-group"> 
                         				 <input type="password" class="form-control border-0 py-3" placeholder="Password" id="password" name="password">
                         			 </td>
                         		</tr>
                         	</table>
+                        	<br>
 						    <input type="submit" class="btn btn-dark border-0 w-100 py-3" value="Login">
 						</form>
                                                 
@@ -80,11 +82,7 @@
                         <br>
                         <p>회원이 아니신가요? <a href="join" style="
                             margin-left: 5px;">회원가입</a></p>
-                            
-            			<a href="/boot/oauth2/authorization/google" class="btn btn-success active" role="button">Google Login</a>
-						
-						<form action="/boot/oauth2/authorization/kakao" method="post">
-						<button class="btn btn-secondary active" role="button">Kakao Login</button>
+
                     	</form>
                     </div>
                 </div>

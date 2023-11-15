@@ -43,7 +43,6 @@
 
         input {
             border: none; /* 상단, 좌우, 우측 테두리 제거 */
-            border-bottom: 1px solid pink; /* 1px 두께의 검은색 밑줄 스타일 적용 */
             outline: none; /* 포커스 스타일 제거 */
         }
         .form-select {
@@ -51,16 +50,6 @@
         }
             .info-front {
         margin-bottom: 40px;
-    }
-
-    input {
-        border: none;
-        border-bottom: 1px solid pink;
-        outline: none;
-    }
-
-    .form-select {
-        border: none;
     }
 
     @media (max-width: 768px) {
@@ -98,6 +87,60 @@
             border-radius: 5px;
             border: none;
         }
+        
+        body{
+		    margin-top:20px;
+		    color: #1a202c;
+		    text-align: left;
+		    background-color: #e2e8f0;    
+		}
+		.main-body {
+		    padding: 15px;
+		}
+		.card {
+		    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+		}
+		
+		.card {
+		    position: relative;
+		    display: flex;
+		    flex-direction: column;
+		    min-width: 0;
+		    word-wrap: break-word;
+		    background-color: #fff;
+		    background-clip: border-box;
+		    border: 0 solid rgba(0,0,0,.125);
+		    border-radius: .25rem;
+		}
+		
+		.card-body {
+		    flex: 1 1 auto;
+		    min-height: 1px;
+		    padding: 1rem;
+		}
+		
+		.gutters-sm {
+		    margin-right: -8px;
+		    margin-left: -8px;
+		}
+		
+		.gutters-sm>.col, .gutters-sm>[class*=col-] {
+		    padding-right: 8px;
+		    padding-left: 8px;
+		}
+		.mb-3, .my-3 {
+		    margin-bottom: 1rem!important;
+		}
+		
+		.bg-gray-300 {
+		    background-color: #e2e8f0;
+		}
+		.h-100 {
+		    height: 100%!important;
+		}
+		.shadow-none {
+		    box-shadow: none!important;
+		}
     </style>
 </head>
 <body>
@@ -113,150 +156,160 @@
 		      <div class="container">
 		          <div class="row">
 		              <div class="col-12 text-center">
-		                    <h2>본인 정보 입력</h2>
-		                    <br>
-		                    <br>
-		                    <br>
-		                    <br>
-							<form id="imageForm1">
-							    <label for="uploadInput" id="uploadButton">이미지 선택</label>
-							    <input type="file" id="uploadInput" accept="image/*">
-							    <button type="button" onclick="uploadImage()" id="uploadButton">업로드</button>
-							</form>
+		                    <h2>Profile</h2>
 		              </div>
 		            </div>
-		            <br>
-		            <br>
-		            <br>
-		            <div class="row">
-		                <!-- 왼쪽 세로 정렬 -->
-		                <div class="col-md-1"></div>
-		                <div class="col-md-5 info-front">
-		                
-		                	 <div class="mb-3 row">
-		                        <label for="age" class="col-4 col-form-label">나이</label>
-		                        <div class="col-8">
-		                            <input type="number" id="age" name="age" value="${mvo1.age}" required>
-		                        </div>
-		                    </div>
-		                    
-		                	<div class="mb-3 row">
-		                        <label for="phone" class="col-7 col-form-label">핸드폰 번호</label>
-		                        <div class="col-10">
-		                            <input type="number" id="phone" name="phone" value="${mvo1.phone}" required>
-		                        </div>
-		                    </div>
-		                	
-		                    <div class="mb-3 row">
-		                        <label for="address" class="col-4 col-form-label">거주지역</label>
-		                        <div class="col-8">
-		                            <input type="text" id="address" name="address" value="${mvo1.address}" required>
-		                        </div>
-		                        
-		                    </div>
-		                    <div class="mb-3 row">
-		                        <label for="interest" class="col-4 col-form-label">관심사</label>
-		                        <div class="col-8">
-		                            <input type="text" id="interest" name="interest" value="${mvo1.interest}" required>
-		                        </div>
-		                    </div>
-		                    
-		                      <div class="mb-3 row">
-		                        <label for="mbti" class="col-4 col-form-label">MBTI</label>
-		                        <div class="col-8">
-		                            <input type="text" id="mbti" name="mbti" value="${mvo1.mbti}" required>
-		                        </div>
-		                    </div>
-		                    
-		                    <div class="mb-3 row">
-		                        <label for="sport" class="col-4 col-form-label">운동</label>
-		                        <div class="col-8">
-		                            <select class="form-select" id="sport" name="sport" required>
-		                                <option value="yes">예</option>
-		                                <option value="no">아니오</option>
-		                            </select>
-		                        </div>
-		                    </div>		          
-		                </div>
-		                
-		                
-		                <!-- 오른쪽 세로 정렬 -->
-		                <div class="col-md-5">
-		                    <div class="mb-5 row">
-		                        <label for="smoking" class="col-4 col-form-label">흡연</label>
-		                        <div class="col-8">
-		                            <select class="form-select" id="smoking" name="smoking" required>
-		                                <option value="yes">예</option>
-		                                <option value="no">아니오</option>
-		                            </select>
-		                        </div>
-		                    </div>
-		                    
-		                    <div class="mb-3 row">
-		                        <label for="drinking" class="col-4 col-form-label">음주</label>
-		                        <div class="col-8">
-		                            <select class="form-select" id="drinking" name="drinking" required>
-		                                <option value="yes">예</option>
-		                                <option value="no">아니오</option>
-		                            </select>
-		                        </div>
-		                    </div>
-		                    
-		                    <div class="mb-3 row">
-		                        <label for="job" class="col-4 col-form-label">직장</label>
-		                        <div class="col-8">
-		                            <input type="text" id="job" name="job" value="${mvo1.job}" required>
-		                        </div>
-		                    </div>
-		                    
-		                    <div class="mb-3 row">
-		                        <label for="school" class="col-4 col-form-label">학교</label>
-		                        <div class="col-8">
-		                            <input type="text" id="school" name="school" value="${mvo1.school}" required>
-		                        </div>
-		                    </div>
-		                    
-		                    <div class="mb-3 row">
-		                        <label for="role" class="col-4 col-form-label">등급</label>
-		                        <div class="col-8">
-		                        	<select class="form-select" id="role" name="role" required>
-		                        		<option value="user">사용자</option>
-		                        		<option value="admin">관리자</option>
-		                        	</select>
-		                       
-		                        </div>
-		                    </div>
-		                    
-		                </div>
-		            </div>
-		      
-		            <br>
-		            <br>
-		            
-		            <div class="">
-		                <!-- 양쪽에 자기소개 배치 -->
-		                <div class="row">
-		                    <div class="col-md-1"></div>
-		                    <div class="col-md-10">
-		                        <label for="aboutme" class="form-label">자기소개</label>
-		                        <textarea class="form-control" id="aboutme" name="aboutme" rows="5" required style="resize: none;">"${mvo1.aboutme}"</textarea>
-		                    </div>
-		                </div>
-		                <br>
-		                <br>
-		                <div class="">
-		                    <!-- 가입 버튼 오른쪽에 배치 -->
-		                    <div class="text-center">
-		                        <input type="submit" class="btn btn-primary" value="수정하기"  onclick="checkUpdateSubmit()">
-		                    </div>
-		                </div>
-		            </div>
-		        </div>
-		   </form>
-		   <!-- 정보 입력 끝!!!!!!!!!!!!!!!!!!!!!!!!  -->
-        <br>
-        <br>
-        <br>
+		            <div class="container">
+    <div class="main-body">
+    
+          <!-- Breadcrumb -->
+<!--           <nav aria-label="breadcrumb" class="main-breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+              <li class="breadcrumb-item"><a href="javascript:void(0)">User</a></li>
+              <li class="breadcrumb-item active" aria-current="page">User Profile</li>
+            </ol>
+          </nav> -->
+          <!-- /Breadcrumb -->
+    
+          <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex flex-column align-items-center text-center">
+                    <img src="img/team-1.jpg" alt="Admin" class="rounded-circle" width="150">
+                    <div class="mt-3">
+                      <h4>${mvo.nickname}</h4>
+                      <p class="text-secondary mb-1">${mvo.job}</p>
+                      <p class="text-muted font-size-sm">${mvo.address}</p>
+                      <form id="imageForm1" style="border: none;">
+						<label for="uploadInput" id="uploadButton">이미지 선택</label>
+						<input type="file" id="uploadInput" accept="image/*">
+						<button type="button" onclick="uploadImage()" id="uploadButton">업로드</button>
+					 </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card mt-3">
+                <textarea class="form-control" id="aboutme" name="aboutme" rows="9" style="resize: none;">${mvo.aboutme}</textarea>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Nick</h6>
+                    </div>
+                    <div class="col-sm-9">
+                    	<input value="${mvo.nickname}">
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Age</h6>
+                    </div>
+                    <div class="col-sm-9">
+                      <input value="${mvo.age}">
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Phone</h6>
+                    </div>
+                    <div class="col-sm-9">
+                      <input value="${mvo.phone}">
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Address</h6>
+                    </div>
+                    <div class="col-sm-9">
+                      <input value="${mvo.address}">
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Interest</h6>
+                    </div>
+                    <div class="col-sm-9">
+                      <input value="${mvo.interest}">
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">MBTI</h6>
+                    </div>
+                    <div class="col-sm-9">
+                      <input value="${mvo.mbti}">
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Sport</h6>
+                    </div>
+                    <div class="col-sm-9">
+                      <input value="${mvo.sport}">
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Smoke</h6>
+                    </div>
+                    <div class="col-sm-9">
+                      <input value="${mvo.smoking}">
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Drink</h6>
+                    </div>
+                    <div class="col-sm-9">
+                      <input value="${mvo.drinking}">
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Job</h6>
+                    </div>
+                    <div class="col-sm-9">
+                      <input value="${mvo.job}">
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Education</h6>
+                    </div>
+                    <div class="col-sm-9">
+                      <input value="${mvo.school}">
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+				<hr>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <a class="btn btn-info " target="__blank" href="update">Edit</a>
+                    </div>
+                  </div>
+            </div>
+          </div>
+
+        </div>
+    </div>
         <!-- Header End -->
 
 
@@ -276,39 +329,6 @@
     <script src="js/main.js"></script>
     
     <script>
-    
-	    function checkUpdateSubmit() {
-	        checkForm();
-	
-	        var isSubmitEnabled = !document.getElementById("submitBtn").disabled;
-	
-	        if (isSubmitEnabled) {
-	            // 이동할 페이지의 URL을 여기에 입력해줘
-	            window.location.href = "index";
-	        }
-	    }
-    
-    
-	    function checkForm() {
-	        var age = document.getElementById("age").value;
-	        var phone = document.getElementById("phone").value;
-	        var address = document.getElementById("address").value;
-	        var interest = document.getElementById("interest").value;
-	        var mbti = document.getElementById("mbti").value;
-	        var sport = document.getElementById("sport").options[document.getElementById("sport").selectedIndex].value;
-	        var smoking = document.getElementById("smoking").options[document.getElementById("smoking").selectedIndex].value;
-	        var drinking = document.getElementById("drinking").options[document.getElementById("drinking").selectedIndex].value;
-	        var job = document.getElementById("job").value;
-	        var school = document.getElementById("school").value;
-	        var role = document.getElementById("role").options[document.getElementById("role").selectedIndex].value;
-	        var aboutme = document.getElementById("aboutme").value;
-	
-	        if (age && phone && address && interest && mbti && sport !== "none" && smoking && drinking && job && school && role !== "none" && aboutme) {
-	            document.getElementById("submitBtn").disabled = false;
-	        } else {
-	            document.getElementById("submitBtn").disabled = true;
-	        }
-	    }
 	    
 	    function uploadImage() {
 	    	  const input = document.getElementById('uploadInput');

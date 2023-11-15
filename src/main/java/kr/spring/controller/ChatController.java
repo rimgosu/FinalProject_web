@@ -21,10 +21,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import kr.spring.entity.ChatRoom;
 import kr.spring.entity.Info;
-import kr.spring.entity.MemberInfo;
 import kr.spring.service.ChatService;
 import kr.spring.service.DBService;
-import kr.spring.service.MemberInfoService;
+import kr.spring.service.InfoService;
 
 @Controller
 public class ChatController {

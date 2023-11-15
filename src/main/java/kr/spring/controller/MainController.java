@@ -3,6 +3,7 @@ package kr.spring.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.lang.reflect.Member;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,17 +12,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
 import com.datastax.oss.driver.api.core.session.Request;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+import com.datastax.oss.driver.api.core.config.DriverConfigLoader;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import kr.spring.entity.ChatRoom;
+import kr.spring.entity.Info;
 import kr.spring.entity.MemberInfo;
+import kr.spring.service.DBService;
 import kr.spring.service.MemberInfoService;
 
 @Controller
@@ -29,7 +33,10 @@ public class MainController {
 
 	@Autowired
 	private MemberInfoService memberInfoService;
-
+	@Autowired
+	private DBService dbService;
+	
+	
 	@GetMapping("/index")
 	public String showMainPage() {
 		System.out.println("main으로 들어왔음.");
@@ -47,40 +54,39 @@ public class MainController {
 		System.out.println("좋아요로 들어왔음.");
 		return "like";
 	}
-
-	@GetMapping("/chat")
-	public String showChatPage() {
-		System.out.println("채팅으로 들어왔음.");
-
-		return "chat";
-	}
-
+	
+	
 	@GetMapping("/login")
 	public String showLoginPage() {
 		System.out.println("로그인으로 들어왔음.");
 		return "login";
 	}
-
+	
 	@PostMapping("/login")
-	public String showLoginPage(MemberInfo m, HttpSession session) {
-		MemberInfo mvo = memberInfoService.login(m);
-		// login하면 if절로 들어옴.
-		if (mvo != null) {
-			session.setAttribute("mvo", mvo);
-			System.out.println(mvo.getUsername());
-			/*
-			 * 로그인할 떄 세션에 값이 들어오는지 테스트 한 코드 String username1 =
-			 * (String)session.getAttribute("username"); System.out.println(username1);
-			 */
-
-			// 전체 memberinfo불러올때 테스트 한 코드
-			String username_session = ((MemberInfo) session.getAttribute("mvo")).getUsername();
-			MemberInfo mvo1 = memberInfoService.SelectMemberInfo(username_session);
-			session.setAttribute("mvo1", mvo1);
-			return "redirect:/index";
+    public String showLoginPage(Info info, HttpSession session) {
+		System.out.println("로그인 페이지로 들어왔음" + info.toString());
+		
+		Map<String, Object> columnValues = new HashMap<>();
+		columnValues.put("username", info.getUsername());
+		columnValues.put("password", info.getPassword());
+		
+		DriverConfigLoader loader = dbService.getConnection();
+		List<Info> listInfo = dbService.findAllByColumnValues(loader, Info.class, columnValues);
+		
+		if ( listInfo.size() == 0 ) {
+			return "redirect:login";
 		} else {
-			return "redirect:/login";
+			session.setAttribute("mvo", listInfo.get(0));
+			return "redirect:index";
 		}
+		
+   }
+
+	
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/index";
 	}
 
 	@GetMapping("/join")

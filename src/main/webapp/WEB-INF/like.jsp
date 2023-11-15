@@ -116,9 +116,9 @@
                             <div class="position-relative">
                                 <img class="img-fluid" src="img/team-1.jpg" alt="">
                                 <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-instagram"></i></a>
+                                    <a href=""></a>
+                                    <a class="btn btn-square mx-1" href=""><i class="fas fa-heart"></i></a>
+                                    <a href=""></a>
                                 </div>
                             </div>
                             <div class="text-center p-4 mt-3">
@@ -132,9 +132,9 @@
                             <div class="position-relative">
                                 <img class="img-fluid" src="img/team-2.jpg" alt="">
                                 <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-instagram"></i></a>
+                                    <a href=""></a>
+                                    <a class="btn btn-square mx-1" href=""><i class="fas fa-heart"></i></a>
+                                    <a href=""></a>
                                 </div>
                             </div>
                             <div class="text-center p-4 mt-3">
@@ -148,9 +148,9 @@
                             <div class="position-relative">
                                 <img class="img-fluid" src="img/team-3.jpg" alt="">
                                 <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-instagram"></i></a>
+                                    <a href=""></a>
+                                    <a class="btn btn-square mx-1" href=""><i class="fas fa-heart"></i></a>
+                                    <a href=""></a>
                                 </div>
                             </div>
                             <div class="text-center p-4 mt-3">
@@ -164,9 +164,9 @@
                             <div class="position-relative">
                                 <img class="img-fluid" src="img/team-4.jpg" alt="">
                                 <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-instagram"></i></a>
+                                    <a href=""></a>
+                                    <a class="btn btn-square mx-1" href=""><i class="fas fa-heart"></i></a>
+                                    <a href=""></a>
                                 </div>
                             </div>
                             <div class="text-center p-4 mt-3">

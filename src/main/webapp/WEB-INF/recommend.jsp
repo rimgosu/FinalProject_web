@@ -164,14 +164,15 @@
                             <div class="position-relative">
                                 <img class="img-fluid" src="img/team-1.jpg" alt="">
                                 <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-twitter"></i></a>
+                                    <button class="btn btn-square mx-1 like-btn" data-count="0"><i class="fas fa-heart"></i></button>
+                                    <button class="btn btn-square mx-1 dislike-btn" data-count="0"><img src="img/pngwing.com.png" style="width: 18px;"></button>
                                     <a class="btn btn-square mx-1" href=""><i class="fab fa-instagram"></i></a>
                                 </div>
                             </div>
                             <div class="text-center p-4 mt-3">
-                                <h5 class="fw-bold mb-0">Full Name</h5>
-                                <small>Designation</small>
+                                <h5 class="fw-bold mb-0">nickname</h5>
+                                <p>age</p>
+                                <small>aboutme</small>
                             </div>
                         </div>
                     </div>
@@ -180,8 +181,8 @@
                             <div class="position-relative">
                                 <img class="img-fluid" src="img/team-2.jpg" alt="">
                                 <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-twitter"></i></a>
+                                    <button class="btn btn-square mx-1 like-btn" data-count="0"><i class="fas fa-heart"></i></button>
+                                    <button class="btn btn-square mx-1 dislike-btn" data-count="0"><img src="img/pngwing.com.png" style="width: 18px;"></button>
                                     <a class="btn btn-square mx-1" href=""><i class="fab fa-instagram"></i></a>
                                 </div>
                             </div>
@@ -196,8 +197,8 @@
                             <div class="position-relative">
                                 <img class="img-fluid" src="img/team-3.jpg" alt="">
                                 <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-twitter"></i></a>
+                                    <button class="btn btn-square mx-1 like-btn" data-count="0"><i class="fas fa-heart"></i></button>
+                                    <button class="btn btn-square mx-1 dislike-btn" data-count="0"><img src="img/pngwing.com.png" style="width: 18px;"></button>
                                     <a class="btn btn-square mx-1" href=""><i class="fab fa-instagram"></i></a>
                                 </div>
                             </div>
@@ -212,8 +213,8 @@
                             <div class="position-relative">
                                 <img class="img-fluid" src="img/team-4.jpg" alt="">
                                 <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-twitter"></i></a>
+                                    <button class="btn btn-square mx-1 like-btn" data-count="0"><i class="fas fa-heart"></i></button>
+                                    <button class="btn btn-square mx-1 dislike-btn" data-count="0"><img src="img/pngwing.com.png" style="width: 18px;"></button>
                                     <a class="btn btn-square mx-1" href=""><i class="fab fa-instagram"></i></a>
                                 </div>
                             </div>
@@ -324,6 +325,31 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    
+        <script>
+    // Initialize Wow.js
+    new WOW().init();
+
+    // jQuery Document Ready
+    $(document).ready(function () {
+        // Like button click event
+        $('.like-btn').click(function () {
+            var count = parseInt($(this).attr('data-count'));
+            count++;
+            $(this).attr('data-count', count);
+            alert("이 유저를 선호합니다." + '\nLike: ' + count);
+        });
+
+        // Dislike button click event
+        $('.dislike-btn').click(function () {
+            var count = parseInt($(this).attr('data-count'));
+            count++;
+            $(this).attr('data-count', count);
+            alert("이 유저를 선호하지 않습니다." + '\nDislike: ' + count);
+        });
+    });
+	</script>
+    
 </body>
 
 </html>

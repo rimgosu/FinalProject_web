@@ -30,7 +30,8 @@ public class SelectMember {
 				PreparedStatement preparedStatement = session.prepare(cql);
 				
 				ResultSet resultSet = session.execute(preparedStatement.bind());
-
+				
+				
                 // Process the results
                 for (Row row : resultSet) {
                     // Access the columns in the result set using row.getXXX() methods

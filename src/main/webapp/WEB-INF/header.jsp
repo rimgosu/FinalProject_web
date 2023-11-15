@@ -53,7 +53,7 @@
                                 <a href="404.html" class="dropdown-item">404 Error</a>
                             </div>
                         </div> -->
-                        <a href="chat" class="nav-item nav-link">CHAT</a>
+                        
                     </div>
                     <c:if test="${empty mvo}">
                   <form class="form-inline" action="${cpath}/login" method="post">
@@ -62,13 +62,15 @@
                     </c:if>
                     <c:if test="${not empty mvo}">
                      <div class="form-group">
-                        <label>${mvo.nickname}님 방문을 환영합니다.</label>
+                        <label></label>
                      </div>
+                     <a href="chat" class="nav-item nav-link">CHAT</a>
+                     <a href="showChatRoom" class="nav-item nav-link">CHATROOM</a>
                   <form class="form-iniline" action="${cpath}/profile" method="get">
-                     <button type="submit" class="btn btn-prmary px-3 d-none d-lg-flex">PROFILE</button>
+                     <button type="submit" class="btn btn-prmary px-3 d-none d-lg-flex" style="color: var(--dark); font-weight: 500;">PROFILE</button>
                   </form>
                   <form class="form-inline" action="${cpath}/logout" method="get">
-                     <button type="submit" class="btn btn-default">LOGOUT</button>
+                     <button type="submit" class="btn btn-default" style="color: var(--dark); font-weight: 500;">LOGOUT</button>
                   </form>
                </c:if>   
                 </div>

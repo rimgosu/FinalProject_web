@@ -346,7 +346,7 @@ input {
 			} else {
 				alert("Please select a file.")
 			}
-		}}
+		}
 	</script>
 
 

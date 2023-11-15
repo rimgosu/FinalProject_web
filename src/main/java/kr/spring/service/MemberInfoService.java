@@ -7,9 +7,9 @@ import kr.spring.entity.MemberInfo;
 
 public interface MemberInfoService {
 
-	/* public void InsertMemberInfo(String username); */
+   /* public void InsertMemberInfo(String username); */
 
-	public void InsertMemberInfo(String nickname, String username, String password);
+   public void InsertMemberInfo(String nickname, String username, String password);
 
 	public MemberInfo login(MemberInfo m);
 	
@@ -21,7 +21,8 @@ public interface MemberInfoService {
 	
 	public void fileUpload(Map<Integer, String> additionalFile, String username_session);
 
-	
-	
-	
+
+   
+   
+   
 }

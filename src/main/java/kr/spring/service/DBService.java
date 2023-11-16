@@ -17,8 +17,13 @@ public interface DBService {
 	public <T> List<T> findAll(DriverConfigLoader loader, Class<T> classType);
 	<T> List<T> findAllByColumnValue(DriverConfigLoader loader, Class<T> classType, String columnName, Object value);
 	
+	
+	
 	public <T> void setFieldValue(Field field, T entity, Row row) throws IllegalAccessException;
 	<T> List<T> findAllByColumnValues(DriverConfigLoader loader, Class<T> classType,
 			Map<String, Object> columnValues);
+	
+	<T> void updateByColumnValues(DriverConfigLoader loader, Class<T> classType, 
+			Map<String, Object> updateValues, Map<String, Object> whereConditions);
 
 }

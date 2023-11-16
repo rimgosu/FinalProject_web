@@ -227,6 +227,56 @@ public class DBServiceImpl implements DBService{
 	    }
 	    // 추가적인 타입에 대한 처리는 여기에 추가
 	}
+	
+	@Override
+	   public <T> void updateByColumnValues(DriverConfigLoader loader, Class<T> classType, 
+	                                        Map<String, Object> updateValues, Map<String, Object> whereConditions) {
+	       try (CqlSession session = CqlSession.builder()
+	               .withConfigLoader(loader)
+	               .build()) {
+
+	           // SET 절 동적 생성
+	           StringBuilder setClause = new StringBuilder();
+	           List<Object> bindSetValues = new ArrayList<>();
+	           for (Map.Entry<String, Object> entry : updateValues.entrySet()) {
+	               if (setClause.length() > 0) {
+	                   setClause.append(", ");
+	               }
+	               setClause.append(entry.getKey()).append(" = ?");
+	               bindSetValues.add(entry.getValue());
+	           }
+
+	           // WHERE 절 동적 생성
+	           StringBuilder whereClause = new StringBuilder();
+	           List<Object> bindWhereValues = new ArrayList<>();
+	           for (Map.Entry<String, Object> entry : whereConditions.entrySet()) {
+	               if (whereClause.length() > 0) {
+	                   whereClause.append(" AND ");
+	               }
+	               whereClause.append(entry.getKey()).append(" = ?");
+	               bindWhereValues.add(entry.getValue());
+	           }
+
+	           String cql = String.format("UPDATE %s SET %s WHERE %s", 
+	                   "member." + classType.getSimpleName().toLowerCase(), setClause.toString(), whereClause.toString());
+	           System.out.println("execute cql : " + cql);
+
+	           PreparedStatement preparedStatement = session.prepare(cql);
+
+	           // 바인딩된 값 추가
+	           List<Object> bindValues = new ArrayList<>(bindSetValues);
+	           bindValues.addAll(bindWhereValues);
+	           BoundStatement boundStatement = preparedStatement.bind(bindValues.toArray());
+	           session.execute(boundStatement);
+
+	       } catch (Exception e) {
+	           // 오류 처리 로직
+	           System.out.println("Error: " + e);
+	       }
+	   }
+	
+	
+	
 
 
 

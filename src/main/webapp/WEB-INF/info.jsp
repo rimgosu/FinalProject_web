@@ -1,3 +1,6 @@
+<%@page import="kr.spring.entity.Info"%>
+<%@page import="java.util.Map"%>
+<%@page import="java.io.File"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -106,13 +109,63 @@ input {
 	border-radius: 5px;
 	border: none;
 }
+
+div.gallery {
+  border: 1px solid #ccc;
+}
+
+div.gallery:hover {
+  border: 1px solid #777;
+}
+
+div.gallery img {
+  width: 100%;
+  height: auto;
+}
+
+div.desc {
+  padding: 15px;
+  text-align: center;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.responsive {
+  padding: 0 6px;
+  float: left;
+  width: 24.99999%;
+}
+
+@media only screen and (max-width: 700px) {
+  .responsive {
+    width: 49.99999%;
+    margin: 6px 0;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .responsive {
+    width: 100%;
+  }
+}
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+
+
 </style>
 </head>
 <body>
 	<div class="container-xxl bg-white p-0">
 		<jsp:include page="header.jsp"></jsp:include>
 		<!-- Navbar End -->
-
+		
 
 		<!-- Header Start -->
 		<br> <br>
@@ -121,236 +174,249 @@ input {
 				<div class="col-12 text-center">
 					<h2>본인 정보 입력</h2>
 					<br> <br> <br> <br>
-					<form action="${cpath}/fileUpload" method="post" enctype="multipart/form-data" id="imageForm1">
-						<label for="uploadInput" id="uploadButton">이미지 선택</label> <input
-							type="file" id="photo" name="file" accept="image/*">
-						<button type="submit" onclick="uploadImage()" id="uploadButton">업로드</button>
-					</form>
-				</div>
-			</div>
-			<br> <br> <br>
-			<form action="${cpath}/info" method="post" enctype="multipart/form-data">
-				<div class="row">
-					<!-- 왼쪽 세로 정렬 -->
-					<div class="col-md-1"></div>
-					<div class="col-md-5 info-front">
-
-						<div class="mb-3 row">
-							<label for="age" class="col-4 col-form-label">나이</label>
-							<div class="col-8">
-								<input type="number" id="age" name="age" required>
+					<div class="card">
+						<div class="card-body mt-3" >
+							<div class="row">
+							<!-- 첫 번째 사진 업로드  -->
+							<c:forEach items="${fileNames}" var="fileName" varStatus="i" >    
+								<div class="responsive">
+									<div class="gallery"> 
+									<img src="${fileName}" alt="Admin" class="rounded" width="150">
+											<form action="${cpath}/fileUpload" method="post" enctype="multipart/form-data" id="imageForm${i.count}" >											   
+												<input type="file" id="photo${i.count}" name="file" accept="image/*">
+												<input type ="hidden" id="photoNum" name="photoNum" value="${i.count}">
+												<button type="submit" id="uploadButton${i.count}">업로드</button>
+											</form>	
+										</div>
+									</div>					
+							</c:forEach>
 							</div>
-						</div>
+							<br> <br> <br>
+							<form action="${cpath}/info" method="post"
+								enctype="multipart/form-data">
+								<div class="row">
+									<!-- 왼쪽 세로 정렬 -->
+									<div class="col-md-1"></div>
+									<div class="col-md-5 info-front">
 
-						<div class="mb-3 row">
-							<label for="phone" class="col-7 col-form-label">핸드폰 번호</label>
-							<div class="col-8">
-								<input type="number" id="phone" name="phone" required>
-							</div>
-						</div>
+										<div class="mb-3 row">
+											<label for="age" class="col-4 col-form-label">나이</label>
+											<div class="col-8">
+												<input type="number" id="age" name="age" required>
+											</div>
+										</div>
 
-						<div class="mb-3 row">
-							<label for="address" class="col-4 col-form-label">거주지역</label>
-							<div class="col-8">
-								<input type="text" id="address" name="address" required>
-							</div>
+										<div class="mb-3 row">
+											<label for="phone" class="col-7 col-form-label">핸드폰
+												번호</label>
+											<div class="col-8">
+												<input type="number" id="phone" name="phone" required>
+											</div>
+										</div>
 
-						</div>
-						<div class="mb-3 row">
-							<label for="interest" class="col-4 col-form-label">관심사</label>
-							<div class="col-8">
-								<input type="text" id="interest" name="interest" required>
-							</div>
-						</div>
+										<div class="mb-3 row">
+											<label for="address" class="col-4 col-form-label">거주지역</label>
+											<div class="col-8">
+												<input type="text" id="address" name="address" required>
+											</div>
 
-						<div class="mb-3 row">
-							<label for="mbti" class="col-4 col-form-label">MBTI</label>
-							<div class="col-8">
-								<input type="text" id="mbti" name="mbti" required>
-							</div>
-						</div>
+										</div>
+										<div class="mb-3 row">
+											<label for="interest" class="col-4 col-form-label">관심사</label>
+											<div class="col-8">
+												<input type="text" id="interest" name="interest" required>
+											</div>
+										</div>
 
-						<div class="mb-3 row">
-							<label for="sport" class="col-4 col-form-label">운동</label>
-							<div class="col-8">
-								<select class="form-select" id="sport" name="sport" required>
-									<option value="yes">예</option>
-									<option value="no">아니오</option>
-								</select>
-							</div>
+										<div class="mb-3 row">
+											<label for="mbti" class="col-4 col-form-label">MBTI</label>
+											<div class="col-8">
+												<input type="text" id="mbti" name="mbti" required>
+											</div>
+										</div>
+
+										<div class="mb-3 row">
+											<label for="sport" class="col-4 col-form-label">운동</label>
+											<div class="col-8">
+												<select class="form-select" id="sport" name="sport" required>
+													<option value="yes">예</option>
+													<option value="no">아니오</option>
+												</select>
+											</div>
+										</div>
+									</div>
+
+
+									<!-- 오른쪽 세로 정렬 -->
+									<div class="col-md-5">
+										<div class="mb-5 row">
+											<label for="smoking" class="col-4 col-form-label">흡연</label>
+											<div class="col-8">
+												<select class="form-select" id="smoking" name="smoking"
+													required>
+													<option value="yes">예</option>
+													<option value="no">아니오</option>
+												</select>
+											</div>
+										</div>
+
+										<div class="mb-3 row">
+											<label for="drinking" class="col-4 col-form-label">음주</label>
+											<div class="col-8">
+												<select class="form-select" id="drinking" name="drinking"
+													required>
+													<option value="yes">예</option>
+													<option value="no">아니오</option>
+												</select>
+											</div>
+										</div>
+
+										<div class="mb-3 row">
+											<label for="job" class="col-4 col-form-label">직장</label>
+											<div class="col-8">
+												<input type="text" id="job" name="job" required>
+											</div>
+										</div>
+
+										<div class="mb-3 row">
+											<label for="school" class="col-4 col-form-label">학교</label>
+											<div class="col-8">
+												<input type="text" id="school" name="school" required>
+											</div>
+										</div>
+
+										<div class="mb-3 row">
+											<label for="role" class="col-4 col-form-label">등급</label>
+											<div class="col-8">
+												<select class="form-select" id="role" name="role" required>
+													<option value="user">사용자</option>
+													<option value="admin">관리자</option>
+												</select>
+
+											</div>
+										</div>
+
+									</div>
+								</div>
+
+								<br> <br>
+
+								<div class="">
+									<!-- 양쪽에 자기소개 배치 -->
+									<div class="row">
+										<div class="col-md-1"></div>
+										<div class="col-md-10">
+											<label for="aboutme" class="form-label">자기소개</label>
+											<textarea class="form-control" id="aboutme" name="aboutme"
+												rows="5" required></textarea>
+										</div>
+									</div>
+									<br> <br>
+									<div class="">
+										<!-- 가입 버튼 오른쪽에 배치 -->
+										<div class="text-center">
+											<input type="submit" class="btn btn-primary" value="가입하기"
+												onclick="checkFormAndSubmit()">
+										</div>
+									</div>
+								</div>
+							</form>
 						</div>
+						<!-- div 컨테이너  -->
+						<!-- 정보 입력 끝!!!!!!!!!!!!!!!!!!!!!!!!  -->
+						<br> <br> <br>
+						<!-- Header End -->
+
+
+						<!-- Back to Top -->
+						<a href="#"
+							class="btn btn-lg btn-primary btn-lg-square back-to-top"><i
+							class="bi bi-arrow-up"></i></a>
 					</div>
 
+					<!-- JavaScript Libraries -->
+					<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+					<script
+						src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+					<script src="lib/wow/wow.min.js"></script>
+					<script src="lib/easing/easing.min.js"></script>
+					<script src="lib/waypoints/waypoints.min.js"></script>
+					<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
-					<!-- 오른쪽 세로 정렬 -->
-					<div class="col-md-5">
-						<div class="mb-5 row">
-							<label for="smoking" class="col-4 col-form-label">흡연</label>
-							<div class="col-8">
-								<select class="form-select" id="smoking" name="smoking" required>
-									<option value="yes">예</option>
-									<option value="no">아니오</option>
-								</select>
-							</div>
-						</div>
+					<!-- Template Javascript -->
+					<script src="js/main.js"></script>
 
-						<div class="mb-3 row">
-							<label for="drinking" class="col-4 col-form-label">음주</label>
-							<div class="col-8">
-								<select class="form-select" id="drinking" name="drinking"
-									required>
-									<option value="yes">예</option>
-									<option value="no">아니오</option>
-								</select>
-							</div>
-						</div>
+					<script>
+						function checkFormAndSubmit() {
+							checkForm();
 
-						<div class="mb-3 row">
-							<label for="job" class="col-4 col-form-label">직장</label>
-							<div class="col-8">
-								<input type="text" id="job" name="job" required>
-							</div>
-						</div>
+							var isSubmitEnabled = !document
+									.getElementById("submitBtn").disabled;
 
-						<div class="mb-3 row">
-							<label for="school" class="col-4 col-form-label">학교</label>
-							<div class="col-8">
-								<input type="text" id="school" name="school" required>
-							</div>
-						</div>
+							if (isSubmitEnabled) {
+								// 이동할 페이지의 URL을 여기에 입력해줘
+								window.location.href = "index";
+							}
+						}
 
-						<div class="mb-3 row">
-							<label for="role" class="col-4 col-form-label">등급</label>
-							<div class="col-8">
-								<select class="form-select" id="role" name="role" required>
-									<option value="user">사용자</option>
-									<option value="admin">관리자</option>
-								</select>
+						function checkForm() {
+							var age = document.getElementById("age").value;
+							var phone = document.getElementById("phone").value;
+							var address = document.getElementById("address").value;
+							var interest = document.getElementById("interest").value;
+							var mbti = document.getElementById("mbti").value;
+							var sport = document.getElementById("sport").options[document
+									.getElementById("sport").selectedIndex].value;
+							var smoking = document.getElementById("smoking").options[document
+									.getElementById("smoking").selectedIndex].value;
+							var drinking = document.getElementById("drinking").options[document
+									.getElementById("drinking").selectedIndex].value;
+							var job = document.getElementById("job").value;
+							var school = document.getElementById("school").value;
+							var role = document.getElementById("role").options[document
+									.getElementById("role").selectedIndex].value;
+							var aboutme = document.getElementById("aboutme").value;
 
-							</div>
-						</div>
+							if (age && phone && address && interest && mbti
+									&& sport !== "none" && smoking && drinking
+									&& job && school && role !== "none"
+									&& aboutme) {
+								document.getElementById("submitBtn").disabled = false;
+							} else {
+								document.getElementById("submitBtn").disabled = true;
+							}
+						}
 
-					</div>
-				</div>
+						function uploadImage() {
+							var input = document.getElementById('photo');
+							var file = fileInput.files[0];
 
-				<br> <br>
-
-				<div class="">
-					<!-- 양쪽에 자기소개 배치 -->
-					<div class="row">
-						<div class="col-md-1"></div>
-						<div class="col-md-10">
-							<label for="aboutme" class="form-label">자기소개</label>
-							<textarea class="form-control" id="aboutme" name="aboutme"
-								rows="5" required></textarea>
-						</div>
-					</div>
-					<br> <br>
-					<div class="">
-						<!-- 가입 버튼 오른쪽에 배치 -->
-						<div class="text-center">
-							<input type="submit" class="btn btn-primary" value="가입하기"
-								onclick="checkFormAndSubmit()">
-						</div>
-					</div>
-				</div>
-			</form>
-		</div>
-		<!-- div 컨테이너  -->
-		<!-- 정보 입력 끝!!!!!!!!!!!!!!!!!!!!!!!!  -->
-		<br> <br> <br>
-		<!-- Header End -->
-
-
-		<!-- Back to Top -->
-		<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i
-			class="bi bi-arrow-up"></i></a>
-	</div>
-
-	<!-- JavaScript Libraries -->
-	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="lib/wow/wow.min.js"></script>
-	<script src="lib/easing/easing.min.js"></script>
-	<script src="lib/waypoints/waypoints.min.js"></script>
-	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
-
-	<!-- Template Javascript -->
-	<script src="js/main.js"></script>
-
-	<script>
-		function checkFormAndSubmit() {
-			checkForm();
-
-			var isSubmitEnabled = !document.getElementById("submitBtn").disabled;
-
-			if (isSubmitEnabled) {
-				// 이동할 페이지의 URL을 여기에 입력해줘
-				window.location.href = "index";
-			}
-		}
-
-		function checkForm() {
-			var age = document.getElementById("age").value;
-			var phone = document.getElementById("phone").value;
-			var address = document.getElementById("address").value;
-			var interest = document.getElementById("interest").value;
-			var mbti = document.getElementById("mbti").value;
-			var sport = document.getElementById("sport").options[document
-					.getElementById("sport").selectedIndex].value;
-			var smoking = document.getElementById("smoking").options[document
-					.getElementById("smoking").selectedIndex].value;
-			var drinking = document.getElementById("drinking").options[document
-					.getElementById("drinking").selectedIndex].value;
-			var job = document.getElementById("job").value;
-			var school = document.getElementById("school").value;
-			var role = document.getElementById("role").options[document
-					.getElementById("role").selectedIndex].value;
-			var aboutme = document.getElementById("aboutme").value;
-
-			if (age && phone && address && interest && mbti && sport !== "none"
-					&& smoking && drinking && job && school && role !== "none"
-					&& aboutme) {
-				document.getElementById("submitBtn").disabled = false;
-			} else {
-				document.getElementById("submitBtn").disabled = true;
-			}
-		}
-
-		function uploadImage() {
-			var input = document.getElementById('photo');
-			var file = fileInput.files[0];
-
-			//선택된 파일이 존재하면 FormData객체 생성 후, 해당 객체에 파일 추가
-			if (file) {
-				var formData = new FormData(document.getElementById('infoForm'));
-				formData.append('file', file);
-				// 여기에서 서버로 Ajax 요청을 보내거나, form.submit()을 사용하여 제출할 수 있습니다.
-				// 예를 들어, jQuery를 사용하여 Ajax 요청을 보내는 경우
-				$.ajax({
-					type : "post",
-					url : '${cpath}/info',
-					data : formData,
-					processData : false, // FormData를 직렬화
-					contentType : false, //컨텐츠 타입 설정 X
-					success : function(response) {
-						// 성공 시 동작
-						alert("Success");
-					},
-					error : function(error) {
-						// 에러 시 동작
-						alert("Error");
-					}
-				});
-			} else {
-				alert("Please select a file.")
-			}
-		}
-	</script>
-
-
-
-
+							//선택된 파일이 존재하면 FormData객체 생성 후, 해당 객체에 파일 추가
+							if (file) {
+								var formData = new FormData(document
+										.getElementById('infoForm'));
+								formData.append('file', file);
+								// 여기에서 서버로 Ajax 요청을 보내거나, form.submit()을 사용하여 제출할 수 있습니다.
+								// 예를 들어, jQuery를 사용하여 Ajax 요청을 보내는 경우
+								$.ajax({
+									type : "post",
+									url : '${cpath}/info',
+									data : formData,
+									processData : false, // FormData를 직렬화
+									contentType : false, //컨텐츠 타입 설정 X
+									success : function(response) {
+										// 성공 시 동작
+										alert("Success");
+									},
+									error : function(error) {
+										// 에러 시 동작
+										alert("Error");
+									}
+								});
+							} else {
+								alert("Please select a file.")
+							}
+						}
+					</script>
 </body>
 </html>

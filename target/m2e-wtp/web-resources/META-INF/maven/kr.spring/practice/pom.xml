@@ -89,7 +89,13 @@
 		<artifactId>jstl</artifactId>
 		<version>1.2</version>
 	</dependency>
-		
+	
+	<dependency>
+	  <groupId>software.amazon.awssdk</groupId>
+	  <artifactId>aws-sdk-java</artifactId>
+	  <version>2.21.23</version>
+	</dependency>
+			
 		
 		
 		<dependency>

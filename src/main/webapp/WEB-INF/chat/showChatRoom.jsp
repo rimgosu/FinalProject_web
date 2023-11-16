@@ -67,22 +67,22 @@
 		        <div class="card">
 		          <div class="card-body">
 		
-		            <ul class="list-unstyled mb-0" style="max-height: 700px;">
+		            <ul id="chatRoomList" class="list-unstyled mb-0" style="max-height: 700px;">
 		              
-		              <c:forEach var="chatRoom" items="${chatRooms}" varStatus="status">
+		              <c:forEach var="chatRoomNotification" items="${chatRoomNotifications}" varStatus="status">
 			            <li class="p-2 border-bottom" style="background-color: #eee;">
-		                  <a href="#!" class="d-flex justify-content-between">
+		                  <a href="#!" class="chat-link d-flex justify-content-between" data-room-uuid="${chatRoomNotification.type_uuid}">
 		                    <div class="d-flex flex-row">
 		                      <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp" alt="avatar"
 		                        class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
 		                      <div class="pt-1">
-		                        <p class="fw-bold mb-0">${chatRoom.room_joined}</p>
+		                        <p class="fw-bold mb-0">${chatRoomNotification.opponent_username}</p>
 		                        <p class="small text-muted">Hello, Are you there?</p>
 		                      </div>
 		                    </div>
 		                    <div class="pt-1 chatRoomTime">
 		                      <span id="timeAgo"></span>
-		                      <span class="badge bg-danger float-end">1</span>
+		                      <span class="badge bg-danger float-end">${chatRoomNotification.notification_count}</span>
 		                    </div>
 		                  </a>
 		                </li>
@@ -336,7 +336,7 @@
                         <div class="position-relative mx-auto" style="max-width: 400px;">
                             <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
                             <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
-                        </div>
+                        </div>          
                     </div>
                 </div>
             </div>
@@ -378,6 +378,43 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    
+<script>
+
+// [채팅 클릭][채팅 보여주기]
+$(document).ready(function() {
+    $('.chat-link').click(function(e) {
+        e.preventDefault();
+        var roomUuid = $(this).data('room-uuid');
+
+        $.ajax({
+            url: '/boot/GetChatting',
+            type: 'GET',
+            data: { room_uuid: roomUuid },
+            success: function(chattings) {
+                var chattingListHtml = '';
+                chattings.forEach(function(chat) {
+                	chattingListHtml += `<li>
+					                        <strong>\${chat.chat_chatter}</strong>: 
+					                        \${chat.chat_content} 
+					                        <small>(\${new Date(chat.chatted_at).toLocaleString()})</small>
+					                     </li>`;
+                });
+
+                $('#chatting-ul').html(chattingListHtml);
+            },
+            error: function(error) {
+                console.error(error);
+            }
+        });
+    });
+});
+
+
+
+</script>
+    
 </body>
 
-</html></html>
+</html>
+

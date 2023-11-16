@@ -15,10 +15,11 @@ import lombok.ToString;
 public class Chatting {
 	
 	private UUID chat_uuid;
-	private Instant chatted_at;
 	private UUID room_uuid;
 	private String chat_chatter;
+	private Instant chatted_at;
 	private String chat_content;
 	private String chat_emoticon;
+	private Boolean read_status;
 	
 }

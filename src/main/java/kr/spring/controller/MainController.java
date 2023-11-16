@@ -22,7 +22,6 @@ import com.datastax.oss.driver.api.core.config.DriverConfigLoader;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import kr.spring.entity.ChatRoom;
 import kr.spring.entity.Info;
 import kr.spring.service.DBService;
 import kr.spring.service.InfoService;
@@ -34,8 +33,8 @@ public class MainController {
 	private InfoService infoService;
 	@Autowired
 	private DBService dbService;
-	
-	
+
+
 	@GetMapping("/index")
 	public String showMainPage() {
 		System.out.println("main으로 들어왔음.");
@@ -53,35 +52,35 @@ public class MainController {
 		System.out.println("좋아요로 들어왔음.");
 		return "like";
 	}
-	
-	
+
+
 	@GetMapping("/login")
 	public String showLoginPage() {
 		System.out.println("로그인으로 들어왔음.");
 		return "login";
 	}
-	
+
 	@PostMapping("/login")
-    public String showLoginPage(Info info, HttpSession session) {
+	public String showLoginPage(Info info, HttpSession session) {
 		System.out.println("로그인 페이지로 들어왔음" + info.toString());
-		
+
 		Map<String, Object> columnValues = new HashMap<>();
 		columnValues.put("username", info.getUsername());
 		columnValues.put("password", info.getPassword());
-		
+
 		DriverConfigLoader loader = dbService.getConnection();
 		List<Info> listInfo = dbService.findAllByColumnValues(loader, Info.class, columnValues);
-		
+
 		if ( listInfo.size() == 0 ) {
 			return "redirect:login";
 		} else {
 			session.setAttribute("mvo", listInfo.get(0));
 			return "redirect:index";
 		}
-		
-   }
 
-	
+	}
+
+
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
@@ -114,13 +113,13 @@ public class MainController {
 		return "redirect:/index";
 
 	}
-	
+
 	//파일 업로드
 	@PostMapping("/fileUpload")
 	public String fileUpload(Info info, @RequestParam("file") MultipartFile file, HttpSession session, HttpServletRequest request) {
 		System.out.println("사진 업로드함.");
 		// 파일 업로드를 할 수 있게 도와주는 MultipartRequest.
-//	    String savePath =request.getServletContext().getRealPath("/");  절대경로 찾는 코드
+		//	    String savePath =request.getServletContext().getRealPath("/");  절대경로 찾는 코드
 		String username_session = ((Info) session.getAttribute("mvo")).getUsername();
 		System.out.println(username_session);
 		// 추가 정보를 담을 Map선언
@@ -131,7 +130,7 @@ public class MainController {
 			if (!file.isEmpty()) {
 				String originalFilename = file.getOriginalFilename();
 				// 파일 저장 경로 및 이름 설정 (File.separator는 경로 구분자/를 구분해줌) savePath+ File.separator
-//				    		String relativePath ="webapp/";
+				//				    		String relativePath ="webapp/";
 				String filePath = request.getServletContext().getRealPath("/" + originalFilename);
 				File dest = new File(filePath);
 
@@ -155,13 +154,13 @@ public class MainController {
 		return "redirect:/index";
 	}
 
-	
+
 	@GetMapping("/profile")
 	public String showProfilePage() {
 		System.out.println("마이페이지로 들어왔음.");
 		return "profile";
 	}
-	
+
 	@GetMapping("/update")
 	public String showUpdatePage() {
 		System.out.println("수정페이지로 들어왔음.");

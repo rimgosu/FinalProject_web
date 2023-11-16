@@ -7,7 +7,6 @@ import java.util.Map;
 import com.datastax.oss.driver.api.core.config.DriverConfigLoader;
 import com.datastax.oss.driver.api.core.cql.Row;
 
-import kr.spring.entity.ChatRoom;
 
 public interface DBService {
 	
@@ -26,5 +25,6 @@ public interface DBService {
 	
 	
 	public <T> void setFieldValue(Field field, T entity, Row row) throws IllegalAccessException;
+
 
 }

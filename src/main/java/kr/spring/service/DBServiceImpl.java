@@ -26,7 +26,6 @@ import com.datastax.oss.driver.api.core.cql.ResultSet;
 import com.datastax.oss.driver.api.core.cql.Row;
 
 import kr.spring.TableColumnsValues;
-import kr.spring.entity.ChatRoom;
 
 @Service
 public class DBServiceImpl implements DBService{
@@ -42,7 +41,7 @@ public class DBServiceImpl implements DBService{
 
 	@Override
 	public <T> void save(DriverConfigLoader loader, Class<T> entityClass, T entity) {
-		
+	    System.out.println("[DBServiceImpl][save]");
 	    TableColumnsValues.Result<T> result = TableColumnsValues.extractData(entityClass, entity);
 	    try (CqlSession session = CqlSession.builder()
 	            .withConfigLoader(loader)
@@ -52,13 +51,25 @@ public class DBServiceImpl implements DBService{
 	        String placeholders = String.join(", ", Collections.nCopies(result.columnNames.length, "?"));
 	        String cql = String.format("INSERT INTO %s (%s) VALUES (%s)", "member."+result.tableName, columns, placeholders);
 
+	        System.out.println("[cql:]" + cql);
+	        System.out.println("[result.values:]");
+	        for (Object value : result.values) {
+	            if (value != null) {
+	                System.out.println("Value: " + value + ", Class: " + value.getClass().getName());
+	            } else {
+	                System.out.println("Value: null (The type cannot be determined)");
+	            }
+	        }
+
 	        PreparedStatement preparedStatement = session.prepare(cql);
-	        session.execute(preparedStatement.bind((Object[]) result.values));
+	        Object[] boundValues = convertToAppropriateType(result.values);
+	        session.execute(preparedStatement.bind(boundValues));
 	    } catch (Exception e) {
 	        // 오류 처리 로직
 	        System.out.println("save Error: " + e);
 	    }
 	}
+
 
 
 	@Override
@@ -157,7 +168,7 @@ public class DBServiceImpl implements DBService{
 	        String cql = String.format("SELECT * FROM %s WHERE %s", 
 	                "member." + classType.getSimpleName().toLowerCase(), whereClause.toString());
 	        cql += " ALLOW FILTERING";
-	        System.out.println("execute cql : " + cql);
+	        System.out.println("[execute cql:] " + cql);
 
 	        PreparedStatement preparedStatement = session.prepare(cql);
 	        // 바인딩된 값 추가
@@ -178,8 +189,6 @@ public class DBServiceImpl implements DBService{
 	                }
 	            }
 	            
-	            System.out.println(entity.toString());
-
 	            entities.add(entity);
 	        }
 
@@ -244,45 +253,97 @@ public class DBServiceImpl implements DBService{
 	
 	
 
-	
+	public Object[] convertToAppropriateType(Object[] values) {
+	    Object[] convertedValues = new Object[values.length];
+	    for (int i = 0; i < values.length; i++) {
+	        Object value = values[i];
+	        if (value == null) {
+	            System.out.println("Value: null");
+	            convertedValues[i] = null;
+	            continue; // 다음 반복으로 넘어갑니다.
+	        }
+
+	        System.out.println("Value: " + value + ", Class: " + value.getClass().getSimpleName()); // 로그 출력
+
+	        if (value instanceof UUID) {
+	            convertedValues[i] = (UUID) value;
+	        } else if (value instanceof Instant) {
+	            convertedValues[i] = (Instant) value;
+	        } else if (value instanceof Boolean) {
+	            convertedValues[i] = (Boolean) value;
+	        } else if (value instanceof String) {
+	            convertedValues[i] = (String) value;
+	        } else if (value instanceof Float) {
+	            convertedValues[i] = (Float) value;
+	        } else if (value instanceof Integer) {
+	            convertedValues[i] = (Integer) value;
+	        } else {
+	            // 다른 타입에 대한 처리
+	            convertedValues[i] = value;
+	        }
+	    }
+	    return convertedValues;
+	}
+
+
+
+
 
 	@Override
 	public <T> void setFieldValue(Field field, T entity, Row row) throws IllegalAccessException {
 	    String columnName = field.getName();
 	    
-	    if (field.getType().equals(String.class)) {
-	        field.set(entity, row.getString(columnName));
-	    } else if (field.getType().equals(UUID.class)) {
-	        field.set(entity, row.getUuid(columnName));
-	    } else if (field.getType().equals(Integer.class) || field.getType().equals(int.class)) {
-	        field.set(entity, row.getInt(columnName));
-	    } else if (field.getType().equals(Instant.class)) {
-	        field.set(entity, row.getInstant(columnName));
-	    } else if (field.getType().equals(Long.class) || field.getType().equals(long.class)) {
-	        field.set(entity, row.getLong(columnName));
-	    } else if (field.getType().equals(Double.class) || field.getType().equals(double.class)) {
-	        field.set(entity, row.getDouble(columnName));
-	    } else if (field.getType().equals(Float.class) || field.getType().equals(float.class)) {
-	        field.set(entity, row.getFloat(columnName));
-	    } else if (field.getType().equals(List.class)) {
-	        // 여기에서 필요한 List 타입 처리
-	        // 예시: String, Integer, Float, Long, Double
-	        ParameterizedType listType = (ParameterizedType) field.getGenericType();
-	        Class<?> listClass = (Class<?>) listType.getActualTypeArguments()[0];
-	        field.set(entity, row.getList(columnName, listClass)); 
-	    } else if (field.getType().equals(Map.class)) {
-	        // 여기에서 필요한 Map 타입 처리
-	        // 예시: Instant to String, Integer to String, Float to String
-	        ParameterizedType mapType = (ParameterizedType) field.getGenericType();
-	        Class<?> keyClass = (Class<?>) mapType.getActualTypeArguments()[0];
-	        Class<?> valueClass = (Class<?>) mapType.getActualTypeArguments()[1];
-	        field.set(entity, row.getMap(columnName, keyClass, valueClass)); 
-	    }
+	    try {
+	    	if (field.getType().equals(String.class)) {
+//		    	System.out.println("[setFieldValue][equals(String.class)][row.getString(columnName)]"+row.getString(columnName));
+		        field.set(entity, row.getString(columnName));
+		    } 
+		    else if (field.getType().equals(UUID.class)) {
+//		    	System.out.println("[setFieldValue][equals(UUID.class)][row.getUuid(columnName)]"+row.getUuid(columnName));
+		    	UUID uuidValue = row.getUuid(columnName);
+	            if (uuidValue != null) {
+	                field.set(entity, uuidValue);
+	            }
+		    } 
+		    else if (field.getType().equals(Integer.class) || field.getType().equals(int.class)) {
+//		    	System.out.println("[setFieldValue][equals(Integer.class][row.getInt(columnName)]"+row.getInt(columnName));
+		        field.set(entity, row.getInt(columnName));
+		    } 
+		    else if (field.getType().equals(Instant.class)) {
+//		    	System.out.println("[setFieldValue][equals(Instant.class)][row.getInstant(columnName)]"+row.getInstant(columnName));
+		        field.set(entity, row.getInstant(columnName));
+		    } 
+		    else if (field.getType().equals(Long.class) || field.getType().equals(long.class)) {
+//		    	System.out.println("[setFieldValue][row.getLong(columnName)]"+row.getLong(columnName));
+		        field.set(entity, row.getLong(columnName));
+		    } 
+		    else if (field.getType().equals(Double.class) || field.getType().equals(double.class)) {
+		        field.set(entity, row.getDouble(columnName));
+		    } 
+		    else if (field.getType().equals(Float.class) || field.getType().equals(float.class)) {
+		        field.set(entity, row.getFloat(columnName));
+		    } 
+		    else if (field.getType().equals(List.class)) {
+		        // 여기에서 필요한 List 타입 처리
+		        // 예시: String, Integer, Float, Long, Double
+		        ParameterizedType listType = (ParameterizedType) field.getGenericType();
+		        Class<?> listClass = (Class<?>) listType.getActualTypeArguments()[0];
+		        field.set(entity, row.getList(columnName, listClass)); 
+		    } 
+		    else if (field.getType().equals(Map.class)) {
+		        // 여기에서 필요한 Map 타입 처리
+		        // 예시: Instant to String, Integer to String, Float to String
+		        ParameterizedType mapType = (ParameterizedType) field.getGenericType();
+		        Class<?> keyClass = (Class<?>) mapType.getActualTypeArguments()[0];
+		        Class<?> valueClass = (Class<?>) mapType.getActualTypeArguments()[1];
+		        field.set(entity, row.getMap(columnName, keyClass, valueClass)); 
+		    }
+	    } catch (Exception e) {
+	    	System.out.println("Error setting field value for column: " + columnName + ", Error: " + e.getMessage());
+		}
+	    
 	    // 추가적인 타입에 대한 처리는 여기에 추가
 	}
-
-
-
 
 	
 }

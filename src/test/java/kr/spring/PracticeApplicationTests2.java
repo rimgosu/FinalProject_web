@@ -1,7 +1,9 @@
 package kr.spring;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -11,73 +13,49 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.datastax.oss.driver.api.core.config.DriverConfigLoader;
 
+import jnr.ffi.annotations.In;
 import kr.spring.entity.Chatting;
 import kr.spring.entity.Info;
 import kr.spring.entity.Interaction;
 import kr.spring.service.DBService;
 
 @SpringBootTest
-class PracticeApplicationTests {
+class PracticeApplicationTests2 {
 	
 	@Autowired
 	DBService dbService;
 
 	
 	
-	   void myTest() {
-	  
-	  String room_uuid_ab = "5f57d331-600c-4920-b974-bf7b54ac8803";
-	  
-	  Chatting chatting = new Chatting(); 
-	  DriverConfigLoader loader = dbService.getConnection();
-	  
-	  chatting.setChat_chatter("c@gmail.com");
-	  chatting.setChat_content("첫번째 채팅입니다."); chatting.setChat_emoticon(null);
-	  chatting.setChat_uuid(UUID.randomUUID());
-	  chatting.setChatted_at(Instant.now());
-	  chatting.setRoom_uuid(UUID.fromString(room_uuid_ab));
-	  chatting.setRead_status(true);
-	  
-	  System.out.println("chatting" + chatting.toString());
-	  
-	  
-	  dbService.save(loader, Chatting.class, chatting);
-	  
-	  chatting.setChat_chatter("c@gmail.com");
-	  chatting.setChat_content("두 번째 채팅입니다."); chatting.setChat_emoticon(null);
-	  chatting.setChat_uuid(UUID.randomUUID());
-	  chatting.setChatted_at(Instant.now());
-	  chatting.setRoom_uuid(UUID.fromString(room_uuid_ab));
-	  chatting.setRead_status(true);
-	  
-	  dbService.save(loader, Chatting.class, chatting);
-	  
-	  chatting.setChat_chatter("c@gmail.com");
-	  chatting.setChat_content("세 번째 채팅입니다."); chatting.setChat_emoticon(null);
-	  chatting.setChat_uuid(UUID.randomUUID());
-	  chatting.setChatted_at(Instant.now());
-	  chatting.setRoom_uuid(UUID.fromString(room_uuid_ab));
-	  chatting.setRead_status(true);
-	  
-	  dbService.save(loader, Chatting.class, chatting);
-	  
-	  chatting.setChat_chatter("c@gmail.com");
-	  chatting.setChat_content("네 번째 채팅입니다."); chatting.setChat_emoticon(null);
-	  chatting.setChat_uuid(UUID.randomUUID());
-	  chatting.setChatted_at(Instant.now());
-	  chatting.setRoom_uuid(UUID.fromString(room_uuid_ab));
-	  chatting.setRead_status(true);
-	  
-	  dbService.save(loader, Chatting.class, chatting);
-	  
-	  chatting.setChat_chatter("c@gmail.com");
-	  chatting.setChat_content("다섯 번째 채팅입니다."); chatting.setChat_emoticon(null);
-	  chatting.setChat_uuid(UUID.randomUUID());
-	  chatting.setChatted_at(Instant.now());
-	  chatting.setRoom_uuid(UUID.fromString(room_uuid_ab));
-	  chatting.setRead_status(true);
-	  
-	  dbService.save(loader, Chatting.class, chatting);
+	  @Test void myTest() {
+		Map<String, Object> interactionColumnValues = new HashMap<>();
+		interactionColumnValues.put("from_to", "from");
+		interactionColumnValues.put("type", "chatting");
+		interactionColumnValues.put("my_username", "a@gmail.com");
+        
+        DriverConfigLoader loader = dbService.getConnection();
+        
+        List<Interaction> interactions = dbService.findAllByColumnValues(loader, Interaction.class, interactionColumnValues);
+        for (Interaction interaction : interactions) {
+        	System.out.println(interaction.toString());
+        }
+			
+			
+//		  DriverConfigLoader loader = dbService.getConnection();
+//		  
+//		  List<Interaction> interactions = dbService.findAll(loader, Interaction.class);
+//		  
+//		  for (Interaction interaction : interactions) {
+//			  System.out.println(interaction.toString()); 
+//		  }
+			 
+			 
+			/*
+			 * DriverConfigLoader loader = dbService.getConnection(); List<Info> infos =
+			 * dbService.findAll(loader, Info.class);
+			 * 
+			 * for (Info info : infos) { System.out.println(info.toString()); }
+			 */
 	  
 	  }
 	 

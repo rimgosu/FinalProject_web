@@ -173,6 +173,12 @@ public class MainController {
 		System.out.println("테스트페이지로 들어옴.");
 		return "test";
 	}
+	
+	@GetMapping("/sendlike")
+	public String showSendLikePage() {
+		System.out.println("보낸좋아요로 들어왔음.");
+		return "sendlike";
+	}
 
 	/*
 	 * @GetMapping("/test2") //지협님이 하신 테스트 public String

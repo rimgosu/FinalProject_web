@@ -7,7 +7,7 @@
 <c:set var="cpath" value="${pageContext.request.contextPath}" />    
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="background: white;">
 <head>
     <meta charset="utf-8">
     <title>Makaan - Real Estate HTML Template</title>
@@ -154,7 +154,7 @@
 		}
     </style>
 </head>
-<body>
+<body style="background: white;">
     <div class="container-xxl bg-white p-0">
         <jsp:include page="header.jsp"></jsp:include>
         <!-- Navbar End -->
@@ -199,6 +199,7 @@
 						<button type="button" onclick="uploadImage()" id="uploadButton">업로드</button>
 					 </form>
                     </div>
+                    <a href="sendlike" class="nav-item nav-link">보낸 좋아요</a>
                   </div>
                 </div>
               </div>
@@ -286,7 +287,7 @@
                       <h6 class="mb-0">Drink</h6>
                     </div>
                     <div class="col-sm-9">
-                      ${mvo.address}
+                      ${mvo.drinking}
                     </div>
                   </div>
                   <hr>

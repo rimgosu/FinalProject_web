@@ -7,7 +7,7 @@
 <c:set var="cpath" value="${pageContext.request.contextPath}" />    
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="background: white;">
 <head>
     <meta charset="utf-8">
     <title>Makaan - Real Estate HTML Template</title>
@@ -143,7 +143,7 @@
 		}
     </style>
 </head>
-<body>
+<body style="background: white;">
     <div class="container-xxl bg-white p-0">
         <jsp:include page="header.jsp"></jsp:include>
         <!-- Navbar End -->
@@ -156,7 +156,7 @@
 		      <div class="container">
 		          <div class="row">
 		              <div class="col-12 text-center">
-		                    <h2>Profile</h2>
+		                    <h2></h2>
 		              </div>
 		            </div>
 		            <div class="container">
@@ -257,7 +257,10 @@
                       <h6 class="mb-0">Sport</h6>
                     </div>
                     <div class="col-sm-9">
-                      <input value="${mvo.sport}">
+                      <select class="form-select" id="sport" name="sport" required style="color: black; width: 100px;">
+							<option value="yes">yes</option>
+							<option value="no">no</option>
+					  </select>
                     </div>
                   </div>
                   <hr>
@@ -266,7 +269,10 @@
                       <h6 class="mb-0">Smoke</h6>
                     </div>
                     <div class="col-sm-9">
-                      <input value="${mvo.smoking}">
+                    	<select class="form-select" id="smoking" name="smoking" required style="color: black; width: 100px;">
+							<option value="yes">yes</option>
+							<option value="no">no</option>
+						</select>
                     </div>
                   </div>
                   <hr>
@@ -275,7 +281,10 @@
                       <h6 class="mb-0">Drink</h6>
                     </div>
                     <div class="col-sm-9">
-                      <input value="${mvo.drinking}">
+                    	<select class="form-select" id="drinking" name="drinking" required style="color: black; width: 100px;">
+							<option value="yes">yes</option>
+							<option value="no">no</option>
+						</select>
                     </div>
                   </div>
                   <hr>
@@ -302,7 +311,7 @@
 				<hr>
                   <div class="row">
                     <div class="col-sm-12">
-                      <a class="btn btn-info " target="__blank" href="update">Edit</a>
+                      <a class="btn btn-info " target="__blank" href="update">Confirm</a>
                     </div>
                   </div>
             </div>

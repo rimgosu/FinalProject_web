@@ -8,7 +8,7 @@
 <c:set var="cpath" value="${pageContext.request.contextPath}" />    
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="background: white;">
 <head>
     <meta charset="utf-8">
     <title>Makaan - Real Estate HTML Template</title>
@@ -39,7 +39,7 @@
     <link href="css/style.css" rel="stylesheet">
     
 </head>
-<body>
+<body style="background: white;">
     <div class="container-xxl bg-white p-0">
         <jsp:include page="header.jsp"></jsp:include>
         <!-- Navbar End -->

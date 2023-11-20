@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.lang.reflect.Member;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,10 @@ import org.springframework.web.multipart.MultipartRequest;
 
 import com.datastax.oss.driver.api.core.session.Request;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.datastax.oss.driver.api.core.config.DriverConfigLoader;
 
 import jakarta.servlet.RequestDispatcher;
@@ -142,32 +147,54 @@ public class MainController {
 	@PostMapping("/fileUpload")
 	public String fileUpload(Info info, @RequestParam("file") MultipartFile file, @RequestParam("photoNum") int photoNum, HttpSession session, HttpServletRequest request) {
 		System.out.println("사진 업로드함. 일단 1번 사진을 클릭한 것을 가정하겠음.");
+		System.out.println(file);
+
 		System.out.println(photoNum);
 		// 파일 업로드를 할 수 있게 도와주는 MultipartRequest.
 //	    String savePath =request.getServletContext().getRealPath("/");  절대경로 찾는 코드
 		String username_session = ((Info) session.getAttribute("mvo")).getUsername();
 		System.out.println(username_session);
-		
-		// 추가 정보를 담을 Map선언
-		Map<Integer, String> additionalFile = new HashMap<>();
-		
+		String originalFilename = null;			
+		String uploadedFilePath_aws = null;			
 		try {
 			String uploadedFilePath = null;
 			// 업로드된 파일 처리
 			if (!file.isEmpty()) {
-				String originalFilename = file.getOriginalFilename();
+				originalFilename = file.getOriginalFilename();
 				// 파일 저장 경로 및 이름 설정
+				System.out.println(originalFilename);
+				String filePath_aws = "s3://simkoong-s3/" + originalFilename;
 				String filePath = request.getServletContext().getRealPath("/" + originalFilename);
+				System.out.println(filePath);
 				File dest = new File(filePath);
-
+				File dest1 = new File(filePath_aws);
+				
+				System.out.println(dest);
 				// 파일 저장
 				file.transferTo(dest);
 				// 파일 경로에서 역슬래시 바꾸는 곳.
 				System.out.println(dest);
 				filePath = filePath.replace("\\\\", "/");
 				uploadedFilePath = filePath.replace("\\", "/");
+				
+				filePath_aws = filePath_aws.replace("\\\\", "/");
+				uploadedFilePath_aws = filePath_aws.replace("\\", "/");
 
-			}			
+			}		
+			//AWS S3
+			
+			System.out.format("Uploading %s to S3 bucket %s...\n", uploadedFilePath, "simkoong-s3");
+	        final AmazonS3 s3 = AmazonS3ClientBuilder.standard().withRegion("ap-northeast-2").build();
+	        try {
+	            s3.putObject("simkoong-s3", "test_image.jpg", new File(uploadedFilePath));
+	        } catch (AmazonServiceException e) {
+	            System.err.println(e.getErrorMessage());
+	            System.exit(1);
+	        }
+	        System.out.println("Done!");
+			
+
+			
 			// listinfo 정보 전체 가져오기
 			Map<String, Object> columnValues = new HashMap<>();
 			columnValues.put("username", username_session);
@@ -175,7 +202,7 @@ public class MainController {
 			DriverConfigLoader loader = dbService.getConnection();
 			List<Info> listInfo = dbService.findAllByColumnValues(loader, Info.class, columnValues);
 			
-			// photo 정보를 가져오기
+			// 업데이트할 정보를 Map형식의 photo에 넣기.
 			Map<Integer, String> photo = listInfo.get(0).getPhoto();
 			photo.put(photoNum, uploadedFilePath);
 			

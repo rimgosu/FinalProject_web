@@ -1,5 +1,5 @@
 // ******   1. css를 위한 기능들      **********
-// 1-1. 스크
+// 1-1. 스크롤
 $(document).ready(function() {
   var chatUl = document.querySelector("#chatting-ul");
   chatUl.scrollTop = chatUl.scrollHeight;

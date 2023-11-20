@@ -55,6 +55,7 @@
         <jsp:include page="../header.jsp"></jsp:include>
         <!-- 채팅방 보여주기 기능  -->
         
+        
 		<section style="background-color: #eee;">
 		  <div class="container py-5">
 		
@@ -394,15 +395,57 @@ $(document).ready(function() {
             success: function(chattings) {
                 var chattingListHtml = '';
                 chattings.forEach(function(chat) {
-                	chattingListHtml += `<li>
-					                        <strong>\${chat.chat_chatter}</strong>: 
-					                        \${chat.chat_content} 
-					                        <small>(\${new Date(chat.chatted_at).toLocaleString()})</small>
-					                     </li>`;
+                	console.log(chat)
+                    if('${mvo.username}' === chat.chat_chatter) {
+                        // #1 코드: 사용자 이름이 같은 경우, 왼쪽에 이미지를 위치시킴
+                        chattingListHtml += `
+                            <li class="d-flex justify-content-between mb-4">
+                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp" alt="avatar" class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60">
+                                <div class="card">
+                                    <div class="card-header d-flex justify-content-between p-3">
+                                        <p class="fw-bold mb-0">\${chat.chat_chatter}</p>
+                                        <p class="text-muted small mb-0"><i class="far fa-clock"></i>\${new Date(chat.chatted_at).toLocaleString()}</p>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">\${chat.chat_content}</p>
+                                    </div>
+                                </div>
+                            </li>`;
+                    } else {
+                        // #2 코드: 사용자 이름이 다른 경우, 오른쪽에 이미지를 위치시킴
+                        chattingListHtml += `
+                            <li class="d-flex justify-content-between mb-4">
+                                <div class="card w-100">
+                                    <div class="card-header d-flex justify-content-between p-3">
+                                        <p class="fw-bold mb-0">\${chat.chat_chatter}</p>
+                                        <p class="text-muted small mb-0"><i class="far fa-clock"></i>\${new Date(chat.chatted_at).toLocaleString()}</p>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">\${chat.chat_content}</p>
+                                    </div>
+                                </div>
+                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp" alt="avatar" class="rounded-circle d-flex align-self-start ms-3 shadow-1-strong" width="60">
+                            </li>`;
+                    }
                 });
+                
+                // 입력창
+                chattingListHtml += `
+                	<li class="bg-white mb-3" style="border-radius: 15px;">
+		              <div class="form-outline" style="width: 100%;">
+		                <textarea class="form-control" id="textAreaExample2" rows="4"></textarea>
+		              </div>
+		            </li>
+                `;
+                
+                // send 버튼
+                chattingListHtml += `
+                	<button type="button" class="btn btn-info btn-rounded float-end">Send</button>
+                `;
 
                 $('#chatting-ul').html(chattingListHtml);
             },
+
             error: function(error) {
                 console.error(error);
             }

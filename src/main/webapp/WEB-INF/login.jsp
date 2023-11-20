@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%-- <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
 <%@ taglib prefix ="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -55,13 +55,13 @@
                         <form action="${cpath}/login" method="post" >
                         	<table>
                         		<tr>
-                        			<td class="form-group" style="width:400px;"> 
+                        			<td class="form-group" style="width:400px;">
                         			 	<input type="email" class="form-control border-0 py-3" placeholder="Username" id="username" name="username">
                         			 </td>
                         		</tr>
                         		<br>
                         		<tr>
-                        			<td class="form-group"> 
+                        			<td class="form-group">
                         				 <input type="password" class="form-control border-0 py-3" placeholder="Password" id="password" name="password">
                         			 </td>
                         		</tr>
@@ -106,4 +106,4 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 </body>
-</html>
+</html> --%>

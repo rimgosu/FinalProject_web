@@ -43,17 +43,41 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    
+    <style type="text/css">
+    	.login {
+		  min-height: 100vh;
+		}
+		
+		.bg-image {
+		  background-image: url('https://source.unsplash.com/WEQbe2jBg40/600x1200');
+		  background-size: cover;
+		  background-position: center;
+		}
+		
+		.login-heading {
+		  font-weight: 300;
+		}
+		
+		.btn-login {
+		  font-size: 0.9rem;
+		  letter-spacing: 0.05rem;
+		  padding: 0.75rem 1rem;
+		}
+    	
+    </style>
+    
 </head>
 
 <body style="background: white;">
     <div class="container-xxl bg-white p-0">
-    	<jsp:include page="header.jsp"></jsp:include>
+    	<%-- <jsp:include page="header.jsp"></jsp:include> --%>
         
         <!-- Navbar End -->
 
-		<div>
+		<!-- <div>
 			<img style="width: 100%; object-fit: cover; height: 80vh; margin-top: 20px;" alt="" src="img/couple-smelling-a-rose-sitting-on-the-floor.jpg">
-		</div>
+		</div> -->
 		
         <!-- Header Start -->
         <!-- <div class="container-fluid header bg-white p-0">
@@ -79,7 +103,7 @@
 
 
         <!-- Search Start -->
-        <div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
+        <!-- <div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
             <div class="container">
                 <div class="row g-2">
                     <div class="col-md-10">
@@ -110,12 +134,12 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- Search End -->
 
 
         <!-- Category Start -->
-        <div class="container-xxl py-5">
+        <!-- <div class="container-xxl py-5">
             <div class="container">
                 <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
                     <h1 class="mb-3">Property Types</h1>
@@ -212,12 +236,12 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- Category End -->
 
 
         <!-- About Start -->
-        <div class="container-xxl py-5">
+        <!-- <div class="container-xxl py-5">
             <div class="container">
                 <div class="row g-5 align-items-center">
                     <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
@@ -235,12 +259,12 @@
                     </div>
                 </div>
             </div>
-        </div>
-        About End
+        </div> -->
+        <!-- About End -->
 
 
-        Property List Start
-        <div class="container-xxl py-5">
+        <!-- Property List Start -->
+        <!-- <div class="container-xxl py-5">
             <div class="container">
                 <div class="row g-0 gx-5 align-items-end">
                     <div class="col-lg-6">
@@ -629,12 +653,12 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- Property List End -->
 
 
         <!-- Call to Action Start -->
-        <div class="container-xxl py-5">
+        <!-- <div class="container-xxl py-5">
             <div class="container">
                 <div class="bg-light rounded p-3">
                     <div class="bg-white rounded p-4" style="border: 1px dashed rgba(0, 185, 142, .3)">
@@ -654,12 +678,12 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- Call to Action End -->
 
 
         <!-- Team Start -->
-        <div class="container-xxl py-5">
+        <!-- <div class="container-xxl py-5">
             <div class="container">
                 <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
                     <h1 class="mb-3">Choose Like</h1>
@@ -732,12 +756,12 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- Team End -->
 
 
         <!-- Testimonial Start -->
-        <div class="container-xxl py-5">
+        <!-- <div class="container-xxl py-5">
             <div class="container">
                 <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
                     <h1 class="mb-3">Our Clients Say!</h1>
@@ -782,8 +806,53 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- Testimonial End -->
+        
+        
+        <div class="container-fluid ps-md-0">
+  <div class="row g-0">
+    <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
+    <div class="col-md-8 col-lg-6">
+      <div class="login d-flex align-items-center py-5">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-9 col-lg-8 mx-auto">
+              <h3 class="login-heading mb-4">Welcome back!</h3>
+
+              <!-- Sign In Form -->
+              <form action="${cpath}/login" method="post">
+                <div class="form-floating mb-3">
+                  <input type="email" class="form-control" id="floatingInput" name="username" placeholder="name@example.com">
+                  <label for="floatingInput">Email address</label>
+                </div>
+                <div class="form-floating mb-3">
+                  <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password">
+                  <label for="floatingPassword">Password</label>
+                </div>
+
+                <div class="form-check mb-3">
+                  <input class="form-check-input" type="checkbox" value="" id="rememberPasswordCheck">
+                  <label class="form-check-label" for="rememberPasswordCheck">
+                    Remember password
+                  </label>
+                </div>
+
+                <div class="d-grid">
+                  <a class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2" type="submit">Sign in</a>
+                  <div class="text-center">
+                    <a class="small" href="#">Forgot password?</a>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
         
         <!-- Footer Start -->
         <div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
@@ -880,6 +949,14 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    
+    <script type="text/javascript">
+    function moveToProfile() {
+        // 페이지 이동
+        window.location.href = "profile";
+      }
+    </script>
+    
 </body>
 
 </html>

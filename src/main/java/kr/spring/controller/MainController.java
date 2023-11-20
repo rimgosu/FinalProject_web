@@ -73,10 +73,10 @@ public class MainController {
 		List<Info> listInfo = dbService.findAllByColumnValues(loader, Info.class, columnValues);
 		
 		if ( listInfo.size() == 0 ) {
-			return "redirect:login";
+			return "redirect:index";
 		} else {
 			session.setAttribute("mvo", listInfo.get(0));
-			return "redirect:index";
+			return "redirect:profile";
 		}
 		
    }

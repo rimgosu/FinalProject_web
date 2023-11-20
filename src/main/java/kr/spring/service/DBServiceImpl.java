@@ -54,14 +54,6 @@ public class DBServiceImpl implements DBService{
 	        String cql = String.format("INSERT INTO %s (%s) VALUES (%s)", "member."+result.tableName, columns, placeholders);
 
 	        System.out.println("[cql:]" + cql);
-	        System.out.println("[result.values:]");
-	        for (Object value : result.values) {
-	            if (value != null) {
-	                System.out.println("Value: " + value + ", Class: " + value.getClass().getName());
-	            } else {
-	                System.out.println("Value: null (The type cannot be determined)");
-	            }
-	        }
 
 	        PreparedStatement preparedStatement = session.prepare(cql);
 	        Object[] boundValues = convertToAppropriateType(result.values);

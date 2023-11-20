@@ -105,4 +105,11 @@ public class ChatServiceImpl implements ChatService {
 	
 	}
 
+
+	@Override
+	public void insertChatting(Chatting chatting) {
+		DriverConfigLoader loader = dbService.getConnection();
+		dbService.save(loader, Chatting.class, chatting);
+	}
+
 }

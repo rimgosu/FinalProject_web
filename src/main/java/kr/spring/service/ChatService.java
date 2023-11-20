@@ -15,6 +15,8 @@ public interface ChatService {
 
 	List<ChatRoomNotification> getChatRoomInteractions(String username);
 
+	void insertChatting(Chatting chatting);
+
 	
 	
 	

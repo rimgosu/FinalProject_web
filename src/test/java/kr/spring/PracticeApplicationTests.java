@@ -23,7 +23,7 @@ class PracticeApplicationTests {
 	DBService dbService;
 
 	
-	
+		@Test
 	   void myTest() {
 	  
 	  String room_uuid_ab = "5f57d331-600c-4920-b974-bf7b54ac8803";
@@ -31,7 +31,7 @@ class PracticeApplicationTests {
 	  Chatting chatting = new Chatting(); 
 	  DriverConfigLoader loader = dbService.getConnection();
 	  
-	  chatting.setChat_chatter("c@gmail.com");
+	  chatting.setChat_chatter("a@gmail.com");
 	  chatting.setChat_content("첫번째 채팅입니다."); chatting.setChat_emoticon(null);
 	  chatting.setChat_uuid(UUID.randomUUID());
 	  chatting.setChatted_at(Instant.now());
@@ -43,7 +43,7 @@ class PracticeApplicationTests {
 	  
 	  dbService.save(loader, Chatting.class, chatting);
 	  
-	  chatting.setChat_chatter("c@gmail.com");
+	  chatting.setChat_chatter("a@gmail.com");
 	  chatting.setChat_content("두 번째 채팅입니다."); chatting.setChat_emoticon(null);
 	  chatting.setChat_uuid(UUID.randomUUID());
 	  chatting.setChatted_at(Instant.now());
@@ -52,7 +52,7 @@ class PracticeApplicationTests {
 	  
 	  dbService.save(loader, Chatting.class, chatting);
 	  
-	  chatting.setChat_chatter("c@gmail.com");
+	  chatting.setChat_chatter("a@gmail.com");
 	  chatting.setChat_content("세 번째 채팅입니다."); chatting.setChat_emoticon(null);
 	  chatting.setChat_uuid(UUID.randomUUID());
 	  chatting.setChatted_at(Instant.now());
@@ -61,7 +61,7 @@ class PracticeApplicationTests {
 	  
 	  dbService.save(loader, Chatting.class, chatting);
 	  
-	  chatting.setChat_chatter("c@gmail.com");
+	  chatting.setChat_chatter("a@gmail.com");
 	  chatting.setChat_content("네 번째 채팅입니다."); chatting.setChat_emoticon(null);
 	  chatting.setChat_uuid(UUID.randomUUID());
 	  chatting.setChatted_at(Instant.now());
@@ -70,7 +70,7 @@ class PracticeApplicationTests {
 	  
 	  dbService.save(loader, Chatting.class, chatting);
 	  
-	  chatting.setChat_chatter("c@gmail.com");
+	  chatting.setChat_chatter("a@gmail.com");
 	  chatting.setChat_content("다섯 번째 채팅입니다."); chatting.setChat_emoticon(null);
 	  chatting.setChat_uuid(UUID.randomUUID());
 	  chatting.setChatted_at(Instant.now());
@@ -78,6 +78,57 @@ class PracticeApplicationTests {
 	  chatting.setRead_status(true);
 	  
 	  dbService.save(loader, Chatting.class, chatting);
+	  
+	  // b@gmail.com
+	  chatting.setChat_chatter("a@gmail.com");
+	  chatting.setChat_content("첫번째 채팅입니다."); chatting.setChat_emoticon(null);
+	  chatting.setChat_uuid(UUID.randomUUID());
+	  chatting.setChatted_at(Instant.now());
+	  chatting.setRoom_uuid(UUID.fromString(room_uuid_ab));
+	  chatting.setRead_status(true);
+	  
+	  System.out.println("chatting" + chatting.toString());
+	  
+	  
+	  dbService.save(loader, Chatting.class, chatting);
+	  
+	  chatting.setChat_chatter("b@gmail.com");
+	  chatting.setChat_content("두 번째 채팅입니다."); chatting.setChat_emoticon(null);
+	  chatting.setChat_uuid(UUID.randomUUID());
+	  chatting.setChatted_at(Instant.now());
+	  chatting.setRoom_uuid(UUID.fromString(room_uuid_ab));
+	  chatting.setRead_status(true);
+	  
+	  dbService.save(loader, Chatting.class, chatting);
+	  
+	  chatting.setChat_chatter("b@gmail.com");
+	  chatting.setChat_content("세 번째 채팅입니다."); chatting.setChat_emoticon(null);
+	  chatting.setChat_uuid(UUID.randomUUID());
+	  chatting.setChatted_at(Instant.now());
+	  chatting.setRoom_uuid(UUID.fromString(room_uuid_ab));
+	  chatting.setRead_status(true);
+	  
+	  dbService.save(loader, Chatting.class, chatting);
+	  
+	  chatting.setChat_chatter("b@gmail.com");
+	  chatting.setChat_content("네 번째 채팅입니다."); chatting.setChat_emoticon(null);
+	  chatting.setChat_uuid(UUID.randomUUID());
+	  chatting.setChatted_at(Instant.now());
+	  chatting.setRoom_uuid(UUID.fromString(room_uuid_ab));
+	  chatting.setRead_status(false);
+	  
+	  dbService.save(loader, Chatting.class, chatting);
+	  
+	  chatting.setChat_chatter("b@gmail.com");
+	  chatting.setChat_content("다섯 번째 채팅입니다."); chatting.setChat_emoticon(null);
+	  chatting.setChat_uuid(UUID.randomUUID());
+	  chatting.setChatted_at(Instant.now());
+	  chatting.setRoom_uuid(UUID.fromString(room_uuid_ab));
+	  chatting.setRead_status(false);
+	  
+	  dbService.save(loader, Chatting.class, chatting);
+	  
+	  
 	  
 	  }
 	 

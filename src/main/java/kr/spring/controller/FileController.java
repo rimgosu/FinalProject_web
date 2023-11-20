@@ -23,7 +23,7 @@ public class FileController {
 	@Autowired
     private AmazonS3 s3client; // 초기화 필요
 
-    @RequestMapping("/readFile")
+    @RequestMapping("/readFile") // 이미지 불러올때.
     public String readFileFromS3(Model model) {
     	try {
     		String bucketName = "simkoong-s3";

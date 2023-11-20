@@ -201,9 +201,7 @@
                   </div>
                 </div>
               </div>
-              <div class="card mt-3">
-                <textarea class="form-control" id="aboutme" name="aboutme" rows="9" readonly="readonly"  style="resize: none;">${mvo.aboutme}</textarea>
-              </div>
+             
             </div>
             <div class="col-md-8">
               <div class="card mb-3">
@@ -305,6 +303,10 @@
                     <div class="col-sm-9">
                       ${mvo.school}
                     </div>
+                    <hr>
+                     <div class="card mt-3">
+		                <textarea class="form-control" id="aboutme" name="aboutme" rows="9" readonly="readonly"  style="resize: none;">${mvo.aboutme}</textarea>
+		              </div>
                   </div>
                   
                 </div>

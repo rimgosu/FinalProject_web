@@ -177,7 +177,7 @@ div.desc {
 					<div class="card">
 						<div class="card-body mt-3" >
 							<div class="row">
-							<!-- 첫 번째 사진 업로드  -->
+							<!-- 사진 업로드  -->
 							<c:forEach items="${fileNames}" var="fileName" varStatus="i" >    
 								<div class="responsive">
 									<div class="gallery"> 

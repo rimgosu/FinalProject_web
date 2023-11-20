@@ -165,65 +165,60 @@ body {
 
 		<!-- Header Start -->
 		<br> <br>
-		<form action="${cpath}/update" method="post">
-			<div class="container">
-				<div class="row">
-					<div class="col-12 text-center">
-						<h2>Profile 수정</h2>
-					</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-12 text-center">
+					<h2>Profile 수정화면 </h2>
 				</div>
-				<div class="container">
-					<div class="main-body">
+			</div>
+			<div class="container">
+				<div class="main-body">
 
-						<!-- Breadcrumb -->
-						<!--           <nav aria-label="breadcrumb" class="main-breadcrumb">
+					<!-- Breadcrumb -->
+					<!--           <nav aria-label="breadcrumb" class="main-breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="index.html">Home</a></li>
               <li class="breadcrumb-item"><a href="javascript:void(0)">User</a></li>
               <li class="breadcrumb-item active" aria-current="page">User Profile</li>
             </ol>
           </nav> -->
-						<!-- /Breadcrumb -->
+					<!-- /Breadcrumb -->
 
-						<div class="row gutters-sm">
-							<div class="col-md-4 mb-3">
-								<div class="card">
-									<div class="card-body">
-										<div class="d-flex flex-column align-items-center text-center">
-											<img src="img/team-1.jpg" alt="Admin" class="rounded-circle"
-												width="150">
-											<div class="mt-3">
-												<h4>${mvo.nickname}</h4>
-												<p class="text-secondary mb-1">${mvo.job}</p>
-												<p class="text-muted font-size-sm">${mvo.address}</p>
-												<form id="imageForm1" >
-													<label for="uploadInput" id="uploadButton">이미지 선택</label> <input
-														type="file" id="uploadInput" accept="image/*">
-													<button type="button" onclick="uploadImage()"
-														id="uploadButton">업로드</button>
-												</form>
-											</div>
+					<div class="row gutters-sm">
+						<div class="col-md-4 mb-3">
+							<div class="card">
+								<div class="card-body">
+									<div class="d-flex flex-column align-items-center text-center">
+										<img src="img/team-1.jpg" alt="Admin" class="rounded-circle"
+											width="150">
+										<div class="mt-3">
+											<h4>${mvo.nickname}</h4>
+											<p class="text-secondary mb-1">${mvo.job}</p>
+											<p class="text-muted font-size-sm">${mvo.address}</p>
+											<form id="imageForm1">
+												<label for="uploadInput" id="uploadButton">이미지 선택</label> <input
+													type="file" id="uploadInput" accept="image/*">
+												<button type="button" onclick="uploadImage()"
+													id="uploadButton">업로드</button>
+											</form>
 										</div>
 									</div>
-								</div> <!-- card  -->											
-							<form action ="${cpath}/update" method="post">
-								<div class="card mt-3">
-									<textarea class="form-control" id="aboutme" name="aboutme"
-										rows="9" style="resize: none;">${mvo.aboutme}</textarea>
 								</div>
-							</form>
-							</div><!-- col-md-4 mb-3 -->
-													
-							<div class="col-md-8">
-							<form> 
+							</div>
+							</div>
+							<!-- card  -->
+					
+						<div class="col-md-8">
+							<form action="${cpath}/update" method="post">
+								<input type="hidden" name="username" value="${mvo.username}">
 								<div class="card mb-3">
 									<div class="card-body">
 										<div class="row">
 											<div class="col-sm-3">
-												<h6 class="mb-0">Nick</h6>
+												<h6 class="mb-0">Nickname</h6>
 											</div>
 											<div class="col-sm-9">
-												<input value="${mvo.nickname}">
+												<input type="text" name="nickname" value="${mvo.nickname}">
 											</div>
 										</div>
 										<hr>
@@ -232,7 +227,7 @@ body {
 												<h6 class="mb-0">Age</h6>
 											</div>
 											<div class="col-sm-9">
-												<input value="${mvo.age}">
+												<input type="number" id="age" name="age" value="${mvo.age}">
 											</div>
 										</div>
 										<hr>
@@ -241,7 +236,7 @@ body {
 												<h6 class="mb-0">Phone</h6>
 											</div>
 											<div class="col-sm-9">
-												<input value="${mvo.phone}">
+												<input type="number" id="phone" name="phone" value="${mvo.phone}">
 											</div>
 										</div>
 										<hr>
@@ -250,7 +245,7 @@ body {
 												<h6 class="mb-0">Address</h6>
 											</div>
 											<div class="col-sm-9">
-												<input value="${mvo.address}">
+												<input type="text" id="address" name="address" value="${mvo.address}">
 											</div>
 										</div>
 										<hr>
@@ -259,7 +254,7 @@ body {
 												<h6 class="mb-0">Interest</h6>
 											</div>
 											<div class="col-sm-9">
-												<input value="${mvo.interest}">
+												<input type="text" id="interest" name="interest" value="${mvo.interest}">
 											</div>
 										</div>
 										<hr>
@@ -268,7 +263,28 @@ body {
 												<h6 class="mb-0">MBTI</h6>
 											</div>
 											<div class="col-sm-9">
-												<input value="${mvo.mbti}">
+												<select class="form-select" id="mbti" name="mbti" >
+												       <optgroup label="E">
+														<option value="ESTP">ESTP</option>
+														<option value="ESFP">ESFP</option>
+														<option value="ESFJ">ESFJ</option>
+														<option value="ESFJ">ESFJ</option>
+														<option value="ENTP">ENTP</option>
+														<option value="ENTJ">ENTJ</option>
+														<option value="ENFP">ENFP</option>																					
+														<option value="ENFJ">ENFJ</option>
+													</optgroup>
+													<optgroup label="I">
+														<option value="ISFP">ISFP</option>
+														<option value="ISFJ">ISFJ</option>
+														<option value="ISTP">ISTP</option>
+														<option value="ISTJ">ISTJ</option>
+														<option value="INTP">INTP</option>
+														<option value="INTJ">INTJ</option>
+														<option value="INFP">INFP</option>											
+														<option value="INFJ">INFJ</option>
+													</optgroup>
+												</select>
 											</div>
 										</div>
 										<hr>
@@ -277,7 +293,10 @@ body {
 												<h6 class="mb-0">Sport</h6>
 											</div>
 											<div class="col-sm-9">
-												<input value="${mvo.sport}">
+												<select class="form-select" id="sport" name="sport" >
+														<option value="yes">예</option>
+														<option value="no">아니오</option>
+												</select>
 											</div>
 										</div>
 										<hr>
@@ -286,7 +305,10 @@ body {
 												<h6 class="mb-0">Smoke</h6>
 											</div>
 											<div class="col-sm-9">
-												<input value="${mvo.smoking}">
+												<select class="form-select" id="smoking" name="smoking">
+														<option value="yes">네</option>
+														<option value="no">아니오</option>
+												</select>
 											</div>
 										</div>
 										<hr>
@@ -295,7 +317,10 @@ body {
 												<h6 class="mb-0">Drink</h6>
 											</div>
 											<div class="col-sm-9">
-												<input value="${mvo.drinking}">
+												<select class="form-select" id="drinking" name="drinking">
+														<option value="yes">예</option>
+														<option value="no">아니오</option>
+												</select>
 											</div>
 										</div>
 										<hr>
@@ -304,7 +329,7 @@ body {
 												<h6 class="mb-0">Job</h6>
 											</div>
 											<div class="col-sm-9">
-												<input value="${mvo.job}">
+												<input type="text" id="job" name="job"  value="${mvo.job}">
 											</div>
 										</div>
 										<hr>
@@ -313,46 +338,57 @@ body {
 												<h6 class="mb-0">Education</h6>
 											</div>
 											<div class="col-sm-9">
-												<input value="${mvo.school}">
+												<input type="text" id="school" name="school" value="${mvo.school}">
 											</div>
 										</div>
-
-									</div> <!-- card body  -->
-								</div> <!-- card mb-3"  -->
-								<hr>
-								<div class="row">
-									<div class="col-sm-12">
-										<input type="submit" class="btn btn-info" value="수정">
-										
+										<div class="row">
+											<div class="card mt-3">
+												<textarea class="form-control" id="aboutme" name="aboutme"
+													rows="9" style="resize: none;">${mvo.aboutme}</textarea>
+											</div>
+										</div>
+	
 									</div>
+									<!-- card body  -->
 								</div>
-								</form>
-							</div> <!-- col md-8 -->
-						</div> <!-- main body  -->
-					</div>  <!-- row gutters-sm -->	
+							<!-- card mb-3"  -->
+							<hr>
+							<div class="row">
+								<div class="col-sm-12">
+									<input type="submit" class="btn btn-info" value="수정">
+								</div>
+							</div>
+							</form>
+						</div>
+						
+						<!-- col md-8 -->
 					</div>
+					<!-- main body  -->
 				</div>
-				<!-- Header End -->
-
-
-				<!-- Back to Top -->
-				<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i
-					class="bi bi-arrow-up"></i></a>
+				<!-- row gutters-sm -->
 			</div>
+		</div>
+		<!-- Header End -->
 
-			<!-- JavaScript Libraries -->
-			<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-			<script
-				src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-			<script src="lib/wow/wow.min.js"></script>
-			<script src="lib/easing/easing.min.js"></script>
-			<script src="lib/waypoints/waypoints.min.js"></script>
-			<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
-			<!-- Template Javascript -->
-			<script src="js/main.js"></script>
+		<!-- Back to Top -->
+		<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i
+			class="bi bi-arrow-up"></i></a>
+	</div>
 
-			<script>
+	<!-- JavaScript Libraries -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="lib/wow/wow.min.js"></script>
+	<script src="lib/easing/easing.min.js"></script>
+	<script src="lib/waypoints/waypoints.min.js"></script>
+	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+	<!-- Template Javascript -->
+	<script src="js/main.js"></script>
+
+	<script>
 	    
 	    function uploadImage() {
 	    	  const input = document.getElementById('uploadInput');

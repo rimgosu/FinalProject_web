@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +25,7 @@ import com.amazonaws.AmazonServiceException;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.datastax.oss.driver.api.core.config.DriverConfigLoader;
 
 import jakarta.servlet.RequestDispatcher;
@@ -41,6 +43,9 @@ public class MainController {
 	private InfoService infoService;
 	@Autowired
 	private DBService dbService;
+	
+	@Autowired //사진 업로드할때 필요
+	private AmazonS3 s3client;
 	
 	
 	@GetMapping("/index")
@@ -110,7 +115,7 @@ public class MainController {
 		return "redirect:/login";
 	}
 
-	@GetMapping("/info")
+	@GetMapping("/info") //사진 출력필요함.
 	public String showInfoPage(HttpSession session, Model model) {
 		System.out.println("정보입력으로 들어왔음.");
 		//사진 출력되는 곳
@@ -146,12 +151,7 @@ public class MainController {
 	//파일 업로드
 	@PostMapping("/fileUpload")
 	public String fileUpload(Info info, @RequestParam("file") MultipartFile file, @RequestParam("photoNum") int photoNum, HttpSession session, HttpServletRequest request) {
-		System.out.println("사진 업로드함. 일단 1번 사진을 클릭한 것을 가정하겠음.");
 		System.out.println(file);
-
-		System.out.println(photoNum);
-		// 파일 업로드를 할 수 있게 도와주는 MultipartRequest.
-//	    String savePath =request.getServletContext().getRealPath("/");  절대경로 찾는 코드
 		String username_session = ((Info) session.getAttribute("mvo")).getUsername();
 		System.out.println(username_session);
 		String originalFilename = null;			
@@ -163,7 +163,7 @@ public class MainController {
 				originalFilename = file.getOriginalFilename();
 				// 파일 저장 경로 및 이름 설정
 				System.out.println(originalFilename);
-				String filePath_aws = "s3://simkoong-s3/" + originalFilename;
+				String filePath_aws = "s3://simkoong-s3/" + originalFilename; 
 				String filePath = request.getServletContext().getRealPath("/" + originalFilename);
 				System.out.println(filePath);
 				File dest = new File(filePath);
@@ -181,19 +181,11 @@ public class MainController {
 				uploadedFilePath_aws = filePath_aws.replace("\\", "/");
 
 			}		
-			//AWS S3
-			
-			System.out.format("Uploading %s to S3 bucket %s...\n", uploadedFilePath, "simkoong-s3");
-	        final AmazonS3 s3 = AmazonS3ClientBuilder.standard().withRegion("ap-northeast-2").build();
-	        try {
-	            s3.putObject("simkoong-s3", "test_image.jpg", new File(uploadedFilePath));
-	        } catch (AmazonServiceException e) {
-	            System.err.println(e.getErrorMessage());
-	            System.exit(1);
-	        }
-	        System.out.println("Done!");
-			
-
+			//AWS S3 관련 코드
+				File fileForS3 = new File(uploadedFilePath);
+				String bucketName = "simkoong-s3";
+				String fileName=originalFilename;
+				s3client.putObject(new PutObjectRequest(bucketName, fileName, fileForS3));
 			
 			// listinfo 정보 전체 가져오기
 			Map<String, Object> columnValues = new HashMap<>();
@@ -204,7 +196,7 @@ public class MainController {
 			
 			// 업데이트할 정보를 Map형식의 photo에 넣기.
 			Map<Integer, String> photo = listInfo.get(0).getPhoto();
-			photo.put(photoNum, uploadedFilePath);
+			photo.put(photoNum, uploadedFilePath_aws);
 			
 			
 			// 어디를 업데이트할지, 값은 뭔지를 설정하기
@@ -215,16 +207,9 @@ public class MainController {
 			updateValue.put("photo", photo);
 			
 			// 업데이트 진행
-			dbService.updateByColumnValues(loader, Info.class, updateValue, whereUpdate);
-			
+			dbService.updateByColumnValues(loader, Info.class, updateValue, whereUpdate);			
 			session.setAttribute("mvo", dbService.findAllByColumnValues(loader, Info.class, columnValues).get(0));
 
-//			Map<Integer, String> photosDb = infoService.selectMemPhoto(username_session);
-//			// 새로운 사진 정보 추가
-//			int nextNum = photosDb.size() + 1;
-//			additionalFile.put(nextNum,uploadedFilePath);	
-//			additionalFile.put("nextNum",nextNum);
-//			additionalFile.put("uploadedFilePath", uploadedFilePath);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -253,9 +238,6 @@ public class MainController {
 			    // sessionPhoto가 null일 때 처리할 코드를 여기에 추가하세요
 			}
 		model.addAttribute("fileName", fileName);
-		
-		
-		
 		return "profile";
 	}
 	
@@ -263,6 +245,38 @@ public class MainController {
 	public String showUpdatePage() {
 		System.out.println("수정페이지로 들어왔음.");
 		return "update";
+	}
+	@PostMapping("/update")
+	public String update(Info info, HttpSession session) {
+		String username_session =((Info) session.getAttribute("mvo")).getUsername();
+		DriverConfigLoader loader = dbService.getConnection();
+		Map<String, Object> columnValues = new HashMap<>();
+		columnValues.put("username", username_session);
+		List<Info> listInfo = dbService.findAllByColumnValues(loader, Info.class, columnValues);
+		
+		
+		// 어디를 업데이트할지, 값은 뭔지를 설정하기
+		Map<String, Object> whereUpdate = new HashMap<>();
+		Map<String, Object> updateValue = new HashMap<>();
+		
+		whereUpdate.put("username", username_session);
+		updateValue.put("nickname", info.getNickname());
+		updateValue.put("age", info.getAge());
+		updateValue.put("phone", info.getPhone());
+		updateValue.put("address", info.getAddress());
+		updateValue.put("interest", info.getInterest());
+		updateValue.put("mbti", info.getMbti());
+		updateValue.put("sport", info.getMbti());
+		updateValue.put("smoking", info.getSmoking());
+		updateValue.put("drinking", info.getDrinking());
+		updateValue.put("job", info.getJob());
+		updateValue.put("school", info.getSchool());
+		updateValue.put("aboutme", info.getAboutme());
+		
+		// 업데이트 진행
+		dbService.updateByColumnValues(loader, Info.class, updateValue, whereUpdate);	
+		session.setAttribute("mvo", dbService.findAllByColumnValues(loader, Info.class, columnValues).get(0));
+		return "redirect:/profile";
 	}
 
 	@GetMapping("/test")

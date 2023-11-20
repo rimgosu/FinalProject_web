@@ -9,9 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 
-
-
-
 @SpringBootTest
 class PracticeApplicationTests {
 	

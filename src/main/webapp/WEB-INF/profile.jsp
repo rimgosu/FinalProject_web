@@ -37,121 +37,65 @@
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
     <style>
-        .info-front{
-            margin-bottom: 40px;
-        }
+body{margin-top:20px;
+background-color:#f2f6fc;
+color:#69707a;
+}
+.img-account-profile {
+    height: 10rem;
+}
+.rounded-circle {
+    border-radius: 50% !important;
+}
+.card {
+    box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
+}
+.card .card-header {
+    font-weight: 500;
+}
+.card-header:first-child {
+    border-radius: 0.35rem 0.35rem 0 0;
+}
+.card-header {
+    padding: 1rem 1.35rem;
+    margin-bottom: 0;
+    background-color: rgba(33, 40, 50, 0.03);
+    border-bottom: 1px solid rgba(33, 40, 50, 0.125);
+}
+.form-control, .dataTable-input {
+    display: block;
+    width: 100%;
+    padding: 0.875rem 1.125rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1;
+    color: #69707a;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #c5ccd6;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0.35rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
 
-        input {
-            border: none; /* 상단, 좌우, 우측 테두리 제거 */
-            border-bottom: 1px solid pink; /* 1px 두께의 검은색 밑줄 스타일 적용 */
-            outline: none; /* 포커스 스타일 제거 */
-        }
-        .form-select {
-            border: none;
-        }
-            .info-front {
-        margin-bottom: 40px;
-    }
-
-    input {
-        border: none;
-        border-bottom: 1px solid pink;
-        outline: none;
-    }
-
-    .form-select {
-        border: none;
-    }
-
-    @media (max-width: 768px) {
-        /* 작은 화면에 대한 스타일 조정 */
-        .info-front {
-            margin-bottom: 20px;
-        }
-
-        input, select {
-            width: 100%;
-        }
-    }
-    
-    #imageForm1 {
-            display: inline-block;
-            border: 2px solid #ddd;
-            padding: 20px;
-            border-radius: 10px;
-        }
-
-        #uploadInput {
-            display: none;
-        }
-
-        #uploadButton {
-            background-color: pink;
-            color: white;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            border-radius: 5px;
-            border: none;
-        }
-        
-        body{
-		    margin-top:20px;
-		    color: #1a202c;
-		    text-align: left;
-		    background-color: #e2e8f0;    
-		}
-		.main-body {
-		    padding: 15px;
-		}
-		.card {
-		    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
-		}
-		
-		.card {
-		    position: relative;
-		    display: flex;
-		    flex-direction: column;
-		    min-width: 0;
-		    word-wrap: break-word;
-		    background-color: #fff;
-		    background-clip: border-box;
-		    border: 0 solid rgba(0,0,0,.125);
-		    border-radius: .25rem;
-		}
-		
-		.card-body {
-		    flex: 1 1 auto;
-		    min-height: 1px;
-		    padding: 1rem;
-		}
-		
-		.gutters-sm {
-		    margin-right: -8px;
-		    margin-left: -8px;
-		}
-		
-		.gutters-sm>.col, .gutters-sm>[class*=col-] {
-		    padding-right: 8px;
-		    padding-left: 8px;
-		}
-		.mb-3, .my-3 {
-		    margin-bottom: 1rem!important;
-		}
-		
-		.bg-gray-300 {
-		    background-color: #e2e8f0;
-		}
-		.h-100 {
-		    height: 100%!important;
-		}
-		.shadow-none {
-		    box-shadow: none!important;
-		}
+.nav-borders .nav-link.active {
+    color: #0061f2;
+    border-bottom-color: #0061f2;
+}
+.nav-borders .nav-link {
+    color: #69707a;
+    border-bottom-width: 0.125rem;
+    border-bottom-style: solid;
+    border-bottom-color: transparent;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
     </style>
 </head>
 <body style="background: white;">
@@ -164,12 +108,12 @@
         <br>
         <br>
          <form action ="${cpath}/update" method="post">
-		      <div class="container">
+		      <!-- <div class="container">
 		          <div class="row">
 		              <div class="col-12 text-center">
 		                    <h2>Profile</h2>
 		              </div>
-		            </div>
+		            </div> -->
 		            <div class="container">
     <div class="main-body">
     
@@ -183,145 +127,122 @@
           </nav> -->
           <!-- /Breadcrumb -->
     
-          <div class="row gutters-sm">
-            <div class="col-md-4 mb-3">
-              <div class="card">
-                <div class="card-body">
-                  <div class="d-flex flex-column align-items-center text-center">
-                    <img src="img/team-1.jpg" alt="Admin" class="rounded-circle" width="150">
-                    <div class="mt-3">
-                      <h4>${mvo.nickname}</h4>
-                      <p class="text-secondary mb-1">${mvo.job}</p>
-                      <p class="text-muted font-size-sm">${mvo.address}</p>
-                      <form id="imageForm1" style="border: none;">
-						<label for="uploadInput" id="uploadButton">이미지 선택</label>
-						<input type="file" id="uploadInput" accept="image/*">
-						<button type="button" onclick="uploadImage()" id="uploadButton">업로드</button>
-					 </form>
-                    </div>
-                    <a href="sendlike" class="nav-item nav-link">보낸 좋아요</a>
-                  </div>
+<div class="container-xl px-4 mt-4">
+    <!-- Account page navigation-->
+<!--     <nav class="nav nav-borders">
+        <a class="nav-link active ms-0" href="https://www.bootdey.com/snippets/view/bs5-edit-profile-account-details" target="__blank">Profile</a>
+        <a class="nav-link" href="https://www.bootdey.com/snippets/view/bs5-profile-billing-page" target="__blank">Billing</a>
+        <a class="nav-link" href="https://www.bootdey.com/snippets/view/bs5-profile-security-page" target="__blank">Security</a>
+        <a class="nav-link" href="https://www.bootdey.com/snippets/view/bs5-edit-notifications-page"  target="__blank">Notifications</a>
+    </nav> --><!-- 
+    <hr class="mt-0 mb-4"> -->
+    <div class="row">
+        <div class="col-xl-4">
+            <!-- Profile picture card-->
+            <div class="card mb-4 mb-xl-0">
+                <div class="card-header">Profile Picture</div>
+                <div class="card-body text-center">
+                    <!-- Profile picture image-->
+                    <img class="img-account-profile rounded-circle mb-2" src="img/team-1.jpg" alt="">
+                    <!-- Profile picture help block-->
+                    <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                    <!-- Profile picture upload button-->
+                    <button class="btn btn-primary" type="button">Upload new image</button>
                 </div>
-              </div>
-              <div class="card mt-3">
-                <textarea class="form-control" id="aboutme" name="aboutme" rows="9" readonly="readonly"  style="resize: none;">${mvo.aboutme}</textarea>
-              </div>
             </div>
-            <div class="col-md-8">
-              <div class="card mb-3">
+            <br>
+            <div class="card mb-4 mb-xl-0">
+            	<div class="card-header text-center">About me</div>
                 <div class="card-body">
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Nick</h6>
+                    <div class="small font-italic text-muted mb-4">
+                    	<textarea rows="9" cols="48" style="border: none; resize: none; outline: none;">${mvo.aboutme}</textarea>
                     </div>
-                    <div class="col-sm-9">
-                      ${mvo.nickname}
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Age</h6>
-                    </div>
-                    <div class="col-sm-9">
-                      ${mvo.age}
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Phone</h6>
-                    </div>
-                    <div class="col-sm-9">
-                      ${mvo.phone}
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Address</h6>
-                    </div>
-                    <div class="col-sm-9">
-                      ${mvo.address}
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Interest</h6>
-                    </div>
-                    <div class="col-sm-9">
-                      ${mvo.interest}
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">MBTI</h6>
-                    </div>
-                    <div class="col-sm-9">
-                      ${mvo.mbti}
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Sport</h6>
-                    </div>
-                    <div class="col-sm-9">
-                      ${mvo.sport}
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Smoke</h6>
-                    </div>
-                    <div class="col-sm-9">
-                      ${mvo.smoking}
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Drink</h6>
-                    </div>
-                    <div class="col-sm-9">
-                      ${mvo.drinking}
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Job</h6>
-                    </div>
-                    <div class="col-sm-9">
-                      ${mvo.job}
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Education</h6>
-                    </div>
-                    <div class="col-sm-9">
-                      ${mvo.school}
-                    </div>
-                  </div>
-                  
                 </div>
-              </div>
-				<hr>
-                  <div class="row">
-                    <div class="col-sm-12">
-                      <a class="btn btn-info " target="__blank" href="update">Edit</a>
-                    </div>
-                  </div>
             </div>
-          </div>
-
+        </div>
+        <div class="col-xl-8">
+            <!-- Account details card-->
+            <div class="card mb-4">
+                <div class="card-header">Account Details</div>
+                <div class="card-body">
+                    <form>
+                        <!-- Form Group (username)-->
+                        <div class="mb-3">
+                            <label class="small mb-1" for="inputUsername">Nick</label>
+                            <input class="form-control" id="inputUsername" type="text" placeholder="Enter your username" value="${mvo.nickname}">
+                        </div>
+                        <!-- Form Row-->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (first name)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputFirstName">Age</label>
+                                <input class="form-control" id="inputFirstName" type="number" placeholder="Enter your first name" value="${mvo.age}">
+                            </div>
+                            <!-- Form Group (last name)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputLastName">Phone</label>
+                                <input class="form-control" id="inputLastName" type="tel" placeholder="Enter your last name" value="${mvo.phone}">
+                            </div>
+                        </div>
+                        <!-- Form Row        -->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (organization name)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputOrgName">Address</label>
+                                <input class="form-control" id="inputOrgName" type="text" placeholder="Enter your organization name" value="${mvo.address}">
+                            </div>
+                            <!-- Form Group (location)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputLocation">Interest</label>
+                                <input class="form-control" id="inputLocation" type="text" placeholder="Enter your location" value="${mvo.interest}">
+                            </div>
+                        </div>
+                        <!-- Form Group (email address)-->
+                        <div class="row gx-3 mb-3">
+                        	<div class="col-md-6">
+                            	<label class="small mb-1" for="inputEmailAddress">MBTI</label>
+                            	<input class="form-control" id="inputEmailAddress" type="text" placeholder="Enter your email address" value="${mvo.mbti}">
+                        	</div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputPhone">Education</label>
+                                <input class="form-control" id="inputPhone" type="text" placeholder="Enter your phone number" value="${mvo.school}">
+                            </div>
+                        </div>
+                        
+                        <!-- Form Row-->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (phone number)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputPhone">Sport</label>
+                                <input class="form-control" id="inputPhone" type="text" placeholder="Enter your phone number" value="${mvo.sport}">
+                            </div>
+                            <!-- Form Group (birthday)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputBirthday">Smoke</label>
+                                <input class="form-control" id="inputBirthday" type="text" name="birthday" placeholder="Enter your birthday" value="${mvo.smoking}">
+                            </div>
+                        </div>
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (phone number)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputPhone">Dring</label>
+                                <input class="form-control" id="inputPhone" type="text" placeholder="Enter your phone number" value="${mvo.drinking}">
+                            </div>
+                            <!-- Form Group (birthday)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputBirthday">Job</label>
+                                <input class="form-control" id="inputBirthday" type="text" name="birthday" placeholder="Enter your birthday" value="${mvo.job}">
+                            </div>
+                        </div>
+                        <!-- Save changes button-->
+                        <button class="btn btn-primary" type="button">Save changes</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
+</div>
+</div>
         <!-- Header End -->
 
 

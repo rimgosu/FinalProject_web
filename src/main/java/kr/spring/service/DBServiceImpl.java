@@ -26,6 +26,7 @@ import com.datastax.oss.driver.api.core.cql.ResultSet;
 import com.datastax.oss.driver.api.core.cql.Row;
 
 import kr.spring.TableColumnsValues;
+import kr.spring.cassandra.CassandraSessionManager;
 
 @Service
 public class DBServiceImpl implements DBService{
@@ -43,9 +44,8 @@ public class DBServiceImpl implements DBService{
 	public <T> void save(DriverConfigLoader loader, Class<T> entityClass, T entity) {
 	    System.out.println("[DBServiceImpl][save]");
 	    TableColumnsValues.Result<T> result = TableColumnsValues.extractData(entityClass, entity);
-	    try (CqlSession session = CqlSession.builder()
-	            .withConfigLoader(loader)
-	            .build()) {
+	    CqlSession session = CassandraSessionManager.getSession(loader);
+	    try {
 
 	        String columns = String.join(", ", result.columnNames);
 	        String placeholders = String.join(", ", Collections.nCopies(result.columnNames.length, "?"));
@@ -75,9 +75,8 @@ public class DBServiceImpl implements DBService{
 	@Override
 	public <T> List<T> findAll(DriverConfigLoader loader, Class<T> classType) {
 	    List<T> entities = new ArrayList<>();
-	    try (CqlSession session = CqlSession.builder()
-	            .withConfigLoader(loader)
-	            .build()) {
+	    CqlSession session = CassandraSessionManager.getSession(loader);
+	    try {
 
 	        String cql = String.format("SELECT * FROM %s", "member." + classType.getSimpleName().toLowerCase());
 
@@ -111,9 +110,8 @@ public class DBServiceImpl implements DBService{
 	@Override
 	public <T> List<T> findAllByColumnValue(DriverConfigLoader loader, Class<T> classType, String columnName, Object value) {
 	    List<T> entities = new ArrayList<>();
-	    try (CqlSession session = CqlSession.builder()
-	            .withConfigLoader(loader)
-	            .build()) {
+	    CqlSession session = CassandraSessionManager.getSession(loader);
+	    try {
 
 	        // WHERE 절 추가
 	        String cql = String.format("SELECT * FROM %s WHERE %s = ?", 
@@ -150,9 +148,8 @@ public class DBServiceImpl implements DBService{
 	@Override
 	public <T> List<T> findAllByColumnValues(DriverConfigLoader loader, Class<T> classType, Map<String, Object> columnValues) {
 	    List<T> entities = new ArrayList<>();
-	    try (CqlSession session = CqlSession.builder()
-	            .withConfigLoader(loader)
-	            .build()) {
+	    CqlSession session = CassandraSessionManager.getSession(loader);
+	    try {
 
 	        // WHERE 절 동적 생성
 	        StringBuilder whereClause = new StringBuilder();
@@ -204,9 +201,8 @@ public class DBServiceImpl implements DBService{
 	@Override
 	public <T> void updateByColumnValues(DriverConfigLoader loader, Class<T> classType, 
 	                                     Map<String, Object> updateValues, Map<String, Object> whereConditions) {
-	    try (CqlSession session = CqlSession.builder()
-	            .withConfigLoader(loader)
-	            .build()) {
+		CqlSession session = CassandraSessionManager.getSession(loader);
+		try {
 
 	        // SET 절 동적 생성
 	        StringBuilder setClause = new StringBuilder();

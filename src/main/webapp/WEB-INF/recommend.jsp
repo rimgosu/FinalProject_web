@@ -8,11 +8,11 @@
 <c:set var="cpath" value="${pageContext.request.contextPath}" />
     
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="background: white;">
 
 <head>
     <meta charset="utf-8">
-    <title>Makaan - Real Estate HTML Template</title>
+    <title>SimKoong</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -38,9 +38,41 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    
+    <style type="text/css">
+    
+        .flip {
+            position: relative;
+            perspective: 1100px;
+        }
+
+        .usercard {
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 1.5s; /* 변경: 트랜지션 속성 순서 변경 */
+        }
+
+        .front, .back {
+            position: absolute;
+            backface-visibility: hidden;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .back {
+            transform: rotateY(180deg);
+        }
+
+        .flip.clicked .usercard { /* 변경: hover 제거, clicked 클래스만 사용 */
+            transform: rotateY(180deg);
+        }
+    
+    
+    
+    </style>
 </head>
 
-<body>
+<body style="background: white;">
     <div class="container-xxl bg-white p-0">
         <jsp:include page="header.jsp"></jsp:include>
         <!-- Navbar End -->
@@ -160,51 +192,85 @@
                 </div>
                 <div class="row g-4">
                     <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="team-item rounded overflow-hidden">
+                    <div class="flip">
+                    <div class="usercard">
+                        <div class="team-item rounded overflow-hidden front">
                             <div class="position-relative">
                                 <img class="img-fluid" src="img/team-1.jpg" alt="">
                                 <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                    <button class="btn btn-square mx-1 like-btn" data-count="0"><i class="fas fa-heart"></i></button>
-                                    <button class="btn btn-square mx-1 dislike-btn" data-count="0"><img src="img/pngwing.com.png" style="width: 18px;"></button>
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-instagram"></i></a>
+                                    <button class="btn btn-square mx-1 like-btn" data-count="0"><i class="far fa-heart"></i></button>
+                                    <button class="btn btn-square mx-1 dislike-btn" data-count="0"><img src="img/before broken.png" style="width: 18px;"></button>
+                                    <a class="btn btn-square mx-1" onclick="flipCard()"><img src="img/repeat.png" style="width: 18px;"></a>
                                 </div>
                             </div>
                             <div class="text-center p-4 mt-3">
-                                <h5 class="fw-bold mb-0">nickname</h5>
-                                <p>age</p>
-                                <small>aboutme</small>
+                                <h5 class="fw-bold mb-0">${mvo.nickname}</h5>
+                                <p>${mvo.age}</p>
+                                <small>${mvo.aboutme}</small>
                             </div>
                         </div>
-                    </div>
+                        <div class="col-lg-3 col-md-6 back" style="background: mintcream; width: 216px; height: 392px; border-radius: 5px;">
+	                            <div>
+	                            <a class="btn btn-square mx-1" onclick="flipCard()"><img src="img/repeat.png" style="width: 18px;"></a>
+	                            </div>
+	                            <p><strong>Address:</strong> ${mvo.address}</p>
+					            <p><strong>Interest:</strong> ${mvo.interest}</p>
+					            <p><strong>MBTI:</strong> ${mvo.mbti}</p>
+					            <p><strong>Sport:</strong> ${mvo.sport}</p>
+					            <p><strong>Smoke:</strong> ${mvo.smoking}</p>
+					            <p><strong>Drink:</strong> ${mvo.drinking}</p>
+					            <p><strong>Job:</strong> ${mvo.job}</p>
+					            <p><strong>Education:</strong> ${mvo.school}</p>
+                        </div>
+                      </div>
+                   </div>
+                </div>
                     <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                        <div class="team-item rounded overflow-hidden">
+                    	<div class="flip">
+                    	<div class="usercard">
+                        <div class="team-item rounded overflow-hidden front">
                             <div class="position-relative">
                                 <img class="img-fluid" src="img/team-2.jpg" alt="">
                                 <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                    <button class="btn btn-square mx-1 like-btn" data-count="0"><i class="fas fa-heart"></i></button>
-                                    <button class="btn btn-square mx-1 dislike-btn" data-count="0"><img src="img/pngwing.com.png" style="width: 18px;"></button>
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-instagram"></i></a>
+                                    <button class="btn btn-square mx-1 like-btn" data-count="0"><i class="far fa-heart"></i></button>
+                                    <button class="btn btn-square mx-1 dislike-btn" data-count="0"><img src="img/before broken.png" style="width: 18px;"></button>
+                                    <a class="btn btn-square mx-1" onclick="flipCard()"><img src="img/repeat.png" style="width: 18px;"></a>
                                 </div>
                             </div>
                             <div class="text-center p-4 mt-3">
-                                <h5 class="fw-bold mb-0">Full Name</h5>
-                                <small>Designation</small>
+                                <h5 class="fw-bold mb-0">${mvo.nickname}</h5>
+                                <p>${mvo.age}</p>
+                                <small>${mvo.aboutme}</small>
                             </div>
                         </div>
+                        <div class="col-lg-3 col-md-6 back" style="background: turquoise; width: 216px; height: 392px; border-radius: 5px;">
+	                            <p><strong>Address:</strong> ${mvo.address}</p>
+					            <p><strong>Interest:</strong> ${mvo.interest}</p>
+					            <p><strong>MBTI:</strong> ${mvo.mbti}</p>
+					            <p><strong>Sport:</strong> ${mvo.sport}</p>
+					            <p><strong>Smoke:</strong> ${mvo.smoking}</p>
+					            <p><strong>Drink:</strong> ${mvo.drinking}</p>
+					            <p><strong>Job:</strong> ${mvo.job}</p>
+					            <p><strong>Education:</strong> ${mvo.school}</p>
+	                            <a class="btn btn-square mx-1" onclick="flipCard()"><img src="img/repeat.png" style="width: 18px;"></a>
+                        </div>
                     </div>
+                 </div>
+              </div>
                     <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
                         <div class="team-item rounded overflow-hidden">
                             <div class="position-relative">
                                 <img class="img-fluid" src="img/team-3.jpg" alt="">
                                 <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                    <button class="btn btn-square mx-1 like-btn" data-count="0"><i class="fas fa-heart"></i></button>
-                                    <button class="btn btn-square mx-1 dislike-btn" data-count="0"><img src="img/pngwing.com.png" style="width: 18px;"></button>
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-instagram"></i></a>
+                                    <button class="btn btn-square mx-1 like-btn" data-count="0"><i class="far fa-heart"></i></button>
+                                    <button class="btn btn-square mx-1 dislike-btn" data-count="0"><img src="img/before broken.png" style="width: 18px;"></button>
+                                    <a class="btn btn-square mx-1" href=""><img src="img/repeat.png" style="width: 18px;"></a>
                                 </div>
                             </div>
                             <div class="text-center p-4 mt-3">
-                                <h5 class="fw-bold mb-0">Full Name</h5>
-                                <small>Designation</small>
+                                <h5 class="fw-bold mb-0">${mvo.nickname}</h5>
+                                <p>${mvo.age}</p>
+                                <small>${mvo.aboutme}</small>
                             </div>
                         </div>
                     </div>
@@ -213,14 +279,15 @@
                             <div class="position-relative">
                                 <img class="img-fluid" src="img/team-4.jpg" alt="">
                                 <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                    <button class="btn btn-square mx-1 like-btn" data-count="0"><i class="fas fa-heart"></i></button>
-                                    <button class="btn btn-square mx-1 dislike-btn" data-count="0"><img src="img/pngwing.com.png" style="width: 18px;"></button>
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-instagram"></i></a>
+                                    <button class="btn btn-square mx-1 like-btn" data-count="0"><i class="far fa-heart"></i></button>
+                                    <button class="btn btn-square mx-1 dislike-btn" data-count="0"><img src="img/before broken.png" style="width: 18px;"></button>
+                                    <a class="btn btn-square mx-1" href=""><img src="img/repeat.png" style="width: 18px;"></a>
                                 </div>
                             </div>
                             <div class="text-center p-4 mt-3">
-                                <h5 class="fw-bold mb-0">Full Name</h5>
-                                <small>Designation</small>
+                                <h5 class="fw-bold mb-0">${mvo.nickname}</h5>
+                                <p>${mvo.age}</p>
+                                <small>${mvo.aboutme}</small>
                             </div>
                         </div>
                     </div>
@@ -326,7 +393,11 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
     
-        <script>
+<script>
+	function flipCard() {
+	    var flipElement = document.querySelector('.flip');
+	    flipElement.classList.toggle('clicked');
+	}
     // Initialize Wow.js
     new WOW().init();
 
@@ -335,20 +406,46 @@
         // Like button click event
         $('.like-btn').click(function () {
             var count = parseInt($(this).attr('data-count'));
-            count++;
-            $(this).attr('data-count', count);
-            alert("이 유저를 선호합니다." + '\nLike: ' + count);
-        });
+            
+            // Toggle the liked class and change the heart color
+            if ($(this).hasClass('liked')) {
+                count--;
+                $(this).removeClass('liked');
+                $(this).find('i').removeClass('fas').addClass('far'); // Change to outline heart
+                alert("이 유저를 더 이상 선호하지 않습니다." + '\nLike: ' + count);
+            } else {
+                count++;
+                $(this).addClass('liked');
+                $(this).find('i').removeClass('far').addClass('fas'); // Change to filled heart
+                alert("이 유저를 선호합니다." + '\nLike: ' + count);
+            }
 
-        // Dislike button click event
+            $(this).attr('data-count', count);
+            
+        });
+        
         $('.dislike-btn').click(function () {
             var count = parseInt($(this).attr('data-count'));
-            count++;
+
+            // Toggle the liked class and change the heart color
+            if ($(this).hasClass('disliked')) {
+                count--;
+                $(this).removeClass('disliked');
+                $(this).find('img').attr('src', 'img/before broken.png'); // Change to original image
+                alert("이 유저를 다시 추천받습니다." + '\ndisLike: ' + count);
+            } else {
+                count++;
+                $(this).addClass('disliked');
+                $(this).find('img').attr('src', 'img/broken-heart.png'); // Change to broken heart image
+                alert("이 유저를 더 이상 추천받지 않습니다." + '\ndisLike: ' + count);
+            }
+
             $(this).attr('data-count', count);
-            alert("이 유저를 선호하지 않습니다." + '\nDislike: ' + count);
+            
         });
     });
-	</script>
+    
+</script>
     
 </body>
 

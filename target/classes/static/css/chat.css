@@ -24,3 +24,13 @@ ul {
 ul::-webkit-scrollbar {
   display: none; /* 웹킷(사파리, 크롬 등) 기반 브라우저에서 스크롤바 숨김 */
 }
+
+#chatting-ul li {
+  display: flex;
+  justify-content: space-between;
+  min-height: 100px; /* 적절한 높이 값으로 설정하세요 */
+}
+
+#chatting-ul .card {
+  flex: 1; /* 카드가 리스트 아이템의 전체 높이를 차지하도록 설정 */
+}

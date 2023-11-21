@@ -31,7 +31,6 @@ import com.datastax.oss.driver.api.core.config.DriverConfigLoader;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import kr.spring.entity.ChatRoom;
 import kr.spring.entity.Info;
 import kr.spring.service.DBService;
 import kr.spring.service.InfoService;
@@ -43,10 +42,8 @@ public class MainController {
 	private InfoService infoService;
 	@Autowired
 	private DBService dbService;
-	
 	@Autowired //사진 업로드할때 필요
 	private AmazonS3 s3client;
-	
 	
 	@GetMapping("/index")
 	public String showMainPage() {
@@ -65,26 +62,25 @@ public class MainController {
 		System.out.println("좋아요로 들어왔음.");
 		return "like";
 	}
-	
-	
+
+
 	@GetMapping("/login")
 	public String showLoginPage() {
 		System.out.println("로그인으로 들어왔음.");
 		return "login";
 	}
-	
+
 	@PostMapping("/login")
-    public String showLoginPage(Info info, HttpSession session) {
+	public String showLoginPage(Info info, HttpSession session) {
 		System.out.println("로그인 페이지로 들어왔음" + info.toString());
-		
+
 		Map<String, Object> columnValues = new HashMap<>();
 		columnValues.put("username", info.getUsername());
 		columnValues.put("password", info.getPassword());
-		
+
 		DriverConfigLoader loader = dbService.getConnection();
 		List<Info> listInfo = dbService.findAllByColumnValues(loader, Info.class, columnValues);
 
-		
 		if ( listInfo.size() == 0 ) {
 			return "redirect:login";
 		} else {
@@ -92,10 +88,10 @@ public class MainController {
 			System.out.println(listInfo.get(0));
 			return "redirect:index";
 		}
-		
-   }
 
-	
+	}
+
+
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
@@ -147,7 +143,7 @@ public class MainController {
 		return "redirect:/index";
 
 	}
-	
+
 	//파일 업로드
 	@PostMapping("/fileUpload")
 	public String fileUpload(Info info, @RequestParam("file") MultipartFile file, @RequestParam("photoNum") int photoNum, HttpSession session, HttpServletRequest request) {
@@ -218,7 +214,7 @@ public class MainController {
 		return "redirect:/info";
 	}
 
-	
+
 	@GetMapping("/profile")
 	public String showProfilePage(Model model, HttpSession session) {
 		System.out.println("마이페이지로 들어왔음.");
@@ -240,7 +236,7 @@ public class MainController {
 		model.addAttribute("fileName", fileName);
 		return "profile";
 	}
-	
+
 	@GetMapping("/update")
 	public String showUpdatePage() {
 		System.out.println("수정페이지로 들어왔음.");

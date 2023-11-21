@@ -45,7 +45,6 @@
     
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
-    <script src="js/chat.js"></script>
     <!-- 채팅관련 모듈 불러오기 끝 -->
     
 </head>
@@ -54,6 +53,7 @@
     <div class="container-xxl bg-white p-0">
         <jsp:include page="../header.jsp"></jsp:include>
         <!-- 채팅방 보여주기 기능  -->
+        
         
 		<section style="background-color: #eee;">
 		  <div class="container py-5">
@@ -67,22 +67,22 @@
 		        <div class="card">
 		          <div class="card-body">
 		
-		            <ul class="list-unstyled mb-0" style="max-height: 700px;">
+		            <ul id="chatRoomList" class="list-unstyled mb-0" style="max-height: 700px;">
 		              
-		              <c:forEach var="chatRoom" items="${chatRooms}" varStatus="status">
+		              <c:forEach var="chatRoomNotification" items="${chatRoomNotifications}" varStatus="status">
 			            <li class="p-2 border-bottom" style="background-color: #eee;">
-		                  <a href="#!" class="d-flex justify-content-between">
+		                  <a href="#!" class="chat-link d-flex justify-content-between" data-room-uuid="${chatRoomNotification.type_uuid}">
 		                    <div class="d-flex flex-row">
 		                      <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp" alt="avatar"
 		                        class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
 		                      <div class="pt-1">
-		                        <p class="fw-bold mb-0">${chatRoom.room_joined}</p>
+		                        <p class="fw-bold mb-0">${chatRoomNotification.opponent_username}</p>
 		                        <p class="small text-muted">Hello, Are you there?</p>
 		                      </div>
 		                    </div>
 		                    <div class="pt-1 chatRoomTime">
 		                      <span id="timeAgo"></span>
-		                      <span class="badge bg-danger float-end">1</span>
+		                      <span class="badge bg-danger float-end">${chatRoomNotification.notification_count}</span>
 		                    </div>
 		                  </a>
 		                </li>
@@ -193,80 +193,8 @@
 		
 		      <div class="col-md-6 col-lg-7 col-xl-8">
 		
-		        <ul class="list-unstyled" id="chatting-ul">
-		        
-		          <li class="d-flex justify-content-between mb-4">
-		            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp" alt="avatar" class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60">
-		            <div class="card">
-		              <div class="card-header d-flex justify-content-between p-3">
-		                <p class="fw-bold mb-0">Brad Pitt</p>
-		                <p class="text-muted small mb-0"><i class="far fa-clock"></i> 12 mins ago</p>
-		              </div>
-		              <div class="card-body">
-		                <p class="mb-0">
-		                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-		                  labore et dolore magna aliqua.
-		                </p>
-		              </div>
-		            </div>
-		          </li>
-		        
-		          <li class="d-flex justify-content-between mb-4">
-		            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp" alt="avatar"
-		              class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60">
-		            <div class="card">
-		              <div class="card-header d-flex justify-content-between p-3">
-		                <p class="fw-bold mb-0">Brad Pitt</p>
-		                <p class="text-muted small mb-0"><i class="far fa-clock"></i> 12 mins ago</p>
-		              </div>
-		              <div class="card-body">
-		                <p class="mb-0">
-		                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-		                  labore et dolore magna aliqua.
-		                </p>
-		              </div>
-		            </div>
-		          </li>
-		          <li class="d-flex justify-content-between mb-4">
-		            <div class="card w-100">
-		              <div class="card-header d-flex justify-content-between p-3">
-		                <p class="fw-bold mb-0">Lara Croft</p>
-		                <p class="text-muted small mb-0"><i class="far fa-clock"></i> 13 mins ago</p>
-		              </div>
-		              <div class="card-body">
-		                <p class="mb-0">
-		                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-		                  laudantium.
-		                </p>
-		              </div>
-		            </div>
-		            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp" alt="avatar"
-		              class="rounded-circle d-flex align-self-start ms-3 shadow-1-strong" width="60">
-		          </li>
-		          <li class="d-flex justify-content-between mb-4">
-		            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp" alt="avatar"
-		              class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60">
-		            <div class="card">
-		              <div class="card-header d-flex justify-content-between p-3">
-		                <p class="fw-bold mb-0">Brad Pitt</p>
-		                <p class="text-muted small mb-0"><i class="far fa-clock"></i> 10 mins ago</p>
-		              </div>
-		              <div class="card-body">
-		                <p class="mb-0">
-		                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-		                  labore et dolore magna aliqua.
-		                </p>
-		              </div>
-		            </div>
-		          </li>
-		          <li class="bg-white mb-3">
-		            <div class="form-outline">
-		              <textarea class="form-control" id="textAreaExample2" rows="4"></textarea>
-		              <label class="form-label" for="textAreaExample2">Message</label>
-		            </div>
-		          </li>
-		          <button type="button" class="btn btn-info btn-rounded float-end">Send</button>
-		        </ul>
+		        <ul class="list-unstyled" id="chatting-ul"></ul>
+		        <ul class="list-unstyled" id="send-ul"></ul>
 		
 		      </div>
 		
@@ -279,10 +207,6 @@
         
         
         <!-- 채팅방 보여주기 기능 끝 -->
-        
-        
-        
-        
         
         <div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
             <div class="container py-5">
@@ -336,7 +260,7 @@
                         <div class="position-relative mx-auto" style="max-width: 400px;">
                             <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
                             <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
-                        </div>
+                        </div>          
                     </div>
                 </div>
             </div>
@@ -378,6 +302,185 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    
+<script>
+
+
+var roomUuid;
+
+//[채팅 클릭][채팅 보여주기]
+$(document).ready(function() {
+ $('.chat-link').click(function(e) {
+     e.preventDefault();
+     roomUuid = $(this).data('room-uuid');
+
+     $.ajax({
+         url: '/boot/GetChatting',
+         type: 'GET',
+         data: { room_uuid: roomUuid },
+         success: function(chattings) {
+             var chattingListHtml = '';
+             var sendHtml = '';
+             chattings.forEach(function(chat) {
+                 if('${mvo.username}' === chat.chat_chatter) {
+                     // #1 코드: 사용자 이름이 같은 경우, 왼쪽에 이미지를 위치시킴
+                     chattingListHtml += `
+                         <li class="d-flex justify-content-between mb-4">
+                             <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp" alt="avatar" class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60">
+                             <div class="card">
+                                 <div class="card-header d-flex justify-content-between p-3">
+                                     <p class="fw-bold mb-0">\${chat.chat_chatter}</p>
+                                     <p class="text-muted small mb-0"><i class="far fa-clock"></i>\${new Date(chat.chatted_at).toLocaleString()}</p>
+                                 </div>
+                                 <div class="card-body">
+                                     <p class="mb-0">\${chat.chat_content}</p>
+                                 </div>
+                             </div>
+                         </li>`;
+                 } else {
+                     // #2 코드: 사용자 이름이 다른 경우, 오른쪽에 이미지를 위치시킴
+                     chattingListHtml += `
+                         <li class="d-flex justify-content-between mb-4">
+                             <div class="card w-100">
+                                 <div class="card-header d-flex justify-content-between p-3">
+                                     <p class="fw-bold mb-0">\${chat.chat_chatter}</p>
+                                     <p class="text-muted small mb-0"><i class="far fa-clock"></i>\${new Date(chat.chatted_at).toLocaleString()}</p>
+                                 </div>
+                                 <div class="card-body">
+                                     <p class="mb-0">\${chat.chat_content}</p>
+                                 </div>
+                             </div>
+                             <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp" alt="avatar" class="rounded-circle d-flex align-self-start ms-3 shadow-1-strong" width="60">
+                         </li>`;
+                 }
+             });
+             
+             // 입력창
+             sendHtml += `
+          	 <form class="form-inline">       
+             	<li class="bg-white mb-3" style="border-radius: 15px;">
+	              <div class="form-outline" style="width: 100%;">
+	                <textarea class="form-control" id="chat_content" rows="4"></textarea>
+	              </div>
+	            </li>
+             `;
+             
+             // send 버튼
+             sendHtml += `
+             	<button type="submit" id="send" class="btn btn-info btn-rounded float-end">Send</button>
+           	 </form>
+             	`;
+
+             $('#chatting-ul').html(chattingListHtml);
+             $('#send-ul').html(sendHtml);
+             
+         },
+
+         error: function(error) {
+             console.error(error);
+         }
+     });
+ });
+});
+
+
+$(document).ready(function() {
+    connect(); // 페이지 로드 시 WebSocket 연결을 시작합니다.
+});
+
+host_address = 'localhost'
+var username = '@Session["username"]';
+
+const stompClient = new StompJs.Client({
+    brokerURL: `ws://\${host_address}:8081/boot/gs-guide-websocket`
+});
+
+stompClient.onConnect = (frame) => {
+    setConnected(true);
+    console.log('Connected: ' + frame);
+    stompClient.subscribe('/topic/greetings', (greeting) => {
+        showGreeting(JSON.parse(greeting.body).content);
+    });
+};
+
+stompClient.onWebSocketError = (error) => {
+    console.error('Error with websocket', error);
+};
+
+stompClient.onStompError = (frame) => {
+    console.error('Broker reported error: ' + frame.headers['message']);
+    console.error('Additional details: ' + frame.body);
+};
+
+function setConnected(connected) {
+    $("#connect").prop("disabled", connected);
+    $("#disconnect").prop("disabled", !connected);
+    if (connected) {
+        $("#conversation").show();
+    }
+    else {
+        $("#conversation").hide();
+    }
+    $("#greetings").html("");
+}
+
+function connect() {
+    stompClient.activate();
+}
+
+function disconnect() {
+    stompClient.deactivate();
+    setConnected(false);
+    console.log("Disconnected");
+}
+
+function sendName() {
+    stompClient.publish({
+        destination: "/app/hello",
+        body: JSON.stringify({
+        	'chat_content': $("#chat_content").val(),
+        	'room_uuid' : roomUuid,
+        	'chat_chatter' : '${mvo.username}'
+        })
+    });
+}
+
+function showGreeting(message) {
+	$('#chatting-ul').append(`
+<li class="d-flex justify-content-between mb-4">
+  <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp" alt="avatar" class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60">
+  <div class="card">
+    <div class="card-header d-flex justify-content-between p-3">
+      <p class="fw-bold mb-0">${mvo.username}</p>
+      <p class="text-muted small mb-0"><i class="far fa-clock"></i>\${new Date().toLocaleString()}</p>
+	</div>
+	<div class="card-body">
+	  <p class="mb-0">\${message}</p>
+	</div>
+  </div>
+</li>
+`);
+	// 스크롤을 최하단으로 이동
+	var chattingUl = $('#chatting-ul');
+    chattingUl.scrollTop(chattingUl.prop('scrollHeight'));
+}
+
+
+// #send 누르면 sendName() 함수 실행
+$(document).on('submit', 'form', function(e) {
+    e.preventDefault();
+});
+
+$(document).on('click', '#send', function() {
+    sendName();
+});
+
+
+
+
+</script>
+    
 </body>
 
-</html></html>
+</html>
+

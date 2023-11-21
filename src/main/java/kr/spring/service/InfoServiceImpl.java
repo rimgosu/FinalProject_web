@@ -112,8 +112,12 @@ public class InfoServiceImpl implements InfoService {
 		return photoMap;
 	}
 
+	//사진 업로드 기능 구현
 	@Override
 	public void fileUpload(Map<Integer, String> additionalFile, String username_session) {
+		
+		System.out.println("Service : fileUpload");
+		
 		Path configPath = Paths.get("c:/keys/keyspace/application.conf");
 		DriverConfigLoader loader = DriverConfigLoader.fromPath(configPath);
 		
@@ -178,10 +182,18 @@ public class InfoServiceImpl implements InfoService {
 	@Override
 	public void InsertInfo(String nickname, String username, String password) {
 
+		Map<Integer, String> files = new HashMap<>();
+		files.put(1, "default.png");
+		files.put(2, "default.png");
+		files.put(3, "default.png");
+		files.put(4, "default.png");
+		
 		Info info = new Info();
 		info.setNickname(nickname);
 		info.setUsername(username);
 		info.setPassword(password);
+		info.setPhoto(files);
+		
 		
 		
 		

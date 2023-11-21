@@ -98,7 +98,7 @@ public class MainController {
 	public String showJoinPage(@RequestParam("nickname") String nickname, @RequestParam("username") String username,
 			@RequestParam("password") String password) {
 		infoService.InsertInfo(nickname, username, password);
-		return "redirect:/login";
+		return "redirect:/index";
 	}
 
 	@GetMapping("/info")

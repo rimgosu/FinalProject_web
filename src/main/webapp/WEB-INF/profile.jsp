@@ -10,7 +10,7 @@
 <html lang="en" style="background: white;">
 <head>
     <meta charset="utf-8">
-    <title>Makaan - Real Estate HTML Template</title>
+    <title>SimKoong</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -107,7 +107,7 @@ color:#69707a;
         <!-- Header Start -->
         <br>
         <br>
-         <form action ="${cpath}/update" method="post">
+         <%-- <form action ="${cpath}/update" method="post"> --%>
 		      <!-- <div class="container">
 		          <div class="row">
 		              <div class="col-12 text-center">
@@ -136,6 +136,7 @@ color:#69707a;
         <a class="nav-link" href="https://www.bootdey.com/snippets/view/bs5-edit-notifications-page"  target="__blank">Notifications</a>
     </nav> --><!-- 
     <hr class="mt-0 mb-4"> -->
+    <form>
     <div class="row">
         <div class="col-xl-4">
             <!-- Profile picture card-->
@@ -241,6 +242,8 @@ color:#69707a;
             </div>
         </div>
     </div>
+    
+    </form>
 </div>
 </div>
         <!-- Header End -->

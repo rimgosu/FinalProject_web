@@ -18,7 +18,7 @@ ul {
   scrollbar-width: none; /* 파이어폭스에서 스크롤바 숨김 */
   -ms-overflow-style: none; /* 인터넷 익스플로러와 엣지에서 스크롤바 숨김 */
 
-  max-height: 1000px; /* 또는 원하는 높이 */
+  max-height: 550px; /* 또는 원하는 높이 */
 }
 
 ul::-webkit-scrollbar {

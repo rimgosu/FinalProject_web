@@ -71,10 +71,10 @@
 		              
 		              <c:forEach var="chatRoomNotification" items="${chatRoomNotifications}" varStatus="status">
 		              		<c:if test="${chatRoomNotification.notification_count == 0}">
-						    	<li class="p-2 border-bottom">
+						    	<li class="p-2 border-bottom chatRoomItem" >
 						    </c:if>
 						    <c:if test="${chatRoomNotification.notification_count != 0}">
-						    	<li class="p-2 border-bottom" style="background-color: #eee;">
+						    	<li class="p-2 border-bottom chatRoomItem" style="background-color: #eee;">
 						    </c:if>
 						        <a href="#!" class="chat-link d-flex justify-content-between" data-room-uuid="${chatRoomNotification.type_uuid}">
 						            <div class="d-flex flex-row">
@@ -532,6 +532,31 @@ $(document).on('click', '#send', function() {
 	[웹소켓] 끝
 *****************************/
 
+
+
+/****************************
+	[채팅방 클릭시 ]
+*****************************/
+document.addEventListener("DOMContentLoaded", function() {
+    // 모든 채팅 링크에 이벤트 리스너 추가
+    document.querySelectorAll('.chat-link').forEach(function(link) {
+        link.addEventListener('click', function() {
+            // 부모 <li> 요소 선택
+            var li = this.closest('.chatRoomItem');
+
+            // <li> 요소의 스타일 변경
+            if (li) {
+                li.style.backgroundColor = '';
+            }
+
+            // 알림 배지 요소 찾기 및 내용 변경
+            var badge = li.querySelector('.badge');
+            if (badge) {
+                badge.textContent = '';
+            }
+        });
+    });
+});
 
 
 

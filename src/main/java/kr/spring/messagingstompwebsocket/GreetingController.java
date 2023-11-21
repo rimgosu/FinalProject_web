@@ -30,6 +30,7 @@ public class GreetingController {
 		
 		chatting.setChat_uuid(UUID.randomUUID());
 		chatting.setChatted_at(Instant.now());
+		chatting.setRead_status(false);
 		
 		chatService.insertChatting(chatting);
 		

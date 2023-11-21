@@ -77,112 +77,6 @@
         <jsp:include page="header.jsp"></jsp:include>
         <!-- Navbar End -->
 
-
-        <!-- Header Start -->
-        <!-- <div class="container-fluid header bg-white p-0">
-            <div class="row g-0 align-items-center flex-column-reverse flex-md-row">
-                <div class="col-md-6 p-5 mt-lg-5">
-                    <h1 class="display-5 animated fadeIn mb-4">About Us</h1> 
-                        <nav aria-label="breadcrumb animated fadeIn">
-                        <ol class="breadcrumb text-uppercase">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                            <li class="breadcrumb-item text-body active" aria-current="page">About</li>
-                        </ol>
-                    </nav>
-                </div>
-                <div class="col-md-6 animated fadeIn">
-                    <img class="img-fluid" src="img/header.jpg" alt="">
-                </div>
-            </div>
-        </div> -->
-        <!-- Header End -->
-
-
-        <!-- Search Start -->
-        <!-- <div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
-            <div class="container">
-                <div class="row g-2">
-                    <div class="col-md-10">
-                        <div class="row g-2">
-                            <div class="col-md-4">
-                                <input type="text" class="form-control border-0 py-3" placeholder="Search Keyword">
-                            </div>
-                            <div class="col-md-4">
-                                <select class="form-select border-0 py-3">
-                                    <option selected>Property Type</option>
-                                    <option value="1">Property Type 1</option>
-                                    <option value="2">Property Type 2</option>
-                                    <option value="3">Property Type 3</option>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <select class="form-select border-0 py-3">
-                                    <option selected>Location</option>
-                                    <option value="1">Location 1</option>
-                                    <option value="2">Location 2</option>
-                                    <option value="3">Location 3</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <button class="btn btn-dark border-0 w-100 py-3">Search</button>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-        <!-- Search End -->
-
-
-        <!-- About Start -->
-        <!-- <div class="container-xxl py-5">
-            <div class="container">
-                <div class="row g-5 align-items-center">
-                    <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
-                        <div class="about-img position-relative overflow-hidden p-5 pe-0">
-                            <img class="img-fluid w-100" src="img/about.jpg">
-                        </div>
-                    </div>
-                    <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
-                        <h1 class="mb-4">#1 Place To Find The Perfect Property</h1>
-                        <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
-                        <p><i class="fa fa-check text-primary me-3"></i>Tempor erat elitr rebum at clita</p>
-                        <p><i class="fa fa-check text-primary me-3"></i>Aliqu diam amet diam et eos</p>
-                        <p><i class="fa fa-check text-primary me-3"></i>Clita duo justo magna dolore erat amet</p>
-                        <a class="btn btn-primary py-3 px-5 mt-3" href="">Read More</a>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-        <!-- About End -->
-
-
-        <!-- Call to Action Start -->
-        <!-- <div class="container-xxl py-5">
-            <div class="container">
-                <div class="bg-light rounded p-3">
-                    <div class="bg-white rounded p-4" style="border: 1px dashed rgba(0, 185, 142, .3)">
-                        <div class="row g-5 align-items-center">
-                            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
-                                <img class="img-fluid rounded w-100" src="img/call-to-action.jpg" alt="">
-                            </div>
-                            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
-                                <div class="mb-4">
-                                    <h1 class="mb-3">Contact With Our Certified Agent</h1>
-                                    <p>Eirmod sed ipsum dolor sit rebum magna erat. Tempor lorem kasd vero ipsum sit sit diam justo sed vero dolor duo.</p>
-                                </div>
-                                <a href="" class="btn btn-primary py-3 px-4 me-2"><i class="fa fa-phone-alt me-2"></i>Make A Call</a>
-                                <a href="" class="btn btn-dark py-3 px-4"><i class="fa fa-calendar-alt me-2"></i>Get Appoinment</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-        <!-- Call to Action End -->
-
-
         <!-- Team Start -->
         <div class="container-xxl py-5">
             <div class="container">
@@ -394,56 +288,56 @@
     <script src="js/main.js"></script>
     
 <script>
-	function flipCard() {
-	    var flipElement = document.querySelector('.flip');
-	    flipElement.classList.toggle('clicked');
-	}
-    // Initialize Wow.js
-    new WOW().init();
+function flipCard() {
+    var flipElement = document.querySelector('.flip');
+    flipElement.classList.toggle('clicked');
+}
+   // Initialize Wow.js
+   new WOW().init();
 
-    // jQuery Document Ready
-    $(document).ready(function () {
-        // Like button click event
-        $('.like-btn').click(function () {
-            var count = parseInt($(this).attr('data-count'));
-            
-            // Toggle the liked class and change the heart color
-            if ($(this).hasClass('liked')) {
-                count--;
-                $(this).removeClass('liked');
-                $(this).find('i').removeClass('fas').addClass('far'); // Change to outline heart
-                alert("이 유저를 더 이상 선호하지 않습니다." + '\nLike: ' + count);
-            } else {
-                count++;
-                $(this).addClass('liked');
-                $(this).find('i').removeClass('far').addClass('fas'); // Change to filled heart
-                alert("이 유저를 선호합니다." + '\nLike: ' + count);
-            }
+   // jQuery Document Ready
+   $(document).ready(function () {
+       // Like button click event
+       $('.like-btn').click(function () {
+           var count = parseInt($(this).attr('data-count'));
+           
+           // Toggle the liked class and change the heart color
+           if ($(this).hasClass('liked')) {
+               count--;
+               $(this).removeClass('liked');
+               $(this).find('i').removeClass('fas').addClass('far'); // Change to outline heart
+               alert("이 유저를 더 이상 선호하지 않습니다." + '\nLike: ' + count);
+           } else {
+               count++;
+               $(this).addClass('liked');
+               $(this).find('i').removeClass('far').addClass('fas'); // Change to filled heart
+               alert("이 유저를 선호합니다." + '\nLike: ' + count);
+           }
 
-            $(this).attr('data-count', count);
-            
-        });
-        
-        $('.dislike-btn').click(function () {
-            var count = parseInt($(this).attr('data-count'));
+           $(this).attr('data-count', count);
+           
+       });
+       
+       $('.dislike-btn').click(function () {
+           var count = parseInt($(this).attr('data-count'));
 
-            // Toggle the liked class and change the heart color
-            if ($(this).hasClass('disliked')) {
-                count--;
-                $(this).removeClass('disliked');
-                $(this).find('img').attr('src', 'img/before broken.png'); // Change to original image
-                alert("이 유저를 다시 추천받습니다." + '\ndisLike: ' + count);
-            } else {
-                count++;
-                $(this).addClass('disliked');
-                $(this).find('img').attr('src', 'img/broken-heart.png'); // Change to broken heart image
-                alert("이 유저를 더 이상 추천받지 않습니다." + '\ndisLike: ' + count);
-            }
+           // Toggle the liked class and change the heart color
+           if ($(this).hasClass('disliked')) {
+               count--;
+               $(this).removeClass('disliked');
+               $(this).find('img').attr('src', 'img/before broken.png'); // Change to original image
+               alert("이 유저를 다시 추천받습니다." + '\ndisLike: ' + count);
+           } else {
+               count++;
+               $(this).addClass('disliked');
+               $(this).find('img').attr('src', 'img/broken-heart.png'); // Change to broken heart image
+               alert("이 유저를 더 이상 추천받지 않습니다." + '\ndisLike: ' + count);
+           }
 
-            $(this).attr('data-count', count);
-            
-        });
-    });
+           $(this).attr('data-count', count);
+           
+       });
+   });
     
 </script>
     

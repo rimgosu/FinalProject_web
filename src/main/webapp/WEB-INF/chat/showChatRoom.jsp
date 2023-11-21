@@ -70,23 +70,31 @@
 		            <ul id="chatRoomList" class="list-unstyled mb-0" style="max-height: 700px;">
 		              
 		              <c:forEach var="chatRoomNotification" items="${chatRoomNotifications}" varStatus="status">
-			            <li class="p-2 border-bottom" style="background-color: #eee;">
-		                  <a href="#!" class="chat-link d-flex justify-content-between" data-room-uuid="${chatRoomNotification.type_uuid}">
-		                    <div class="d-flex flex-row">
-		                      <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp" alt="avatar"
-		                        class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
-		                      <div class="pt-1">
-		                        <p class="fw-bold mb-0">${chatRoomNotification.opponent_username}</p>
-		                        <p class="small text-muted">Hello, Are you there?</p>
-		                      </div>
-		                    </div>
-		                    <div class="pt-1 chatRoomTime">
-		                      <span id="timeAgo"></span>
-		                      <span class="badge bg-danger float-end">${chatRoomNotification.notification_count}</span>
-		                    </div>
-		                  </a>
-		                </li>
-		        	  </c:forEach>
+		              		<c:if test="${chatRoomNotification.notification_count == 0}">
+						    	<li class="p-2 border-bottom">
+						    </c:if>
+						    <c:if test="${chatRoomNotification.notification_count != 0}">
+						    	<li class="p-2 border-bottom" style="background-color: #eee;">
+						    </c:if>
+						        <a href="#!" class="chat-link d-flex justify-content-between" data-room-uuid="${chatRoomNotification.type_uuid}">
+						            <div class="d-flex flex-row">
+						                <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp" alt="avatar"
+						                    class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
+						                <div class="pt-1">
+						                    <p class="fw-bold mb-0">${chatRoomNotification.opponent_username}</p>
+						                    <p class="small text-muted">Hello, Are you there?</p>
+						                </div>
+						            </div>
+						            <div class="pt-1 chatRoomTime">
+						                <span id="timeAgo"></span>
+						                <c:if test="${chatRoomNotification.notification_count != 0}">
+						                    <span class="badge bg-danger float-end">${chatRoomNotification.notification_count}</span>
+						                </c:if>
+						            </div>
+						        </a>
+						    </li>
+						</c:forEach>
+
 		              
 		              
 		              
@@ -399,7 +407,10 @@ stompClient.onConnect = (frame) => {
     setConnected(true);
     console.log('Connected: ' + frame);
     stompClient.subscribe('/topic/greetings', (greeting) => {
-        showGreeting(JSON.parse(greeting.body).content);
+        const chattingData = JSON.parse(greeting.body);
+        // 필요한 데이터를 추출하여 사용
+        // 예: chattingData.chat_uuid, chattingData.chat_content 등
+        showGreeting(chattingData); // 또는 필요에 따라 다른 데이터를 사용
     });
 };
 
@@ -443,26 +454,53 @@ function sendName() {
         	'chat_chatter' : '${mvo.username}'
         })
     });
+    
+    /// textarea 내용 초기화
+    $('#chat_content').val('');
 }
 
-function showGreeting(message) {
-	$('#chatting-ul').append(`
-<li class="d-flex justify-content-between mb-4">
-  <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp" alt="avatar" class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60">
-  <div class="card">
-    <div class="card-header d-flex justify-content-between p-3">
-      <p class="fw-bold mb-0">${mvo.username}</p>
-      <p class="text-muted small mb-0"><i class="far fa-clock"></i>\${new Date().toLocaleString()}</p>
-	</div>
-	<div class="card-body">
-	  <p class="mb-0">\${message}</p>
-	</div>
-  </div>
-</li>
-`);
-	// 스크롤을 최하단으로 이동
-	var chattingUl = $('#chatting-ul');
+function showGreeting(chattingData) {
+    var htmlContent;
+    
+    // mvo.username과 chattingData.chat_chatter가 일치하는 경우
+    if ('${mvo.username}' === chattingData.chat_chatter) {
+        htmlContent = `
+        <li class="d-flex justify-content-between mb-4">
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp" alt="avatar" class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between p-3">
+                    <p class="fw-bold mb-0">\${chattingData.chat_chatter}</p>
+                    <p class="text-muted small mb-0"><i class="far fa-clock"></i>\${new Date().toLocaleString()}</p>
+                </div>
+                <div class="card-body">
+                    <p class="mb-0">\${chattingData.chat_content}</p>
+                </div>
+            </div>
+        </li>
+        `;
+    } else {
+        // mvo.username과 chattingData.chat_chatter가 일치하지 않는 경우
+    	htmlContent = `
+        <li class="d-flex justify-content-between mb-4">
+            <div class="card w-100">
+                <div class="card-header d-flex justify-content-between p-3">
+                    <p class="fw-bold mb-0">\${chattingData.chat_chatter}</p>
+                    <p class="text-muted small mb-0"><i class="far fa-clock"></i>\${new Date().toLocaleString()}</p>
+                </div>
+                <div class="card-body">
+                    <p class="mb-0">\${chattingData.chat_content}</p>
+                </div>
+            </div>
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp" alt="avatar" class="rounded-circle d-flex align-self-start ms-3 shadow-1-strong" width="60">
+        </li>`;
+    }
+
+    $('#chatting-ul').append(htmlContent);
+
+    // 스크롤을 최하단으로 이동
+    var chattingUl = $('#chatting-ul');
     chattingUl.scrollTop(chattingUl.prop('scrollHeight'));
+    
 }
 
 

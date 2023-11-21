@@ -25,7 +25,7 @@ public class GreetingController {
 	
 	@MessageMapping("/hello")
 	@SendTo("/topic/greetings")
-	public Greeting greeting(Chatting chatting) throws Exception {
+	public Chatting greeting(Chatting chatting) throws Exception {
 		System.out.println("[GreetingController][@MessageMapping(\"/hello\")][chatting]"+ chatting.toString());
 		
 		chatting.setChat_uuid(UUID.randomUUID());
@@ -35,7 +35,7 @@ public class GreetingController {
 		
 		Thread.sleep(1000);
 		// Greeting 객체를 만들고 반환함
-		return new Greeting(HtmlUtils.htmlEscape(chatting.getChat_content()));
+		return chatting;
 	}
 
 }

@@ -70,23 +70,31 @@
 		            <ul id="chatRoomList" class="list-unstyled mb-0" style="max-height: 700px;">
 		              
 		              <c:forEach var="chatRoomNotification" items="${chatRoomNotifications}" varStatus="status">
-			            <li class="p-2 border-bottom" style="background-color: #eee;">
-		                  <a href="#!" class="chat-link d-flex justify-content-between" data-room-uuid="${chatRoomNotification.type_uuid}">
-		                    <div class="d-flex flex-row">
-		                      <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp" alt="avatar"
-		                        class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
-		                      <div class="pt-1">
-		                        <p class="fw-bold mb-0">${chatRoomNotification.opponent_username}</p>
-		                        <p class="small text-muted">Hello, Are you there?</p>
-		                      </div>
-		                    </div>
-		                    <div class="pt-1 chatRoomTime">
-		                      <span id="timeAgo"></span>
-		                      <span class="badge bg-danger float-end">${chatRoomNotification.notification_count}</span>
-		                    </div>
-		                  </a>
-		                </li>
-		        	  </c:forEach>
+		              		<c:if test="${chatRoomNotification.notification_count == 0}">
+						    	<li class="p-2 border-bottom">
+						    </c:if>
+						    <c:if test="${chatRoomNotification.notification_count != 0}">
+						    	<li class="p-2 border-bottom" style="background-color: #eee;">
+						    </c:if>
+						        <a href="#!" class="chat-link d-flex justify-content-between" data-room-uuid="${chatRoomNotification.type_uuid}">
+						            <div class="d-flex flex-row">
+						                <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp" alt="avatar"
+						                    class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
+						                <div class="pt-1">
+						                    <p class="fw-bold mb-0">${chatRoomNotification.opponent_username}</p>
+						                    <p class="small text-muted">Hello, Are you there?</p>
+						                </div>
+						            </div>
+						            <div class="pt-1 chatRoomTime">
+						                <span id="timeAgo"></span>
+						                <c:if test="${chatRoomNotification.notification_count != 0}">
+						                    <span class="badge bg-danger float-end">${chatRoomNotification.notification_count}</span>
+						                </c:if>
+						            </div>
+						        </a>
+						    </li>
+						</c:forEach>
+
 		              
 		              
 		              
@@ -446,6 +454,9 @@ function sendName() {
         	'chat_chatter' : '${mvo.username}'
         })
     });
+    
+    /// textarea 내용 초기화
+    $('#chat_content').val('');
 }
 
 function showGreeting(chattingData) {
@@ -489,8 +500,8 @@ function showGreeting(chattingData) {
     // 스크롤을 최하단으로 이동
     var chattingUl = $('#chatting-ul');
     chattingUl.scrollTop(chattingUl.prop('scrollHeight'));
+    
 }
-
 
 
 // #send 누르면 sendName() 함수 실행

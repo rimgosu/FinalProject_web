@@ -34,6 +34,7 @@ import jakarta.servlet.http.HttpSession;
 import kr.spring.entity.Info;
 import kr.spring.service.DBService;
 import kr.spring.service.InfoService;
+import net.coobird.thumbnailator.Thumbnails;
 
 @Controller
 public class MainController {
@@ -88,10 +89,7 @@ public class MainController {
 			System.out.println(listInfo.get(0));
 			return "redirect:index";
 		}
-
 	}
-
-
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
@@ -105,15 +103,27 @@ public class MainController {
 	}
 
 	@PostMapping("/join")
-	public String showJoinPage(@RequestParam("nickname") String nickname, @RequestParam("username") String username,
-			@RequestParam("password") String password) {
-		infoService.InsertInfo(nickname, username, password);
-		return "redirect:/login";
+	public String showJoinPage(HttpSession session, Info info) {
+		infoService.InsertInfo(info.getNickname(), info.getUsername(), info.getPassword());
+		
+		DriverConfigLoader loader = dbService.getConnection(); //db연결
+		Map<String, Object> columnValues = new HashMap<>();
+		columnValues.put("username", info.getUsername());
+		List<Info> listInfo = dbService.findAllByColumnValues(loader, Info.class, columnValues);
+
+		if ( listInfo.size() == 0 ) {
+			return "redirect:join";
+		} else {
+			session.setAttribute("mvo", listInfo.get(0));
+			System.out.println(listInfo.get(0));
+			return "redirect:/info";
+		}
+		
 	}
 
 	@GetMapping("/info") //사진 출력필요함.
 	public String showInfoPage(HttpSession session, Model model) {
-		System.out.println("정보입력으로 들어왔음.");
+		System.out.println("사진입력으로 들어왔음.");
 		//사진 출력되는 곳
 		 Info userInfo =(Info) session.getAttribute("mvo");
 		  Map<Integer, String> photoMap = userInfo.getPhoto();
@@ -125,11 +135,14 @@ public class MainController {
 				  imagePath = photoMap.get(i);
 				  File file  = new File(imagePath);
 				  fileName = file.getName();
-				  fileNames.add(fileName);				  
+				  
+				  if(fileName.equals("default.png") ) {
+					  fileName = "simkoong.png";
+				  }
+				  fileNames.add(fileName);
 			  }			    
 			} else {
-				System.out.println("없음");
-			    // sessionPhoto가 null일 때 처리할 코드를 여기에 추가하세요
+				//사진 없다는 경우. 하지만 default로 default.png가 들어감. 그래서 여기로 오는 경우 없음.		    
 			}
 		model.addAttribute("fileNames", fileNames);
 		model.addAttribute(fileName);
@@ -141,7 +154,6 @@ public class MainController {
 		String username_session = ((Info) session.getAttribute("mvo")).getUsername();
 		infoService.InsertInfoAdditional(info, username_session);
 		return "redirect:/index";
-
 	}
 
 	//파일 업로드
@@ -157,25 +169,24 @@ public class MainController {
 			// 업로드된 파일 처리
 			if (!file.isEmpty()) {
 				originalFilename = file.getOriginalFilename();
-				// 파일 저장 경로 및 이름 설정
-				System.out.println(originalFilename);
+				// 파일 저장 경로 및 이름 설
 				String filePath_aws = "s3://simkoong-s3/" + originalFilename; 
 				String filePath = request.getServletContext().getRealPath("/" + originalFilename);
-				System.out.println(filePath);
-				File dest = new File(filePath);
-				File dest1 = new File(filePath_aws);
-				
-				System.out.println(dest);
-				// 파일 저장
-				file.transferTo(dest);
 				// 파일 경로에서 역슬래시 바꾸는 곳.
-				System.out.println(dest);
 				filePath = filePath.replace("\\\\", "/");
 				uploadedFilePath = filePath.replace("\\", "/");
 				
 				filePath_aws = filePath_aws.replace("\\\\", "/");
-				uploadedFilePath_aws = filePath_aws.replace("\\", "/");
-
+				uploadedFilePath_aws = filePath_aws.replace("\\", "/");			
+				//파일 생성
+				File dest1 = new File(uploadedFilePath_aws);
+				File dest = new File(uploadedFilePath);
+				// 파일 저장
+				file.transferTo(dest);
+				//파일 변환
+				Thumbnails.of(dest)
+							.size(400,400)
+							.toFile(dest); 		
 			}		
 			//AWS S3 관련 코드
 				File fileForS3 = new File(uploadedFilePath);
@@ -219,27 +230,56 @@ public class MainController {
 	public String showProfilePage(Model model, HttpSession session) {
 		System.out.println("마이페이지로 들어왔음.");
 		//사진 출력되는 곳
+		Info userInfo =(Info) session.getAttribute("mvo");
+		  Map<Integer, String> photoMap = userInfo.getPhoto();
+		  List<String> fileNames = new ArrayList<>();
+		  String imagePath = null;
+		  String fileName = null;
+		  if (photoMap != null) {
+			  for(int i=1;i<=4; i++) {
+				  imagePath = photoMap.get(i);
+				  File file  = new File(imagePath);
+				  fileName = file.getName();
+				  
+				  if(fileName.equals("default.png") ) {
+					  fileName = "simkoong.png";
+				  }
+				  fileNames.add(fileName);
+			  }			    
+			} else {
+				//사진 없다는 경우. 하지만 default로 default.png가 들어감. 그래서 여기로 오는 경우 없음.		    
+			}
+		model.addAttribute("fileNames", fileNames);
+		model.addAttribute(fileName);
+		
+		return "profile";
+	}
+
+	@GetMapping("/update")
+	public String showUpdatePage(HttpSession session, Info info, Model model) {
+		System.out.println("수정페이지로 들어왔음.");
 		 Info userInfo =(Info) session.getAttribute("mvo");
 		  Map<Integer, String> photoMap = userInfo.getPhoto();
 		  List<String> fileNames = new ArrayList<>();
 		  String imagePath = null;
 		  String fileName = null;
 		  if (photoMap != null) {
-				  imagePath = photoMap.get(1);
+			  for(int i=1;i<=4; i++) {
+				  imagePath = photoMap.get(i);
 				  File file  = new File(imagePath);
-				  fileName = file.getName();	
-
+				  fileName = file.getName();
+				  
+				  if(fileName.equals("default.png") ) {
+					  fileName = "simkoong.png";
+				  }
+				  fileNames.add(fileName);
+			  }			    
 			} else {
-				System.out.println("없음");
-			    // sessionPhoto가 null일 때 처리할 코드를 여기에 추가하세요
+				//사진 없다는 경우. 하지만 default로 default.png가 들어감. 그래서 여기로 오는 경우 없음.		    
 			}
-		model.addAttribute("fileName", fileName);
-		return "profile";
-	}
+		model.addAttribute("fileNames", fileNames);
+		model.addAttribute(fileName);
 
-	@GetMapping("/update")
-	public String showUpdatePage() {
-		System.out.println("수정페이지로 들어왔음.");
 		return "update";
 	}
 	@PostMapping("/update")
@@ -262,7 +302,7 @@ public class MainController {
 		updateValue.put("address", info.getAddress());
 		updateValue.put("interest", info.getInterest());
 		updateValue.put("mbti", info.getMbti());
-		updateValue.put("sport", info.getMbti());
+		updateValue.put("sport", info.getSport());
 		updateValue.put("smoking", info.getSmoking());
 		updateValue.put("drinking", info.getDrinking());
 		updateValue.put("job", info.getJob());

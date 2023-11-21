@@ -125,17 +125,21 @@
 		    <artifactId>aws-java-sdk-s3</artifactId>
 		    <version>1.12.592</version>
 		</dependency>
-		    <!-- Spring Cloud AWS -->
-
-	  
-	  
-	  
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		<!--파일 변환 thumbnails위한 의존성-->
+		<dependency>
+		    <groupId>net.coobird</groupId>
+		    <artifactId>thumbnailator</artifactId>
+		    <version>0.4.14</version> <!-- 라이브러리 버전 -->
+		</dependency>
+
+	
+		
 	</dependencies>
 
    <build>

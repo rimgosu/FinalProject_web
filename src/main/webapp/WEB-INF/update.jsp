@@ -6,9 +6,11 @@
 
 <c:set var="cpath" value="${pageContext.request.contextPath}" />
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="utf-8">
 <title>Makaan - Real Estate HTML Template</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -103,6 +105,9 @@ body {
 	background-color: #e2e8f0;
 }
 
+.mt-3{
+ 	text-align:center;
+}
 .main-body {
 	padding: 15px;
 }
@@ -128,6 +133,7 @@ body {
 	flex: 1 1 auto;
 	min-height: 1px;
 	padding: 1rem;
+
 }
 
 .gutters-sm {
@@ -155,6 +161,125 @@ body {
 .shadow-none {
 	box-shadow: none !important;
 }
+
+#photoLink {
+	color: pink;
+	width: 30px;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+.slider-container {
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60%;
+  
+}
+
+.slider {
+  width: 100%;
+  max-width: 350px;
+  height: 300px;
+  margin: 20px;
+  text-align: center;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+.slides {
+  display: flex;
+  overflow-x: scroll;
+  position: relative;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+}
+
+.slide {
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  width: 100%;
+  height: 300px;
+  scroll-snap-align: center;
+  margin-right: 0px;
+  box-sizing: border-box;
+  background: white;
+  transform-origin: center center;
+  transform: scale(1);
+}
+
+
+.slide__text {
+  font-size: 40px;
+  font-family: sans-serif;
+}
+
+
+.slide a {
+  background: none;
+  border: none;
+}
+
+a.slide__prev,
+.slider::before {
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+  left: 5%;
+}
+
+a.slide__next,
+.slider::after {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  right: 5%;
+}
+
+.slider::before,
+.slider::after,
+.slide__prev,
+.slide__next {
+  position: absolute;
+  top: 48%;
+  width: 35px;
+  height: 35px;
+  border: solid black;
+  border-width: 0 4px 4px 0;
+  padding: 3px;
+  box-sizing: border-box;
+}
+
+.slider::before,
+.slider::after {
+  content: "";
+  z-index: 1;
+  background: none;
+  pointer-events: none;
+}
+
+#card-body-top{
+	height:530px;
+}
+.image-box {
+  display: inline-block;
+    width: 100%;
+    height: 90%;
+    overflow: hidden;
+    object-fit: cover;
+    border-radius: 5px;
+
+}
+
+.image-box img {
+  width: 100%; /* 이미지를 부모 요소에 꽉 채웁니다. */
+  height: 100%; /* 이미지를 부모 요소에 꽉 채웁니다. */
+
+}
+
+
+
 </style>
 </head>
 <body>
@@ -168,7 +293,7 @@ body {
 		<div class="container">
 			<div class="row">
 				<div class="col-12 text-center">
-					<h2>Profile 수정화면 </h2>
+					<h2>Profile 수정화면</h2>
 				</div>
 			</div>
 			<div class="container">
@@ -187,27 +312,50 @@ body {
 					<div class="row gutters-sm">
 						<div class="col-md-4 mb-3">
 							<div class="card">
-								<div class="card-body">
+								<div id="card-body-top" class="card-body">
 									<div class="d-flex flex-column align-items-center text-center">
-										<img src="img/team-1.jpg" alt="Admin" class="rounded-circle"
-											width="150">
+										<div class="slider-container">
+											<!-- 프로필 사진 슬라이드 -->
+											<div class="slider">
+												<div class="slides">
+													<c:forEach items="${fileNames}" var="fileName" varStatus="i"> 
+														 <div id="slides__${i.count}" class="slide">
+														 <div class="image-box">
+														 	<img src="${fileName}" alt="Admin"  width="200">
+														 </div>
+														 
+														 	<c:choose> 
+															 	<c:when test="${i.count eq 1}"> <!-- i가 1일때는 이전버튼 :4, 다음버튼은 2  -->
+															 		<a class="slide__prev" href="#slides__4" title="prev"></a> 
+																    <a class="slide__next" href="#slides__2" title="Next"></a> 													 	
+															 	</c:when>
+															 	<c:when test="${i.count eq 4}"> <!-- i가 4일때는 이전버튼 :3, 다음버튼은 1  -->
+															 		<a class="slide__prev" href="#slides__3" title="prev"></a> 
+																    <a class="slide__next" href="#slides__1" title="Next"></a> 	
+															 	</c:when>
+															 	<c:otherwise> 
+															 		<a class="slide__prev" href="#slides__${i.count-1}" title="prev"></a> 
+																    <a class="slide__next" href="#slides__${i.count+1}" title="Next"></a> 	
+															 	</c:otherwise>
+														 </c:choose>
+														 </div>
+													 </c:forEach>
+													</div>
+												</div>
+											</div>
+										</div>
 										<div class="mt-3">
-											<h4>${mvo.nickname}</h4>
+											<h4>${mvo.nickname}님</h4>
 											<p class="text-secondary mb-1">${mvo.job}</p>
 											<p class="text-muted font-size-sm">${mvo.address}</p>
-											<form id="imageForm1">
-												<label for="uploadInput" id="uploadButton">이미지 선택</label> <input
-													type="file" id="uploadInput" accept="image/*">
-												<button type="button" onclick="uploadImage()"
-													id="uploadButton">업로드</button>
-											</form>
+											<a href="/boot/info" id="photoLink"> 사진 추가 및 업데이트 </a>
+
 										</div>
 									</div>
 								</div>
 							</div>
-							</div>
-							<!-- card  -->
-					
+						<!-- card  -->
+
 						<div class="col-md-8">
 							<form action="${cpath}/update" method="post">
 								<input type="hidden" name="username" value="${mvo.username}">
@@ -236,7 +384,8 @@ body {
 												<h6 class="mb-0">Phone</h6>
 											</div>
 											<div class="col-sm-9">
-												<input type="number" id="phone" name="phone" value="${mvo.phone}">
+												<input type="number" id="phone" name="phone"
+													value="${mvo.phone}">
 											</div>
 										</div>
 										<hr>
@@ -245,7 +394,8 @@ body {
 												<h6 class="mb-0">Address</h6>
 											</div>
 											<div class="col-sm-9">
-												<input type="text" id="address" name="address" value="${mvo.address}">
+												<input type="text" id="address" name="address"
+													value="${mvo.address}">
 											</div>
 										</div>
 										<hr>
@@ -254,7 +404,8 @@ body {
 												<h6 class="mb-0">Interest</h6>
 											</div>
 											<div class="col-sm-9">
-												<input type="text" id="interest" name="interest" value="${mvo.interest}">
+												<input type="text" id="interest" name="interest"
+													value="${mvo.interest}">
 											</div>
 										</div>
 										<hr>
@@ -263,15 +414,15 @@ body {
 												<h6 class="mb-0">MBTI</h6>
 											</div>
 											<div class="col-sm-9">
-												<select class="form-select" id="mbti" name="mbti" >
-												       <optgroup label="E">
+												<select class="form-select" id="mbti" name="mbti">
+													<optgroup label="E">
 														<option value="ESTP">ESTP</option>
 														<option value="ESFP">ESFP</option>
 														<option value="ESFJ">ESFJ</option>
 														<option value="ESFJ">ESFJ</option>
 														<option value="ENTP">ENTP</option>
 														<option value="ENTJ">ENTJ</option>
-														<option value="ENFP">ENFP</option>																					
+														<option value="ENFP">ENFP</option>
 														<option value="ENFJ">ENFJ</option>
 													</optgroup>
 													<optgroup label="I">
@@ -281,7 +432,7 @@ body {
 														<option value="ISTJ">ISTJ</option>
 														<option value="INTP">INTP</option>
 														<option value="INTJ">INTJ</option>
-														<option value="INFP">INFP</option>											
+														<option value="INFP">INFP</option>
 														<option value="INFJ">INFJ</option>
 													</optgroup>
 												</select>
@@ -293,9 +444,9 @@ body {
 												<h6 class="mb-0">Sport</h6>
 											</div>
 											<div class="col-sm-9">
-												<select class="form-select" id="sport" name="sport" >
-														<option value="yes">예</option>
-														<option value="no">아니오</option>
+												<select class="form-select" id="sport" name="sport">
+													<option value="yes">예</option>
+													<option value="no">아니오</option>
 												</select>
 											</div>
 										</div>
@@ -306,8 +457,8 @@ body {
 											</div>
 											<div class="col-sm-9">
 												<select class="form-select" id="smoking" name="smoking">
-														<option value="yes">네</option>
-														<option value="no">아니오</option>
+													<option value="yes">네</option>
+													<option value="no">아니오</option>
 												</select>
 											</div>
 										</div>
@@ -318,8 +469,8 @@ body {
 											</div>
 											<div class="col-sm-9">
 												<select class="form-select" id="drinking" name="drinking">
-														<option value="yes">예</option>
-														<option value="no">아니오</option>
+													<option value="yes">예</option>
+													<option value="no">아니오</option>
 												</select>
 											</div>
 										</div>
@@ -329,7 +480,7 @@ body {
 												<h6 class="mb-0">Job</h6>
 											</div>
 											<div class="col-sm-9">
-												<input type="text" id="job" name="job"  value="${mvo.job}">
+												<input type="text" id="job" name="job" value="${mvo.job}">
 											</div>
 										</div>
 										<hr>
@@ -338,7 +489,8 @@ body {
 												<h6 class="mb-0">Education</h6>
 											</div>
 											<div class="col-sm-9">
-												<input type="text" id="school" name="school" value="${mvo.school}">
+												<input type="text" id="school" name="school"
+													value="${mvo.school}">
 											</div>
 										</div>
 										<div class="row">
@@ -347,20 +499,20 @@ body {
 													rows="9" style="resize: none;">${mvo.aboutme}</textarea>
 											</div>
 										</div>
-	
+
 									</div>
 									<!-- card body  -->
 								</div>
-							<!-- card mb-3"  -->
-							<hr>
-							<div class="row">
-								<div class="col-sm-12">
-									<input type="submit" class="btn btn-info" value="수정">
+								<!-- card mb-3"  -->
+								<hr>
+								<div class="row">
+									<div class="col-sm-12">
+										<input type="submit" class="btn btn-info" value="수정">
+									</div>
 								</div>
-							</div>
 							</form>
 						</div>
-						
+
 						<!-- col md-8 -->
 					</div>
 					<!-- main body  -->

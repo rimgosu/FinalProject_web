@@ -38,6 +38,24 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    
+<style>
+.image-box {
+  display: inline-block;
+    width: 100%;
+    height: 90%;
+    overflow: hidden;
+    object-fit: cover;
+    border-radius: 5px;
+
+}
+
+.image-box img {
+  width: 100%; /* 이미지를 부모 요소에 꽉 채웁니다. */
+  height: 100%; /* 이미지를 부모 요소에 꽉 채웁니다. */
+
+}
+</style>
 </head>
 
 <body>
@@ -162,7 +180,9 @@
                     <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="team-item rounded overflow-hidden">
                             <div class="position-relative">
+                              <div class="image-box">
                                 <img class="img-fluid" src="img/team-1.jpg" alt="">
+                               </div>
                                 <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
                                     <button class="btn btn-square mx-1 like-btn" data-count="0"><i class="fas fa-heart"></i></button>
                                     <button class="btn btn-square mx-1 dislike-btn" data-count="0"><img src="img/pngwing.com.png" style="width: 18px;"></button>

@@ -48,7 +48,7 @@
 <body>
     <div class="container-xxl bg-white p-0">
     	<jsp:include page="header.jsp"></jsp:include>
-        <a href="/boot/readFile">test로 가기</a>
+
         <!-- Navbar End -->
 
 		<div>

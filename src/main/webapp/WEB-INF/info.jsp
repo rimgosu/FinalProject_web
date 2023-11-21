@@ -10,13 +10,27 @@
 <c:set var="cpath" value="${pageContext.request.contextPath}" />
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="background: white;">
 <head>
 <meta charset="utf-8">
-<title>Makaan - Real Estate HTML Template</title>
+<title>SimKoong</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="" name="keywords">
 <meta content="" name="description">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700,900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    
+    <!-- Style -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>Contact Form #9</title>
 
 <!-- Favicon -->
 <link href="img/favicon.ico" rel="icon">
@@ -50,6 +64,158 @@
 .info-front {
 	margin-bottom: 40px;
 }
+
+
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: "Roboto", sans-serif;
+  color: #000; }
+
+a {
+  -webkit-transition: .3s all ease;
+  -o-transition: .3s all ease;
+  transition: .3s all ease; }
+  a, a:hover {
+    text-decoration: none !important; }
+
+.text-black {
+  color: #000; }
+
+.content {
+  padding: 0 3rem 0; }
+
+.heading {
+  font-size: 2.5rem;
+  font-weight: 900; }
+
+.form-control {
+  border: none;
+  border-bottom: 1px solid #ccc;
+  padding-left: 0;
+  padding-right: 0;
+  border-radius: 0;
+  background: none; }
+  .form-control:active, .form-control:focus {
+    outline: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-color: #000; }
+
+.col-form-label {
+  color: #000;
+  font-size: 13px; }
+
+/* .btn, .form-control, .custom-select {
+  height: 45px;
+  border-radius: 0; } */
+
+.custom-select {
+  border: none;
+  border-bottom: 1px solid #ccc;
+  padding-left: 0;
+  padding-right: 0;
+  border-radius: 0; }
+  .custom-select:active, .custom-select:focus {
+    outline: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-color: #000; }
+
+/* .btn {
+  border: none;
+  border-radius: 0;
+  font-size: 11px;
+  letter-spacing: .2rem;
+  text-transform: uppercase;
+  border-radius: 30px !important; }
+  .btn.btn-primary {
+    border-radius: 30px;
+    background: #ef4339;
+    color: #fff;
+    -webkit-box-shadow: 0 15px 30px 0 rgba(239, 67, 57, 0.2);
+    box-shadow: 0 15px 30px 0 rgba(239, 67, 57, 0.2); }
+  .btn:hover {
+    color: #fff; }
+  .btn:active, .btn:focus {
+    outline: none;
+    -webkit-box-shadow: none;
+    box-shadow: none; } */
+
+.contact-wrap {
+  -webkit-box-shadow: 0 0px 20px 0 rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0px 20px 0 rgba(0, 0, 0, 0.05);
+  border: 1px solid #efefef; }
+  .contact-wrap .col-form-label {
+    font-size: 14px;
+    color: #b3b3b3;
+    margin: 0 0 10px 0;
+    display: inline-block;
+    padding: 0; }
+  .contact-wrap .form, .contact-wrap .contact-info {
+    padding: 40px; }
+  .contact-wrap .contact-info {
+    color: rgba(255, 255, 255, 0.5); }
+    .contact-wrap .contact-info ul li {
+      margin-bottom: 15px;
+      color: rgba(255, 255, 255, 0.5); }
+      .contact-wrap .contact-info ul li .wrap-icon {
+        font-size: 20px;
+        color: #fff;
+        margin-top: 5px; }
+  .contact-wrap .form {
+    background: #fff; }
+    .contact-wrap .form h3 {
+      color: #000;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 30px; }
+  .contact-wrap .contact-info {
+    height: 100vh;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat; }
+    .contact-wrap .contact-info a {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0; }
+    @media (max-width: 1199.98px) {
+      .contact-wrap .contact-info {
+        height: 400px !important; } }
+    .contact-wrap .contact-info h3 {
+      color: #fff;
+      font-size: 20px;
+      margin-bottom: 30px; }
+
+label.error {
+  font-size: 12px;
+  color: red; }
+
+#message {
+  resize: vertical; }
+
+#form-message-warning, #form-message-success {
+  display: none; }
+
+#form-message-warning {
+  color: #B90B0B; }
+
+#form-message-success {
+  color: #55A44E;
+  font-size: 18px;
+  font-weight: bold; }
+
+.submitting {
+  float: left;
+  width: 100%;
+  padding: 10px 0;
+  display: none;
+  font-weight: bold;
+  font-size: 12px;
+  color: #000; }
+
 
 input {
 	border: none; /* 상단, 좌우, 우측 테두리 제거 */
@@ -161,10 +327,237 @@ div.desc {
 
 </style>
 </head>
-<body>
+<body style="background: white;">
 	<div class="container-xxl bg-white p-0">
 		<jsp:include page="header.jsp"></jsp:include>
 		<!-- Navbar End -->
+<<<<<<< HEAD
+
+<br>
+		<!-- Header Start -->
+  <div class="content">
+    
+    <div class="container">
+      <div class="row align-items-stretch no-gutters contact-wrap">
+        <div class="col-md-12">
+          <div class="form h-100">
+            <h3></h3>
+            <form class="mb-5" method="post" id="contactForm" name="contactForm">
+              <div class="row">
+                <div class="col-md-6 form-group mb-3">
+                  <label for="" class="col-form-label">&#127874; 나이 *</label>
+                  <input type="number" class="form-control" name="age" id="age" placeholder="Your age">
+                </div>
+                <div class="col-md-6 form-group mb-3">
+                  <label for="budget" class="col-form-label">&#128684; 흡연 *</label>
+                  <select class="form-control" id="smoking" name="smoking" style="background: white; appearance: auto; margin-top: -2px;">
+				    <option selected>Choose...</option>
+				    <option value="yes">Yes</option>
+				    <option value="no">No</option>
+				  </select>
+                </div>
+              </div>
+              <br>
+			  <div class="row">
+                <div class="col-md-6 form-group mb-3">
+                  <label for="" class="col-form-label">&#128241; 핸드폰 번호 *</label>
+                  <input type="text" class="form-control" name="phone" id="phone" placeholder="Your phone">
+                </div>
+                <div class="col-md-6 form-group mb-3">
+                  <label for="" class="col-form-label">&#127866; 음주 *</label>
+                  <input type="text" class="form-control" name="drinking" id="drinking"  placeholder="Your drink">
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-md-6 form-group mb-3">
+                  <label for="" class="col-form-label">&#127968; 거주지역 *</label>
+                  <input type="text" class="form-control" name="address" id="address" placeholder="Your age">
+                </div>
+                <div class="col-md-6 form-group mb-3">
+                  <label for="" class="col-form-label">&#127970; 직업 *</label>
+                  <input type="text" class="form-control" name="job" id="job"  placeholder="Your job">
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-md-6 form-group mb-3">
+                  <label for="" class="col-form-label">&#128161; 관심사 *</label>
+                  <input type="text" class="form-control" name="interest" id="interest" placeholder="Your interest">
+                </div>
+                <div class="col-md-6 form-group mb-3">
+                  <label for="budget" class="col-form-label">&#128214; 학력 *</label>
+                  <select class="form-control" id="school" name="school" style="background: white; appearance: auto; margin-top: -2px;">
+				    <option selected>Choose...</option>
+				    <option value="고졸">고등학교 졸업</option>
+				    <option value="대졸">대학교 졸업</option>
+				  </select>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-md-6 form-group mb-3">
+                  <label for="budget" class="col-form-label">MBTI *</label>
+                  <select class="form-control" id="mbti" name="mbti" style="background: white; appearance: auto; margin-top: -2px;">
+				    <option selected>Choose...</option>
+				    <option value="INTJ">INTJ</option>
+				    <option value="INTP">INTP</option>
+				    <option value="INFJ">INFJ</option>
+				    <option value="INFP">INFP</option>
+				    <option value="ISTJ">ISTJ</option>
+				    <option value="ISFJ">ISFJ</option>
+				    <option value="ISTP">ISTP</option>
+				    <option value="ISFP">ISFP</option>
+				    <option value="ENTJ">ENTJ</option>
+				    <option value="ENTP">ENTP</option>
+				    <option value="ENFJ">ENFJ</option>
+				    <option value="ENFP">ENFP</option>
+				    <option value="ESTJ">ESTJ</option>
+				    <option value="ESFJ">ESFJ</option>
+				    <option value="ESTP">ESTP</option>
+				    <option value="ESFP">ESFP</option>
+				  </select>
+                </div>
+                <div class="col-md-6 form-group mb-3">
+                  <label for="budget" class="col-form-label">&#128692; 운동 *</label>
+                  <select class="form-control" id="budget" name="budget" style="background: white; appearance: auto; margin-top: -2px;">
+				    <option selected>Choose...</option>
+				    <option value="yes">Yes</option>
+				    <option value="no">No</option>
+				  </select>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-md-6 form-group mb-3">
+                  <label for="budget" class="col-form-label">등급 *</label>
+                  <select class="form-control" id="budget" name="budget" style="background: white; appearance: auto; margin-top: -2px;">
+				    <option selected>Choose...</option>
+				    <option value="회원">회원</option>
+				    <option value="관리자">관리자</option>
+				  </select>
+                </div>
+              </div>
+				<br>
+              <div class="row">
+                <div class="col-md-12 form-group mb-3">
+                  <label for="message" class="col-form-label">&#128221; 자기소개 *</label>
+                  <textarea class="form-control" name="aboutme" id="aboutme" cols="30" rows="6" style="resize: none;" placeholder="Introduce yourself"></textarea>
+                </div>
+              </div>
+              <br>
+              <br>
+              <div class="row">
+                <div class="col-md-12 form-group">
+                  <input type="submit" value="confirm" class="btn btn-primary rounded-0 py-2 px-4" style="margin-left: 525px;">
+                  <span class="submitting"></span>
+                </div>
+              </div>
+            </form>
+
+<!--             <div id="form-message-warning mt-4"></div> 
+            <div id="form-message-success">
+              Your message was sent, thank you!
+            </div> -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+		<!-- Header End -->
+
+
+		<!-- Back to Top -->
+		<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i
+			class="bi bi-arrow-up"></i></a>
+	</div>
+
+	<!-- JavaScript Libraries -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="lib/wow/wow.min.js"></script>
+	<script src="lib/easing/easing.min.js"></script>
+	<script src="lib/waypoints/waypoints.min.js"></script>
+	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+	<!-- Template Javascript -->
+	<script src="js/main.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
+	<script>
+		function checkFormAndSubmit() {
+			checkForm();
+
+			var isSubmitEnabled = !document.getElementById("submitBtn").disabled;
+
+			if (isSubmitEnabled) {
+				// 이동할 페이지의 URL을 여기에 입력해줘
+				window.location.href = "index";
+			}
+		}
+
+		function checkForm() {
+			var age = document.getElementById("age").value;
+			var phone = document.getElementById("phone").value;
+			var address = document.getElementById("address").value;
+			var interest = document.getElementById("interest").value;
+			var mbti = document.getElementById("mbti").value;
+			var sport = document.getElementById("sport").options[document
+					.getElementById("sport").selectedIndex].value;
+			var smoking = document.getElementById("smoking").options[document
+					.getElementById("smoking").selectedIndex].value;
+			var drinking = document.getElementById("drinking").options[document
+					.getElementById("drinking").selectedIndex].value;
+			var job = document.getElementById("job").value;
+			var school = document.getElementById("school").value;
+			var role = document.getElementById("role").options[document
+					.getElementById("role").selectedIndex].value;
+			var aboutme = document.getElementById("aboutme").value;
+
+			if (age && phone && address && interest && mbti && sport !== "none"
+					&& smoking && drinking && job && school && role !== "none"
+					&& aboutme) {
+				document.getElementById("submitBtn").disabled = false;
+			} else {
+				document.getElementById("submitBtn").disabled = true;
+			}
+		}
+
+		function uploadImage() {
+			var input = document.getElementById('photo');
+			var file = fileInput.files[0];
+
+			//선택된 파일이 존재하면 FormData객체 생성 후, 해당 객체에 파일 추가
+			if (file) {
+				var formData = new FormData(document.getElementById('infoForm'));
+				formData.append('file', file);
+				// 여기에서 서버로 Ajax 요청을 보내거나, form.submit()을 사용하여 제출할 수 있습니다.
+				// 예를 들어, jQuery를 사용하여 Ajax 요청을 보내는 경우
+				$.ajax({
+					type : "post",
+					url : '${cpath}/info',
+					data : formData,
+					processData : false, // FormData를 직렬화
+					contentType : false, //컨텐츠 타입 설정 X
+					success : function(response) {
+						// 성공 시 동작
+						alert("Success");
+					},
+					error : function(error) {
+						// 에러 시 동작
+						alert("Error");
+					}
+				});
+			} else {
+				alert("Please select a file.")
+			}
+		}
+	</script>
+=======
 		
 
 		<!-- Header Start -->
@@ -358,6 +751,7 @@ div.desc {
 								window.location.href = "index";
 							}
 						}
+>>>>>>> origin/master
 
 						function checkForm() {
 							var age = document.getElementById("age").value;

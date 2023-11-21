@@ -82,7 +82,7 @@ public class MainController {
 		List<Info> listInfo = dbService.findAllByColumnValues(loader, Info.class, columnValues);
 
 		if ( listInfo.size() == 0 ) {
-			return "redirect:login";
+			return "redirect:index";
 		} else {
 			session.setAttribute("mvo", listInfo.get(0));
 			System.out.println(listInfo.get(0));
@@ -108,7 +108,7 @@ public class MainController {
 	public String showJoinPage(@RequestParam("nickname") String nickname, @RequestParam("username") String username,
 			@RequestParam("password") String password) {
 		infoService.InsertInfo(nickname, username, password);
-		return "redirect:/login";
+		return "redirect:/index";
 	}
 
 	@GetMapping("/info") //사진 출력필요함.
@@ -279,6 +279,12 @@ public class MainController {
 	public String showTestPage() {
 		System.out.println("테스트페이지로 들어옴.");
 		return "test";
+	}
+	
+	@GetMapping("/sendlike")
+	public String showSendLikePage() {
+		System.out.println("보낸좋아요로 들어왔음.");
+		return "sendlike";
 	}
 
 	/*

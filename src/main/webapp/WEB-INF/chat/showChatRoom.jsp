@@ -312,11 +312,12 @@
     <script src="js/main.js"></script>
     
 <script>
-
+/****************************
+[채팅 클릭][채팅 보여주기] 시작
+*****************************/
 
 var roomUuid;
 
-//[채팅 클릭][채팅 보여주기]
 $(document).ready(function() {
  $('.chat-link').click(function(e) {
      e.preventDefault();
@@ -382,6 +383,9 @@ $(document).ready(function() {
              $('#chatting-ul').html(chattingListHtml);
              $('#send-ul').html(sendHtml);
              
+             var chattingUl = $('#chatting-ul');
+             chattingUl.scrollTop(chattingUl.prop('scrollHeight'));
+             
          },
 
          error: function(error) {
@@ -391,7 +395,18 @@ $(document).ready(function() {
  });
 });
 
+/****************************
+	[채팅 클릭][채팅 보여주기] 끝
+*****************************/
 
+
+
+
+
+
+/****************************
+	[웹소켓] 시작
+*****************************/
 $(document).ready(function() {
     connect(); // 페이지 로드 시 WebSocket 연결을 시작합니다.
 });
@@ -512,6 +527,10 @@ $(document).on('submit', 'form', function(e) {
 $(document).on('click', '#send', function() {
     sendName();
 });
+
+/****************************
+	[웹소켓] 끝
+*****************************/
 
 
 

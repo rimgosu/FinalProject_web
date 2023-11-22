@@ -1,0 +1,179 @@
+/*****************
+    - Header -
+*****************/
+header {
+	position:relative;
+	left:0;
+	top:0;
+	width:100%;
+	min-height:120px;
+	padding:50px 0;
+	color:#fff;
+	    background: #383838 url(https://www.athenadesignstudio.com/plugins/switch/images/bg.jpg) no-repeat center center;
+	margin-bottom:30px
+}
+
+/* Logo */
+header .logo {
+	clear:both;
+    display:block;
+	text-align:center;
+    padding-bottom:10px;
+}
+
+/* Title */
+header h1 {
+    font-weight:300;
+    font-size:24px;
+    color:#eee;	
+	letter-spacing:2px;
+	text-align:center;
+	text-transform:uppercase;
+	margin:0 !important;
+	padding-bottom:25px;
+}
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,800,900|Open Sans:400,600,800');
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+div,
+input,
+p,
+a {
+    font-family: "Open Sans";
+    margin: 0px;
+}
+
+a,
+a:hover,
+a:focus {
+    color: inherit;
+}
+
+body {
+    background-color: #F1F2F3;
+}
+
+.container-fluid,
+.container {
+    max-width: 1200px;
+}
+
+.card-container {
+    padding: 100px 0px;
+    -webkit-perspective: 1000;
+    perspective: 1000;
+}
+
+.profile-card-2 {
+    max-width: 355px;
+    background-color: #FFF;
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1);
+    background-position: center;
+    overflow: hidden;
+    position: relative;
+    margin: 10px auto;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+
+.profile-card-2 img {
+    width: 100%; /* 이미지가 카드 너비에 맞춰지도록 설정 */
+    height: auto; /* 이미지의 비율을 유지하면서 높이 조정 */
+    object-fit: cover; /* 이미지가 카드를 채우도록 설정 */
+    position: relative; /* 상대 위치 설정 */
+    transition: all linear 0.25s;
+}
+
+/* 필요한 경우, 특정 화면 크기에서의 스타일 조정 */
+@media (max-width: 768px) {
+    .profile-card-2 img {
+        /* 화면 크기가 768px 이하일 때의 이미지 스타일 */
+    }
+}
+
+/* 기타 클래스 스타일 설정 */
+
+.profile-card-2 .profile-name {
+    position: absolute;
+    left: 30px;
+    bottom: 70px;
+    font-size: 30px;
+    color: #FFF;
+    text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+    transition: all linear 0.25s;
+}
+
+.profile-card-2 .profile-icons {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    color: #FFF;
+    transition: all linear 0.25s;
+}
+
+.profile-card-2 .profile-username {
+    position: absolute;
+    bottom: 50px;
+    left: 30px;
+    color: #FFF;
+    font-size: 13px;
+    transition: all linear 0.25s;
+}
+
+.profile-card-2 .profile-icons .fa {
+    margin: 5px;
+}
+
+.profile-card-2:hover img {
+    filter: grayscale(100%);
+}
+
+.profile-card-2:hover .profile-name {
+    bottom: 80px;
+}
+
+.profile-card-2:hover .profile-username {
+    bottom: 60px;
+}
+
+.profile-card-2:hover .profile-icons {
+    right: 40px;
+}
+
+
+
+.profile-icons {
+    /* 프로필 아이콘을 위한 스타일 */
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.fa-heart {
+    /* Font Awesome 아이콘 기본 스타일 */
+    font-size: 24px;
+    color : red;
+}
+.fa-times {
+    /* X 아이콘 두께 증가를 위한 text-shadow 추가 */
+    text-shadow: 
+        1px 0 0 currentColor, 
+        0 1px 0 currentColor,
+        -1px 0 0 currentColor,
+        0 -1px 0 currentColor,
+        1px 1px currentColor,
+        -1px -1px 0 currentColor,
+        1px -1px 0 currentColor,
+        -1px 1px 0 currentColor;
+    font-size: 26px;
+
+    /* 아이콘을 2px만큼 위로 이동 */
+    position: relative;
+    top: -2px;
+}

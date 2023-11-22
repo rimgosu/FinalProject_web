@@ -14,7 +14,7 @@ host_address = 'localhost'
 var username = '@Session["username"]';
 
 const stompClient = new StompJs.Client({
-    brokerURL: `ws://${host_address}:8081/boot/gs-guide-websocket`
+    brokerURL: `ws://${host_address}:8081/gs-guide-websocket`
 });
 
 stompClient.onConnect = (frame) => {

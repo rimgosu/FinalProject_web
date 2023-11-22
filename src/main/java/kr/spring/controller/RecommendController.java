@@ -1,12 +1,14 @@
 package kr.spring.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.HttpSession;
 import kr.spring.entity.Info;
@@ -39,7 +41,7 @@ public class RecommendController {
 	}
 	
 	@GetMapping("/recommendLike")
-	public String like(HttpSession session, @RequestParam String oppUserName) {
+	public String like(HttpSession session, @RequestParam String oppUserName, RedirectAttributes rttr) {
 		System.out.println("[RecommendController][/recommendLike]");
 		
 		Info info = (Info) session.getAttribute("mvo");
@@ -47,7 +49,38 @@ public class RecommendController {
 		// from, to 둘 다 저장
 		recommendService.saveLikeInteraction(info.getUsername(), oppUserName, "like");
 		
+		/*
+		 * oppUserName에게 좋아요를 받은 상태에서 좋아요를 누르면
+		 * 1. matching이 됨. (매칭 확인)
+		 * 2. 버튼을 누르면 채팅방을 팔 수 있음.
+		 */
+		Boolean isLikeMe = recommendService.isCheckLikeMe(info, oppUserName);
+		
+		/*
+		 *  상대가 날 좋아하면 매칭을 잡아줌
+		 *  상대 matchingUuid를 집어 넣음.
+		 */
+		if (isLikeMe) {
+			UUID matchingUuid = recommendService.saveMatching(info, oppUserName);
+			rttr.addAttribute("matchingUuid", matchingUuid);
+			return "redirect:/matching";
+		}
+		
 		return "redirect:/recommend";
 	}
 
+	
+	@GetMapping("/recommendDislike")
+	public String dislike(HttpSession session, @RequestParam String oppUserName) {
+		System.out.println("[RecommendController][/recommendDislike]");
+		
+		Info info = (Info) session.getAttribute("mvo");
+		
+		// from, to 둘 다 저장
+		recommendService.saveLikeInteraction(info.getUsername(), oppUserName, "dislike");
+		
+		return "redirect:/recommend";
+	}
+	
+	
 }

@@ -68,13 +68,10 @@
 						<div class="profile-username">${recommendUser.username}</div>
 						<div class="profile-icons">
 							<a href="/recommendLike?oppUserName=${recommendUser.username}"><i class="fa fa-heart"></i></a>
-							<a href="/dislike?oppUserName=${recommendUser.username}"><i class="fa fa-times"></i></a>
+							<a href="/recommendDislike?oppUserName=${recommendUser.username}"><i class="fa fa-times"></i></a>
 						</div>
 					</div>
 				</div>
-
-
-
 			</div>
 		</div>
 		<!-- 추천 카드 끝 -->

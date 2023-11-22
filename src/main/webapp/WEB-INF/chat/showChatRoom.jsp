@@ -71,10 +71,10 @@
 		              
 		              <c:forEach var="chatRoomNotification" items="${chatRoomNotifications}" varStatus="status">
 		              		<c:if test="${chatRoomNotification.notification_count == 0}">
-						    	<li class="p-2 border-bottom">
+						    	<li class="p-2 border-bottom chatRoomItem" >
 						    </c:if>
 						    <c:if test="${chatRoomNotification.notification_count != 0}">
-						    	<li class="p-2 border-bottom" style="background-color: #eee;">
+						    	<li class="p-2 border-bottom chatRoomItem" style="background-color: #eee;">
 						    </c:if>
 						        <a href="#!" class="chat-link d-flex justify-content-between" data-room-uuid="${chatRoomNotification.type_uuid}">
 						            <div class="d-flex flex-row">
@@ -312,11 +312,12 @@
     <script src="js/main.js"></script>
     
 <script>
-
+/****************************
+[채팅 클릭][채팅 보여주기] 시작
+*****************************/
 
 var roomUuid;
 
-//[채팅 클릭][채팅 보여주기]
 $(document).ready(function() {
  $('.chat-link').click(function(e) {
      e.preventDefault();
@@ -382,6 +383,9 @@ $(document).ready(function() {
              $('#chatting-ul').html(chattingListHtml);
              $('#send-ul').html(sendHtml);
              
+             var chattingUl = $('#chatting-ul');
+             chattingUl.scrollTop(chattingUl.prop('scrollHeight'));
+             
          },
 
          error: function(error) {
@@ -391,7 +395,18 @@ $(document).ready(function() {
  });
 });
 
+/****************************
+	[채팅 클릭][채팅 보여주기] 끝
+*****************************/
 
+
+
+
+
+
+/****************************
+	[웹소켓] 시작
+*****************************/
 $(document).ready(function() {
     connect(); // 페이지 로드 시 WebSocket 연결을 시작합니다.
 });
@@ -513,6 +528,35 @@ $(document).on('click', '#send', function() {
     sendName();
 });
 
+/****************************
+	[웹소켓] 끝
+*****************************/
+
+
+
+/****************************
+	[채팅방 클릭시 ]
+*****************************/
+document.addEventListener("DOMContentLoaded", function() {
+    // 모든 채팅 링크에 이벤트 리스너 추가
+    document.querySelectorAll('.chat-link').forEach(function(link) {
+        link.addEventListener('click', function() {
+            // 부모 <li> 요소 선택
+            var li = this.closest('.chatRoomItem');
+
+            // <li> 요소의 스타일 변경
+            if (li) {
+                li.style.backgroundColor = '';
+            }
+
+            // 알림 배지 요소 찾기 및 내용 변경
+            var badge = li.querySelector('.badge');
+            if (badge) {
+                badge.textContent = '';
+            }
+        });
+    });
+});
 
 
 

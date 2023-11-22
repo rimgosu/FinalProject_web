@@ -6,10 +6,12 @@ import java.nio.file.Paths;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -93,6 +95,12 @@ public class ChatServiceImpl implements ChatService {
         	chatColumnValues.put("read_status", false);
         	
         	List<Chatting> chattings = dbService.findAllByColumnValues(loader, Chatting.class, chatColumnValues);
+        	
+        	// 내 이름과 비교하여 같으면 알림을 하지 않기.
+        	chattings = chattings.stream()
+                    .filter(chatting -> !chatting.getChat_chatter().equals(username))
+                    .collect(Collectors.toList());
+        	
         	ChatRoomNotification chatRoomNotification = new ChatRoomNotification(interaction);
         	chatRoomNotification.setNotification_count(chattings.size());
         	chatRoomNotifications.add(chatRoomNotification);
@@ -111,5 +119,6 @@ public class ChatServiceImpl implements ChatService {
 		DriverConfigLoader loader = dbService.getConnection();
 		dbService.save(loader, Chatting.class, chatting);
 	}
+
 
 }

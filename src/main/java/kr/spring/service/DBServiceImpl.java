@@ -336,6 +336,9 @@ public class DBServiceImpl implements DBService{
 		    else if (field.getType().equals(Float.class) || field.getType().equals(float.class)) {
 		        field.set(entity, row.getFloat(columnName));
 		    } 
+		    else if (field.getType().equals(Boolean.class)) {
+		        field.set(entity, row.getBoolean(columnName));
+		    } 
 		    else if (field.getType().equals(List.class)) {
 		        // 여기에서 필요한 List 타입 처리
 		        // 예시: String, Integer, Float, Long, Double

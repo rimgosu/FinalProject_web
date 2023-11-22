@@ -51,11 +51,7 @@ public class MainController {
 		return "index";
 	}
 
-	@GetMapping("/recommend")
-	public String showRecommendPage() {
-		System.out.println("추천화면으로 들어왔음.");
-		return "recommend";
-	}
+	
 
 	@GetMapping("/like")
 	public String showLikePage() {
@@ -86,7 +82,7 @@ public class MainController {
 		} else {
 			session.setAttribute("mvo", listInfo.get(0));
 			System.out.println(listInfo.get(0));
-			return "redirect:index";
+			return "redirect:/recommend";
 		}
 
 	}

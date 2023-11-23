@@ -321,11 +321,11 @@ a.slide__next,
 											<!-- 프로필 사진 슬라이드 -->
 											<div class="slider">
 												<div class="slides">
-													<c:forEach items="${fileNames}" var="fileName"
+													<c:forEach items="${imageDatas}" var="imageData"
 														varStatus="i">
 														<div id="slides__${i.count}" class="slide">
 															<div class="image-box">
-																<img src="${fileName}" alt="Admin" width="200">
+																<img src="data:image/jpeg;base64,${imageData}" alt="S3 Image" width="200">
 															</div>
 
 															<c:choose>

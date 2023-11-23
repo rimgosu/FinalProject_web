@@ -4,18 +4,29 @@ package kr.spring.controller;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 
 import com.amazonaws.util.IOUtils;
+
+import jakarta.servlet.http.HttpSession;
+import kr.spring.entity.Info;
 
 @Controller
 public class FileController {
@@ -40,10 +51,13 @@ public class FileController {
 			// TODO: handle exception
     		e.printStackTrace();
 		}
-        
-        
-
-     
         return "test"; // JSP 파일 이름
     }
+    
+
+    // AddressData 모델 클래스
+    
+    
+    
+    
 }

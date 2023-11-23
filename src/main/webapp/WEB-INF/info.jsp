@@ -182,10 +182,10 @@ div.desc {
 						<div class="card-body mt-3" >
 							<div class="row">
 							<!-- 사진 업로드  -->
-							<c:forEach items="${fileNames}" var="fileName" varStatus="i" >    
+							<c:forEach items="${imageDatas}" var="imageData" varStatus="i" >    
 								<div class="responsive">
 									<div class="gallery"> 
-									<img src="${fileName}" alt="Admin" class="rounded" style="width:300px; height:350px;">
+									<img src="data:image/jpeg;base64,${imageData}" alt="S3 Image" class="rounded" style="width:300px; height:350px;">
 											<form action="${cpath}/fileUpload" method="post" enctype="multipart/form-data" id="imageForm${i.count}" >											   
 												<input type="file" id="photo${i.count}" name="file" accept="image/*">
 												<input type ="hidden" id="photoNum" name="photoNum" value="${i.count}">

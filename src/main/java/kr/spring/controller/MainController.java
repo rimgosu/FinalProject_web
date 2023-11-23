@@ -3,18 +3,18 @@ package kr.spring.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.lang.reflect.Member;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
@@ -26,11 +26,16 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.S3ObjectInputStream;
+
+import com.amazonaws.util.IOUtils;
 import com.datastax.oss.driver.api.core.config.DriverConfigLoader;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import kr.spring.entity.AddressData;
 import kr.spring.entity.Info;
 import kr.spring.service.DBService;
 import kr.spring.service.InfoService;
@@ -43,9 +48,9 @@ public class MainController {
 	private InfoService infoService;
 	@Autowired
 	private DBService dbService;
-	@Autowired //사진 업로드할때 필요
+	@Autowired // 사진 업로드할때 필요
 	private AmazonS3 s3client;
-	
+
 	@GetMapping("/index")
 	public String showMainPage() {
 		System.out.println("main으로 들어왔음.");
@@ -64,7 +69,6 @@ public class MainController {
 		return "like";
 	}
 
-
 	@GetMapping("/login")
 	public String showLoginPage() {
 		System.out.println("로그인으로 들어왔음.");
@@ -82,7 +86,7 @@ public class MainController {
 		DriverConfigLoader loader = dbService.getConnection();
 		List<Info> listInfo = dbService.findAllByColumnValues(loader, Info.class, columnValues);
 
-		if ( listInfo.size() == 0 ) {
+		if (listInfo.size() == 0) {
 			return "redirect:login";
 		} else {
 			session.setAttribute("mvo", listInfo.get(0));
@@ -90,6 +94,7 @@ public class MainController {
 			return "redirect:index";
 		}
 	}
+
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
@@ -105,47 +110,55 @@ public class MainController {
 	@PostMapping("/join")
 	public String showJoinPage(HttpSession session, Info info) {
 		infoService.InsertInfo(info.getNickname(), info.getUsername(), info.getPassword());
-		
-		DriverConfigLoader loader = dbService.getConnection(); //db연결
+
+		DriverConfigLoader loader = dbService.getConnection(); // db연결
 		Map<String, Object> columnValues = new HashMap<>();
 		columnValues.put("username", info.getUsername());
 		List<Info> listInfo = dbService.findAllByColumnValues(loader, Info.class, columnValues);
 
-		if ( listInfo.size() == 0 ) {
+		if (listInfo.size() == 0) {
 			return "redirect:join";
 		} else {
 			session.setAttribute("mvo", listInfo.get(0));
 			System.out.println(listInfo.get(0));
 			return "redirect:/info";
 		}
-		
+
 	}
 
-	@GetMapping("/info") //사진 출력필요함.
+	@GetMapping("/info") // 사진 출력필요함.
 	public String showInfoPage(HttpSession session, Model model) {
 		System.out.println("사진입력으로 들어왔음.");
-		//사진 출력되는 곳
-		 Info userInfo =(Info) session.getAttribute("mvo");
-		  Map<Integer, String> photoMap = userInfo.getPhoto();
-		  List<String> fileNames = new ArrayList<>();
-		  String imagePath = null;
-		  String fileName = null;
-		  if (photoMap != null) {
-			  for(int i=1;i<=4; i++) {
-				  imagePath = photoMap.get(i);
-				  File file  = new File(imagePath);
-				  fileName = file.getName();
-				  
-				  if(fileName.equals("default.png") ) {
-					  fileName = "simkoong.png";
-				  }
-				  fileNames.add(fileName);
-			  }			    
-			} else {
-				//사진 없다는 경우. 하지만 default로 default.png가 들어감. 그래서 여기로 오는 경우 없음.		    
+		// 사진 출력되는 곳
+		Info userInfo = (Info) session.getAttribute("mvo");
+		Map<Integer, String> photoMap = userInfo.getPhoto();
+		List<String> imageDatas = new ArrayList<>();
+		// aws에서 가져오기
+		String bucketName = "simkoong-s3";
+		String base64Encoded = null;
+		if (photoMap != null) {
+			for (int i = 1; i <= 4; i++) {
+				String imagePath = photoMap.get(i);
+				if (imagePath != null) {
+					File file = new File(imagePath);
+					String fileName = file.getName();
+					System.out.println(fileName);
+					try {
+					    S3Object s3object = s3client.getObject(bucketName, fileName);
+					    S3ObjectInputStream inputStream = s3object.getObjectContent();
+					    byte[] bytes = IOUtils.toByteArray(inputStream);
+					    base64Encoded = Base64.encodeBase64String(bytes);
+					    imageDatas.add(base64Encoded);
+					} catch (Exception e) {
+					    // 파일이 존재하지 않을 때 빈 이미지 추가
+					    base64Encoded = ""; // 빈 문자열 또는 기본 이미지 URL 설정
+					    imageDatas.add(base64Encoded);
+					}
+				}
 			}
-		model.addAttribute("fileNames", fileNames);
-		model.addAttribute(fileName);
+		} 
+		model.addAttribute("imageDatas", imageDatas);
+		model.addAttribute("imageData", base64Encoded);
 		return "info";
 	}
 
@@ -156,145 +169,153 @@ public class MainController {
 		return "redirect:/index";
 	}
 
-	//파일 업로드
+	// 파일 업로드
 	@PostMapping("/fileUpload")
-	public String fileUpload(Info info, @RequestParam("file") MultipartFile file, @RequestParam("photoNum") int photoNum, HttpSession session, HttpServletRequest request) {
+	public String fileUpload(Info info, @RequestParam("file") MultipartFile file,
+			@RequestParam("photoNum") int photoNum, HttpSession session, HttpServletRequest request) {
 		System.out.println(file);
 		String username_session = ((Info) session.getAttribute("mvo")).getUsername();
 		System.out.println(username_session);
-		String originalFilename = null;			
-		String uploadedFilePath_aws = null;			
+		String originalFilename = null;
+		String uploadedFilePath_aws = null;
 		try {
 			String uploadedFilePath = null;
 			// 업로드된 파일 처리
 			if (!file.isEmpty()) {
 				originalFilename = file.getOriginalFilename();
 				// 파일 저장 경로 및 이름 설
-				String filePath_aws = "s3://simkoong-s3/" + originalFilename; 
+				String filePath_aws = "s3://simkoong-s3/" + originalFilename;
 				String filePath = request.getServletContext().getRealPath("/" + originalFilename);
 				// 파일 경로에서 역슬래시 바꾸는 곳.
 				filePath = filePath.replace("\\\\", "/");
 				uploadedFilePath = filePath.replace("\\", "/");
-				
+
 				filePath_aws = filePath_aws.replace("\\\\", "/");
-				uploadedFilePath_aws = filePath_aws.replace("\\", "/");			
-				//파일 생성
-				File dest1 = new File(uploadedFilePath_aws);
-				File dest = new File(uploadedFilePath);
+				uploadedFilePath_aws = filePath_aws.replace("\\", "/");
+				// 파일 생성
+				File dest1 = new File(uploadedFilePath_aws); //aws주소
+				File dest = new File(uploadedFilePath); //로컬주소
 				// 파일 저장
-				file.transferTo(dest);
-				//파일 변환
-				Thumbnails.of(dest)
-							.size(400,400)
-							.toFile(dest); 		
-			}		
-			//AWS S3 관련 코드
-				File fileForS3 = new File(uploadedFilePath);
-				String bucketName = "simkoong-s3";
-				String fileName=originalFilename;
-				s3client.putObject(new PutObjectRequest(bucketName, fileName, fileForS3));
-			
+				file.transferTo(dest); //로컬주소
+				// 파일 변환
+				Thumbnails.of(dest).size(358, 516).toFile(dest); //로컬주소
+			}
+			// AWS S3 관련 코드
+			File fileForS3 = new File(uploadedFilePath);
+			String bucketName = "simkoong-s3";
+			String fileName = originalFilename;
+			s3client.putObject(new PutObjectRequest(bucketName, fileName, fileForS3));
+
 			// listinfo 정보 전체 가져오기
 			Map<String, Object> columnValues = new HashMap<>();
 			columnValues.put("username", username_session);
-			
+
 			DriverConfigLoader loader = dbService.getConnection();
 			List<Info> listInfo = dbService.findAllByColumnValues(loader, Info.class, columnValues);
-			
+
 			// 업데이트할 정보를 Map형식의 photo에 넣기.
 			Map<Integer, String> photo = listInfo.get(0).getPhoto();
 			photo.put(photoNum, uploadedFilePath_aws);
-			
-			
+
 			// 어디를 업데이트할지, 값은 뭔지를 설정하기
 			Map<String, Object> whereUpdate = new HashMap<>();
 			Map<String, Object> updateValue = new HashMap<>();
-			
+
 			whereUpdate.put("username", username_session);
 			updateValue.put("photo", photo);
-			
+
 			// 업데이트 진행
-			dbService.updateByColumnValues(loader, Info.class, updateValue, whereUpdate);			
+			dbService.updateByColumnValues(loader, Info.class, updateValue, whereUpdate);
 			session.setAttribute("mvo", dbService.findAllByColumnValues(loader, Info.class, columnValues).get(0));
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 //		infoService.fileUpload(additionalFile, username_session);
 		return "redirect:/info";
 	}
 
-
 	@GetMapping("/profile")
 	public String showProfilePage(Model model, HttpSession session) {
 		System.out.println("마이페이지로 들어왔음.");
-		//사진 출력되는 곳
-		Info userInfo =(Info) session.getAttribute("mvo");
-		  Map<Integer, String> photoMap = userInfo.getPhoto();
-		  List<String> fileNames = new ArrayList<>();
-		  String imagePath = null;
-		  String fileName = null;
-		  if (photoMap != null) {
-			  for(int i=1;i<=4; i++) {
-				  imagePath = photoMap.get(i);
-				  File file  = new File(imagePath);
-				  fileName = file.getName();
-				  
-				  if(fileName.equals("default.png") ) {
-					  fileName = "simkoong.png";
-				  }
-				  fileNames.add(fileName);
-			  }			    
-			} else {
-				//사진 없다는 경우. 하지만 default로 default.png가 들어감. 그래서 여기로 오는 경우 없음.		    
+		// 사진 출력되는 곳
+		Info userInfo = (Info) session.getAttribute("mvo");
+		Map<Integer, String> photoMap = userInfo.getPhoto();
+		List<String> imageDatas = new ArrayList<>();
+		String bucketName = "simkoong-s3";
+		String base64Encoded = null;		
+		if (photoMap != null) {
+			for (int i = 1; i <= 4; i++) {
+				String imagePath = photoMap.get(i);
+				if (imagePath != null) {
+					File file = new File(imagePath);
+					String fileName = file.getName();
+					try {
+					    S3Object s3object = s3client.getObject(bucketName, fileName);
+					    S3ObjectInputStream inputStream = s3object.getObjectContent();
+					    byte[] bytes = IOUtils.toByteArray(inputStream);
+					    base64Encoded = Base64.encodeBase64String(bytes);
+					    imageDatas.add(base64Encoded);
+					} catch (Exception e) {
+					    // 파일이 존재하지 않을 때 빈 이미지 추가
+					    base64Encoded = ""; // 빈 문자열 또는 기본 이미지 URL 설정
+					    imageDatas.add(base64Encoded);
+					}				
+				}
 			}
-		model.addAttribute("fileNames", fileNames);
-		model.addAttribute(fileName);
-		
+		}
+		model.addAttribute("imageDatas", imageDatas);
 		return "profile";
 	}
 
 	@GetMapping("/update")
 	public String showUpdatePage(HttpSession session, Info info, Model model) {
 		System.out.println("수정페이지로 들어왔음.");
-		 Info userInfo =(Info) session.getAttribute("mvo");
-		  Map<Integer, String> photoMap = userInfo.getPhoto();
-		  List<String> fileNames = new ArrayList<>();
-		  String imagePath = null;
-		  String fileName = null;
-		  if (photoMap != null) {
-			  for(int i=1;i<=4; i++) {
-				  imagePath = photoMap.get(i);
-				  File file  = new File(imagePath);
-				  fileName = file.getName();
-				  
-				  if(fileName.equals("default.png") ) {
-					  fileName = "simkoong.png";
-				  }
-				  fileNames.add(fileName);
-			  }			    
-			} else {
-				//사진 없다는 경우. 하지만 default로 default.png가 들어감. 그래서 여기로 오는 경우 없음.		    
+		Info userInfo = (Info) session.getAttribute("mvo");
+		Map<Integer, String> photoMap = userInfo.getPhoto();
+		List<String> imageDatas = new ArrayList<>();
+		String bucketName = "simkoong-s3";
+		String base64Encoded = null;
+		if (photoMap != null) {
+			for (int i = 1; i <= 4; i++) {
+				String imagePath = photoMap.get(i);
+				if (imagePath != null) {
+					File file = new File(imagePath);
+					String fileName = file.getName();
+	
+					try {
+					    S3Object s3object = s3client.getObject(bucketName, fileName);
+					    S3ObjectInputStream inputStream = s3object.getObjectContent();
+					    byte[] bytes = IOUtils.toByteArray(inputStream);
+					    base64Encoded = Base64.encodeBase64String(bytes);
+					    imageDatas.add(base64Encoded);
+					} catch (Exception e) {
+					    // 파일이 존재하지 않을 때 빈 이미지 추가
+					    base64Encoded = ""; // 빈 문자열 또는 기본 이미지 URL 설정
+					    imageDatas.add(base64Encoded);
+					}
+				}
 			}
-		model.addAttribute("fileNames", fileNames);
-		model.addAttribute(fileName);
+		} 
+		model.addAttribute("imageDatas", imageDatas);
+		
 
 		return "update";
 	}
+
 	@PostMapping("/update")
 	public String update(Info info, HttpSession session) {
-		String username_session =((Info) session.getAttribute("mvo")).getUsername();
+		String username_session = ((Info) session.getAttribute("mvo")).getUsername();
 		DriverConfigLoader loader = dbService.getConnection();
 		Map<String, Object> columnValues = new HashMap<>();
 		columnValues.put("username", username_session);
 		List<Info> listInfo = dbService.findAllByColumnValues(loader, Info.class, columnValues);
-		
-		
+
 		// 어디를 업데이트할지, 값은 뭔지를 설정하기
 		Map<String, Object> whereUpdate = new HashMap<>();
 		Map<String, Object> updateValue = new HashMap<>();
-		
+
 		whereUpdate.put("username", username_session);
 		updateValue.put("nickname", info.getNickname());
 		updateValue.put("age", info.getAge());
@@ -308,12 +329,60 @@ public class MainController {
 		updateValue.put("job", info.getJob());
 		updateValue.put("school", info.getSchool());
 		updateValue.put("aboutme", info.getAboutme());
-		
+
 		// 업데이트 진행
-		dbService.updateByColumnValues(loader, Info.class, updateValue, whereUpdate);	
+		dbService.updateByColumnValues(loader, Info.class, updateValue, whereUpdate);
 		session.setAttribute("mvo", dbService.findAllByColumnValues(loader, Info.class, columnValues).get(0));
 		return "redirect:/profile";
 	}
+	
+	@GetMapping("/location")
+	public String locationPage() {
+		System.out.println("위치 정보 확인");
+		
+		return "location";
+	}
+	@PostMapping("/location")
+    public ResponseEntity<String> receiveAddress(@RequestBody AddressData addressData, HttpSession session, Info info) {
+        // DB연결
+		String username_session = ((Info)session.getAttribute("mvo")).getUsername();
+		DriverConfigLoader loader = dbService.getConnection();
+		Map<String, Object> columnValues = new HashMap<>();
+		columnValues.put("username", username_session);
+		List<Info> listInfo = dbService.findAllByColumnValues(loader, Info.class, columnValues);
+		
+		Map<String, Object> whereUpdate = new HashMap<>();
+		Map<String, Object> updateValue = new HashMap<>();
+		
+		String roadAddress = addressData.getRoadAddress();
+		String cityName = addressData.getCityName(); 
+		String latitude =addressData.getLatitude();
+		String longitude = addressData.getLongitude();
+        // 예시로 받은 데이터를 콘솔에 출력해보겠습니다.
+        System.out.println("도로명 주소: " + roadAddress);
+        System.out.println("도시명: " + cityName);
+        System.out.println("경도 "+ latitude);
+        System.out.println("위도 "+ longitude);
+        
+        List<String> addressList= new ArrayList<>();
+		addressList.add(roadAddress);
+		addressList.add(latitude);
+		addressList.add(longitude);
+		
+		whereUpdate.put("username", username_session);
+		updateValue.put("address", addressList);
+		
+		dbService.updateByColumnValues(loader, Info.class, updateValue, whereUpdate);
+		session.setAttribute("mvo", dbService.findAllByColumnValues(loader, Info.class, columnValues).get(0));
+    	
+        
+     // 클라이언트에게 JSON 형태로 응답을 보냅니다.
+        String response = "{\"message\": \"주소 정보를 성공적으로 받았습니다.\"}";
+        return ResponseEntity.ok(response);
+    }
+	
+	
+	
 
 	@GetMapping("/test")
 	public String showTestPage() {
@@ -324,8 +393,7 @@ public class MainController {
 	/*
 	 * @GetMapping("/test2") //지협님이 하신 테스트 public String
 	 * showTest2Page(@RequestParam("username") String username) {
-	 * System.out.println("테스트페이지2로 들어옴.");
-	 * InfoService.InsertInfo(username);
+	 * System.out.println("테스트페이지2로 들어옴."); InfoService.InsertInfo(username);
 	 * 
 	 * return "test"; }
 	 */

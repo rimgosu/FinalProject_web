@@ -29,6 +29,8 @@ public class Info {
     private String school;
     private String aboutme;
     private Instant register_date;
+    private String sex;
+    private Boolean status;
     private List<String> role;
     private List<String> address;
     private Map<Integer, String> photo;

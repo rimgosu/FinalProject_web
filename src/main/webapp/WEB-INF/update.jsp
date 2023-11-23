@@ -168,20 +168,19 @@ body {
 	font-weight: bold;
 	text-decoration: underline;
 }
-
 .slider-container {
   background: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 60%;
+  height: 100%;
   
 }
 
 .slider {
   width: 100%;
   max-width: 350px;
-  height: 300px;
+  height: 350px;
   margin: 20px;
   text-align: center;
   border-radius: 20px;
@@ -202,7 +201,7 @@ body {
   align-items: center;
   flex-shrink: 0;
   width: 100%;
-  height: 300px;
+  height: 400px;
   scroll-snap-align: center;
   margin-right: 0px;
   box-sizing: border-box;
@@ -260,18 +259,8 @@ a.slide__next,
 }
 
 #card-body-top{
-	height:530px;
+	height:600px;
 }
-.image-box {
-  display: inline-block;
-    width: 100%;
-    height: 90%;
-    overflow: hidden;
-    object-fit: cover;
-    border-radius: 5px;
-
-}
-
 .image-box img {
   width: 100%; /* 이미지를 부모 요소에 꽉 채웁니다. */
   height: 100%; /* 이미지를 부모 요소에 꽉 채웁니다. */
@@ -318,10 +307,10 @@ a.slide__next,
 											<!-- 프로필 사진 슬라이드 -->
 											<div class="slider">
 												<div class="slides">
-													<c:forEach items="${fileNames}" var="fileName" varStatus="i"> 
+													<c:forEach items="${imageDatas}" var="imageData" varStatus="i"> 
 														 <div id="slides__${i.count}" class="slide">
 														 <div class="image-box">
-														 	<img src="${fileName}" alt="Admin"  width="200">
+														 	<img src="data:image/jpeg;base64,${imageData}" alt="S3 Image"  width="200">
 														 </div>
 														 
 														 	<c:choose> 
@@ -347,8 +336,10 @@ a.slide__next,
 										<div class="mt-3">
 											<h4>${mvo.nickname}님</h4>
 											<p class="text-secondary mb-1">${mvo.job}</p>
-											<p class="text-muted font-size-sm">${mvo.address}</p>
+											<p class="text-muted font-size-sm">${mvo.address[0]}</p>
 											<a href="/boot/info" id="photoLink"> 사진 추가 및 업데이트 </a>
+											<br>
+											<a href="/boot/location" id="photoLink">현재 위치 설정</a>
 
 										</div>
 									</div>
@@ -393,7 +384,7 @@ a.slide__next,
 											<div class="col-sm-3">
 												<h6 class="mb-0">Address</h6>
 											</div>
-											<div class="col-sm-9">
+											<div class="col-sm-9">										
 												<input type="text" id="address" name="address"
 													value="${mvo.address}">
 											</div>
@@ -445,8 +436,8 @@ a.slide__next,
 											</div>
 											<div class="col-sm-9">
 												<select class="form-select" id="sport" name="sport">
-													<option value="yes">예</option>
-													<option value="no">아니오</option>
+													<option value="yes">운동 선호</option>
+													<option value="no">운동 비선호</option>
 												</select>
 											</div>
 										</div>
@@ -489,8 +480,18 @@ a.slide__next,
 												<h6 class="mb-0">Education</h6>
 											</div>
 											<div class="col-sm-9">
-												<input type="text" id="school" name="school"
-													value="${mvo.school}">
+												<select class="form-select" id="school" name="school">
+													<option value="doctor">박사</option>
+													<option value="master">석사</option>
+													<option value="university_graduate">대학교 졸업</option>
+													<option value="university">대학교 재학</option>
+													<option value="college_graduate">전문대 졸업</option>
+													<option value="college">전문대 재학</option>
+													<option value="highschool">고등학교</option>
+													<option value="middleschool">중학교</option>
+													<option value="etc">기타</option>
+													<option value="private">비공개</option>
+												</select>
 											</div>
 										</div>
 										<div class="row">

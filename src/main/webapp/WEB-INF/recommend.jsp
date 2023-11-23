@@ -38,24 +38,7 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
-    
-<style>
-.image-box {
-  display: inline-block;
-    width: 100%;
-    height: 90%;
-    overflow: hidden;
-    object-fit: cover;
-    border-radius: 5px;
 
-}
-
-.image-box img {
-  width: 100%; /* 이미지를 부모 요소에 꽉 채웁니다. */
-  height: 100%; /* 이미지를 부모 요소에 꽉 채웁니다. */
-
-}
-</style>
 </head>
 
 <body>

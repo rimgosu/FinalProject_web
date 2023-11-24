@@ -48,7 +48,7 @@
 <body>
     <div class="container-xxl bg-white p-0">
     	<jsp:include page="header.jsp"></jsp:include>
-
+		<a href="/boot/otherProfile">상대 프로필 보기</a>
         <!-- Navbar End -->
 
 		<div>

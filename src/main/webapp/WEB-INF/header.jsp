@@ -38,13 +38,13 @@
                     <div class="navbar-nav ms-auto">
                         <a href="index" class="nav-item nav-link">Home</a>
                         <a href="recommend" class="nav-item nav-link">RECOMMEND</a>
-                        <div class="nav-item dropdown">
+                       <!--  <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Property</a>
                             <div class="dropdown-menu rounded-0 m-0">
                                 <a href="info" class="dropdown-item">내 정보 입력</a>
-                                <a href="property-type.html" class="dropdown-item">Property Type</a>
+
                                 <a href="like" class="dropdown-item">LIKE</a>
-                            </div>
+                            </div> -->
                         </div>
                         <!-- <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
@@ -64,13 +64,13 @@
                      <div class="form-group">
                         <label></label>
                      </div>
-                     <a href="chat" class="nav-item nav-link">CHAT</a>
+                  <!--  <a href="chat" class="nav-item nav-link">CHAT</a> -->  
                      <a href="showChatRoom" class="nav-item nav-link">CHATROOM</a>
                   <form class="form-iniline" action="${cpath}/profile" method="get">
                      <button type="submit" class="btn btn-prmary px-3 d-none d-lg-flex" style="color: var(--dark); font-weight: 500;">PROFILE</button>
                   </form>
-                  <form class="form-inline" action="${cpath}/logout" method="get">
-                     <button type="submit" class="btn btn-default" style="color: var(--dark); font-weight: 500;">LOGOUT</button>
+       <%--            <form class="form-inline" action="${cpath}/logout" method="get">
+                     <button type="submit" class="btn btn-default" style="color: var(--dark); font-weight: 500;">LOGOUT</button> --%>
                   </form>
                </c:if>   
                 </div>

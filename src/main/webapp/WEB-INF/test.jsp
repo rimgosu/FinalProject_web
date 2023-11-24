@@ -1,134 +1,66 @@
-<%@ page contentType="text/html;charset=UTF-8"%>
-<html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<c:set var="cpath" value="${pageContext.request.contextPath}" />
+
+<!DOCTYPE html>
+<html lang="en" style="background: white;">
 <head>
 <meta charset="utf-8">
-<title>좌표로 주소를 얻어내기</title>
+<title>Makaan - Real Estate HTML Template</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="" name="keywords">
+<meta content="" name="description">
+
+<!-- Favicon -->
+<link href="img/favicon.ico" rel="icon">
+
+<!-- Google Web Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@700;800&display=swap"
+	rel="stylesheet">
+
+<!-- Icon Font Stylesheet -->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+	rel="stylesheet">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
+	rel="stylesheet">
+
+<!-- Libraries Stylesheet -->
+<link href="lib/animate/animate.min.css" rel="stylesheet">
+<link href="lib/owlcarousel/assets/owl.carousel.min.css"
+	rel="stylesheet">
+
+<!-- Customized Bootstrap Stylesheet -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Template Stylesheet -->
+<link href="css/style.css" rel="stylesheet">
 <style>
 
-.map_wrap {
-	position: relative;
-	width: 100%;
-	height: 350px;
-}
-
-.title {
-	font-weight: bold;
-	display: block;
-}
-
-.hAddr {
-	position: absolute;
-	left: 10px;
-	top: 10px;
-	border-radius: 2px;
-	background: #fff;
-	background: rgba(255, 255, 255, 0.8);
-	z-index: 1;
-	padding: 5px;
-}
-
-#centerAddr {
-	display: block;
-	margin-top: 2px;
-	font-weight: normal;
-}
-
-.bAddr {
-	padding: 5px;
-	text-overflow: ellipsis;
-	overflow: hidden;
-	white-space: nowrap;
-}
 </style>
 </head>
 <body>
-	<div class="map_wrap">
-    <div id="map" style="width: 100%; height: 100%; position: relative; overflow: hidden;"></div>
-    <div class="hAddr">
-        <span class="title">지도중심기준 행정동 주소정보</span>
-        <span id="centerAddr"></span>
-        <div id="addressInfo">
-            <p id="roadAddress"></p>
-            <p id="jibunAddress"></p>
-        </div>
-    </div>
-</div>
 
 
-	<script type="text/javascript"
-		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fa8ff46cd5bf462c2b89f5178674aa04&libraries=services"></script>
-	  <script>
-        function sendAddressToServer(addressData) {
-        	 fetch('/boot/location', {
-        	        method: 'POST',
-        	        headers: {
-        	            'Content-Type': 'application/json'
-        	        },
-        	        body: JSON.stringify(addressData)
-        	    })
-        	    .then(response => {
-        	        if (response.ok) {
-        	        	 return response.json();
-        	        }else {
-        	            throw new Error('Network response was not ok. Status: ' + response.status);
-        	        }
-        	    })
-        	    .then(data => console.log(data))
-        	    .catch(error => console.error('Error:', error));
-        	}
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="lib/wow/wow.min.js"></script>
+	<script src="lib/easing/easing.min.js"></script>
+	<script src="lib/waypoints/waypoints.min.js"></script>
+	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
-        function displayAddress(roadAddress, jibunAddress) {
-            document.getElementById('roadAddress').innerText = '도로명 주소: ' + roadAddress;
-            document.getElementById('jibunAddress').innerText = '지번 주소: ' + jibunAddress;
-           
-        }
-        
-        function searchDetailAddrFromCoords(coords, callback) {
-            var geocoder = new kakao.maps.services.Geocoder();
-            geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
-        }
+	<!-- Template Javascript -->
+	<script src="js/main.js"></script>
 
-        function initMap(position) {
-            var mapContainer = document.getElementById('map');
-            var mapOption = {
-                center: new kakao.maps.LatLng(position.coords.latitude, position.coords.longitude),
-                level: 1
-            };
-            
-            var map = new kakao.maps.Map(mapContainer, mapOption); 
-            var geocoder = new kakao.maps.services.Geocoder(); 
-            
-            kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
-                searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {
-                    if (status === kakao.maps.services.Status.OK) {
-                        var roadAddress = result[0].road_address.address_name;
-                        var jibunAddress = result[0].address.address_name;
-                        displayAddress(roadAddress, jibunAddress);
-                        var addressData = {
-                            roadAddress: roadAddress,
-                            jibunAddress: jibunAddress
-                        };
-                        sendAddressToServer(addressData);
-                    }  else {
-                        console.log('주소 정보를 찾을 수 없습니다.');
-                    }  
-                });
-            });     
-        }
 
-        function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    initMap(position);
-                }, function(error) {
-                    console.log("Error occurred: " + error.message);
-                });
-            } else { 
-                console.log("Geolocation is not supported by this browser.");
-            }
-        }
-
-        getLocation();
-    </script>
 </body>
 </html>

@@ -299,8 +299,6 @@ public class MainController {
 			}
 		} 
 		model.addAttribute("imageDatas", imageDatas);
-		
-
 		return "update";
 	}
 
@@ -338,8 +336,7 @@ public class MainController {
 	
 	@GetMapping("/location")
 	public String locationPage() {
-		System.out.println("위치 정보 확인");
-		
+		System.out.println("위치 정보 확인");	
 		return "location";
 	}
 	@PostMapping("/location")
@@ -382,6 +379,40 @@ public class MainController {
     }
 	
 	
+	@GetMapping("/otherProfile")
+	public String showOtherProfilePage(HttpSession session, Info info, Model model) {
+		System.out.println("다른 유저의 프로필 방문");
+		Info userInfo = (Info) session.getAttribute("mvo");
+		Map<Integer, String> photoMap = userInfo.getPhoto();
+		List<String> imageDatas = new ArrayList<>();
+		String bucketName = "simkoong-s3";
+		String base64Encoded = null;
+		if (photoMap != null) {
+			for (int i = 1; i <= 4; i++) {
+				String imagePath = photoMap.get(i);
+				if (imagePath != null) {
+					File file = new File(imagePath);
+					String fileName = file.getName();
+	
+					try {
+					    S3Object s3object = s3client.getObject(bucketName, fileName);
+					    S3ObjectInputStream inputStream = s3object.getObjectContent();
+					    byte[] bytes = IOUtils.toByteArray(inputStream);
+					    base64Encoded = Base64.encodeBase64String(bytes);
+					    imageDatas.add(base64Encoded);
+					} catch (Exception e) {
+					    // 파일이 존재하지 않을 때 빈 이미지 추가
+					    base64Encoded = ""; // 빈 문자열 또는 기본 이미지 URL 설정
+					    imageDatas.add(base64Encoded);
+					}
+				}
+			}
+		} 
+		model.addAttribute("imageDatas", imageDatas);
+		
+		return "otherProfile";
+	}
+	
 	
 
 	@GetMapping("/test")
@@ -389,6 +420,7 @@ public class MainController {
 		System.out.println("테스트페이지로 들어옴.");
 		return "test";
 	}
+	
 
 	/*
 	 * @GetMapping("/test2") //지협님이 하신 테스트 public String
